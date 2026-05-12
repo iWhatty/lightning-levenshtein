@@ -5,15 +5,30 @@
     "main": "./dist/lightning-levenshtein.min.js",
     "module": "./dist/lightning-levenshtein.min.js",
     "browser": "./dist/lightning-levenshtein.min.js",
+    "types": "./dist/lightning-levenshtein.min.d.ts",
     "type": "module",
     "packageManager": "pnpm@10.33.1",
     "exports": {
-        ".": "./dist/lightning-levenshtein.min.js",
-        "./v2": "./dist/lightning-levenshtein-v2.min.js"
+        ".": {
+            "types": "./dist/lightning-levenshtein.min.d.ts",
+            "default": "./dist/lightning-levenshtein.min.js"
+        },
+        "./v2": {
+            "types": "./dist/lightning-levenshtein-v2.min.d.ts",
+            "default": "./dist/lightning-levenshtein-v2.min.js"
+        },
+        "./unicode": {
+            "types": "./dist/lightning-levenshtein-unicode.min.d.ts",
+            "default": "./dist/lightning-levenshtein-unicode.min.js"
+        }
     },
     "files": [
         "dist/lightning-levenshtein.min.js",
+        "dist/lightning-levenshtein.min.d.ts",
         "dist/lightning-levenshtein-v2.min.js",
+        "dist/lightning-levenshtein-v2.min.d.ts",
+        "dist/lightning-levenshtein-unicode.min.js",
+        "dist/lightning-levenshtein-unicode.min.d.ts",
         "bench/packages/relative-to-fastest-levenshtein.svg",
         "bench/packages/mean-ops-loglog-chart.svg",
         "bench/packages/relative-performance.svg",
@@ -24,11 +39,13 @@
     "scripts": {
         "build": "node ./build-gcc.mjs",
         "build:v2": "node ./build-gcc-bolt.mjs",
-        "build:all": "pnpm run build && pnpm run build:v2",
+        "build:unicode": "node ./build-gcc-unicode.mjs",
+        "build:all": "pnpm run build && pnpm run build:v2 && pnpm run build:unicode",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
         "html": "http-server . -p 8000 -c-1",
         "html:open": "start http://localhost:8000/bench/benchmark.html",
         "bench": "node bench/bench.js",
+        "bench:char-table": "node ./bench/char-table-spike/run-bench.js",
         "bench:peq": "node ./bench/peq-benchmark.mjs",
         "bench:myersx": "node ./bench/myers-x-variants/run-bench.js",
         "bench:myers32": "node ./bench/myers32-variants/run-bench.js",

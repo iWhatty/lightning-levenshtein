@@ -15,6 +15,13 @@ function distance(a, b) {}
 /**
  * @param {string} a
  * @param {string} b
+ * @return {number}
+ */
+function distanceUnicode(a, b) {}
+
+/**
+ * @param {string} a
+ * @param {string} b
  * @param {number=} maxDistance
  * @return {number}
  */

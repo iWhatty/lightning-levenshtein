@@ -23,12 +23,14 @@ Guidance for future Codex/agent runs in this repository.
 - Keep benchmark claims reproducible from checked-in scripts and data generation settings.
 - Prefer proving algorithm changes in `bench/` or `codegen/` before moving them into `src/` or `bench/bolt/`.
 - Be careful with case-sensitive paths. Windows may pass imports that fail on Linux and npm consumers.
-- Current production builds optimize around small PEQ tables and ASCII/Latin-1-style input. Unicode-width PEQ support should be treated as an explicit benchmarked mode, not a silent default change.
+- Current production builds optimize around small PEQ tables and ASCII/Latin-1-style input. Unicode-width PEQ support should stay explicit and pre-routed, not a silent default change or per-call auto scan in the hot path.
+- PEQ-width variants should share factory implementations where possible. Bind the table once at module setup, then export a hot function with no inner-loop mode checks.
+- `src/distanceUnicode.js` backs the explicit `/unicode` subpath through `src/unicode.js`. Do not export Unicode code from `src/index.js`; that causes the default dist bundle to pull in wide tables.
 - Do not overwrite unrelated lockfile changes. This repo is currently on pnpm in the maintainer's local system.
 
 ## Polish Backlog
 
 - Add CI on Linux to catch import-case drift.
-- Add a deliberate char-table mode spike: low-memory `256`, Unicode `65536`, and possibly `auto`.
+- Add TypeScript declarations once the public API settles.
 - Add TypeScript declarations once the public API settles.
 - Benchmark a batch-oriented Wasm/AssemblyScript prototype before considering a runtime rewrite. See `bench/assemblyscript-spike/README.md`.

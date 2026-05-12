@@ -17,6 +17,7 @@ The published package includes two production builds:
 dist/
   lightning-levenshtein.min.js
   lightning-levenshtein-v2.min.js
+  lightning-levenshtein-unicode.min.js
 ```
 
 ### Default API
@@ -41,6 +42,18 @@ This resolves to `dist/lightning-levenshtein-v2.min.js`.
 
 The `v2` build is a separate optimized runtime that uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. It is not just a renamed copy of the default package entrypoint.
 
+### Unicode API
+
+Unicode-correct UTF-16 code-unit distance is available through a separate subpath:
+
+```js
+import { distanceUnicode } from "lightning-levenshtein/unicode";
+```
+
+This resolves to `dist/lightning-levenshtein-unicode.min.js`.
+
+Use this path when your strings can contain code units above `255`, such as many BMP characters. It is intentionally separate from the default entrypoint so the default `distance` hot path does not pay for per-call character-set routing.
+
 ### Which one should users pick?
 
 Use the default package entrypoint if you want the stable general-purpose npm API:
@@ -55,6 +68,12 @@ Use the `v2` subpath if you specifically want the specialized `levenshteinLightn
 import { levenshteinLightning } from "lightning-levenshtein/v2";
 ```
 
+Use the `unicode` subpath if you need UTF-16 code-unit correctness beyond the default low-memory PEQ table:
+
+```js
+import { distanceUnicode } from "lightning-levenshtein/unicode";
+```
+
 ### Current package exports
 
 The package currently exposes both entrypoints through `exports`:
@@ -63,10 +82,24 @@ The package currently exposes both entrypoints through `exports`:
 {
   "exports": {
     ".": "./dist/lightning-levenshtein.min.js",
-    "./v2": "./dist/lightning-levenshtein-v2.min.js"
+    "./v2": "./dist/lightning-levenshtein-v2.min.js",
+    "./unicode": "./dist/lightning-levenshtein-unicode.min.js"
   }
 }
 ```
+
+### Character table strategy
+
+The default API is tuned for the hottest low-memory path and assumes ASCII/Latin-1-style input for its PEQ tables.
+
+The `unicode` subpath exposes `distanceUnicode`, which is backed by full UTF-16 code-unit PEQ tables. That path is intentionally separate so callers can opt into wider character support without adding per-call detection to the default `distance` hot path.
+
+The design direction is:
+
+* keep `distance` fast and pre-routed for common ASCII/Latin-1 workloads
+* expose Unicode-correct behavior through the deliberate `/unicode` subpath
+* share kernel implementations by binding the PEQ table before entering the hot function
+* avoid naive automatic routing that scans both strings on every call
 
 ## What it does
 
