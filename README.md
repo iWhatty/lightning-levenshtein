@@ -2,7 +2,7 @@
 
 Fast Levenshtein distance in pure JavaScript.
 
-`lightning-levenshtein` uses tiny-string specializations, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback to deliver high throughput across the full input range.
+`lightning-levenshtein` ships a compact default API for fast general-purpose edit distance, plus opt-in subpaths for maximum throughput and Unicode-width character tables.
 
 ## Installation
 
@@ -22,17 +22,17 @@ dist/
 
 ### Default API
 
-The default package entrypoint exposes the stable core API:
+The default package entrypoint exposes the stable core API and keeps the JavaScript payload small:
 
 ```js
 import { distance, distanceMax, closest } from "lightning-levenshtein";
 ```
 
-This resolves to `dist/lightning-levenshtein.min.js`.
+This resolves to `dist/lightning-levenshtein.min.js`. It is the best default when you want a small package with strong performance.
 
-### V2 API
+### Max-throughput API
 
-A second public subpath export is also available:
+The `/v2` subpath exposes the larger max-throughput runtime:
 
 ```js
 import { levenshteinLightning } from "lightning-levenshtein/v2";
@@ -40,7 +40,7 @@ import { levenshteinLightning } from "lightning-levenshtein/v2";
 
 This resolves to `dist/lightning-levenshtein-v2.min.js`.
 
-The `v2` build is a separate optimized runtime that uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. It is not just a renamed copy of the default package entrypoint.
+The `v2` build is a separate optimized runtime that uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. Choose it when throughput matters more than the extra JavaScript payload.
 
 ### Unicode API
 
@@ -52,17 +52,17 @@ import { distanceUnicode } from "lightning-levenshtein/unicode";
 
 This resolves to `dist/lightning-levenshtein-unicode.min.js`.
 
-Use this path when your strings can contain code units above `255`, such as many BMP characters. It is intentionally separate from the default entrypoint so the default `distance` hot path does not pay for per-call character-set routing.
+Use this path when your strings can contain code units above `255`, such as many BMP characters. It is intentionally separate from the default entrypoint so the default `distance` hot path does not pay for wider PEQ tables or per-call character-set routing.
 
 ### Which one should users pick?
 
-Use the default package entrypoint if you want the stable general-purpose npm API:
+Use the default package entrypoint if you want the stable general-purpose API with the smallest production build:
 
 ```js
 import { distance, distanceMax, closest } from "lightning-levenshtein";
 ```
 
-Use the `v2` subpath if you specifically want the specialized `levenshteinLightning` runtime:
+Use the `v2` subpath if you specifically want the specialized `levenshteinLightning` runtime and are comfortable with the larger payload:
 
 ```js
 import { levenshteinLightning } from "lightning-levenshtein/v2";
@@ -76,7 +76,7 @@ import { distanceUnicode } from "lightning-levenshtein/unicode";
 
 ### Current package exports
 
-The package currently exposes both entrypoints through `exports`:
+The package currently exposes three entrypoints through `exports`:
 
 ```json
 {
