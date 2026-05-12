@@ -1,6 +1,6 @@
 
 /// test\closest.test.js
-import { closest, distance } from "../dist/lightning-Levenshtein.min.js";
+import { closest, distance } from "../dist/lightning-levenshtein.min.js";
 
 
 const levenshtein = (a, b) => {

@@ -6,6 +6,7 @@
     "module": "./dist/lightning-levenshtein.min.js",
     "browser": "./dist/lightning-levenshtein.min.js",
     "type": "module",
+    "packageManager": "pnpm@10.33.1",
     "exports": {
         ".": "./dist/lightning-levenshtein.min.js",
         "./v2": "./dist/lightning-levenshtein-v2.min.js"
@@ -13,13 +14,17 @@
     "files": [
         "dist/lightning-levenshtein.min.js",
         "dist/lightning-levenshtein-v2.min.js",
+        "bench/packages/relative-to-fastest-levenshtein.svg",
+        "bench/packages/mean-ops-loglog-chart.svg",
+        "bench/packages/relative-performance.svg",
+        "bench/packages/mean-rank-log-chart.svg",
         "LICENSE.md",
         "README.md"
     ],
     "scripts": {
         "build": "node ./build-gcc.mjs",
         "build:v2": "node ./build-gcc-bolt.mjs",
-        "build:all": "npm run build && npm run build:v2",
+        "build:all": "pnpm run build && pnpm run build:v2",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
         "html": "http-server . -p 8000 -c-1",
         "html:open": "start http://localhost:8000/bench/benchmark.html",
@@ -28,17 +33,18 @@
         "bench:myersx": "node ./bench/myers-x-variants/run-bench.js",
         "bench:myers32": "node ./bench/myers32-variants/run-bench.js",
         "bench:small": "node ./bench/small_kernals/bench-2x-small.js",
+        "bench:small-dispatch": "node ./bench/small-dispatch-spike/run-bench.js",
         "bench:packages": "node ./bench/packages/run-bench.js",
         "bench:packages:table": "node ./bench/packages/render-readme-table.js",
         "bench:packages:bar": "node ./bench/packages/render-relative-bar-chart.js",
         "bench:packages:linechart": "node ./bench/packages/render-readme-line-chart.js",
         "bench:packages:percent": "node ./bench/packages/render-readme-relative-fastest-chart.js",
         "bench:packages:rank": "node ./bench/packages/render-readme-rank-chart.js",
-        "bench:packages:chart": "npm run bench:packages:bar && npm run bench:packages:linechart && npm run bench:packages:percent && npm run bench:packages:rank",
-        "bench:packages:all": "npm run bench:packages && npm run bench:packages:table && npm run bench:packages:chart",
+        "bench:packages:chart": "pnpm run bench:packages:bar && pnpm run bench:packages:linechart && pnpm run bench:packages:percent && pnpm run bench:packages:rank",
+        "bench:packages:all": "pnpm run bench:packages && pnpm run bench:packages:table && pnpm run bench:packages:chart",
         "codegen:myers32:a": "node ./codegen/tools/generateMyers32-A.cjs",
         "codegen:myers32:b": "node ./codegen/tools/generateMyers32-B.cjs",
-        "codegen:myers32": "npm run codegen:myers32:a && npm run codegen:myers32:b"
+        "codegen:myers32": "pnpm run codegen:myers32:a && pnpm run codegen:myers32:b"
     },
     "keywords": [
         "levenshtein",

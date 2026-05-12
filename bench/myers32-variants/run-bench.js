@@ -11,7 +11,7 @@ import { myers32_v4 } from "./myers32_v4.js";
 
 import { myers32_unrolledA } from "../../codegen/artifacts/myers32-unrolledA.js";
 import { myers32_unrolledB } from "../../codegen/artifacts/myers32-unrolledB.js";
-import { levenshteinLightning } from "../lightning-Levenshtein-v2.min.js";
+import { levenshteinLightning } from "../lightning-levenshtein-v2.min.js";
 
 const VARIANTS = [
     ["baseline", myers32_baseline],

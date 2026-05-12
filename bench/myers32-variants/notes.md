@@ -47,7 +47,7 @@ unrolledA-v4 is the best current 32-bit specialized Myers implementation
 
 fixing a.length is more valuable than fixing b.length
 
-upgrading codegen A from legacy mutation kernel to v4 kernel produced consistent gains, especially at lengths 4–32
+upgrading codegen A from legacy mutation kernel to v4 kernel produced consistent gains, especially at lengths 4-32
 
 v4 kernel appears more JIT-friendly than the earlier generated kernel
 

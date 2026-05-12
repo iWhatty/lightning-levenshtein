@@ -154,4 +154,4 @@ for (const len of LENGTHS) {
 fs.mkdirSync(OUT_DIR, { recursive: true });
 fs.writeFileSync(OUT_FILE, JSON.stringify(results, null, 2), "utf8");
 
-console.log(`\n✅ Wrote ${OUT_FILE}`); 
+console.log(`\nWrote ${OUT_FILE}`);

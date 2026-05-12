@@ -28,7 +28,7 @@ export function distanceMax(a, b, maxDistance = Number.MAX_SAFE_INTEGER) {
   if (originalLength === 0) return bLength;
   if (bLength === 0) return originalLength;
 
-  // 🧩 Developer Experience (DX) feature: interpret float as % of `a.length`
+  // Developer Experience (DX) feature: interpret float as % of `a.length`
   if (typeof maxDistance === 'number' && maxDistance > 0 && maxDistance < 1) {
     maxDistance = Math.ceil(maxDistance * originalLength);
   }

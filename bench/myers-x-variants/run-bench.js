@@ -17,7 +17,7 @@ import { myers_x5 } from "./myers_x5.js";
 import { myers_x6 } from "./myers_x6.js";
 import { myers_x7 } from "./myers_x7.js";
 import { distance } from "../mod.js"
-import { levenshteinLightning } from "../lightning-Levenshtein-v2.min.js"
+import { levenshteinLightning } from "../lightning-levenshtein-v2.min.js"
 
 import { myers_x as myers_x_old } from "../../src/myers_x.js";
 import { myers_x as myers_x_old_v2 } from "./myers_x_old_v2.js";

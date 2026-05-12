@@ -8,17 +8,14 @@ const fs = require("fs");
 const Benchmark = require("benchmark");
 
 
-import { levenshteinLightning } from './lightning-Levenshtein-v2.min.js'
+import { levenshteinLightning } from './lightning-levenshtein-v2.min.js'
 
 // import { distanceMax as distMax, distance } from "../src/index.js";
-import { closest, distance, distanceMax } from "../dist/lightning-Levenshtein.min.js";
-
-import { myers32_fast } from './bolt/myers32-fast.js'
-import { myers32_unrolledB } from './bolt/myers32-unrolledB.js'
+import { closest, distance, distanceMax } from "../dist/lightning-levenshtein.min.js";
 
 import { distance as distFast } from "./mod.js";
 
-import { myers_x as myers_x_old_v2 } from "../myers-x-variants/myers_x_old_v2.js";
+import { myers_x as myers_x_old_v2 } from "./myers-x-variants/myers_x_old_v2.js";
 
 
 
