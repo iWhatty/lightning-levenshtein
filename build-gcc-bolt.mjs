@@ -67,12 +67,14 @@ try {
 console.log("Rewriting preserved global export to ESM export...");
 const closureCode = readFileSync(benchOutputFile, "utf8");
 
-let fixedCode = closureCode.replace(
-  /"undefined"!==typeof globalThis&&\(\s*globalThis\.levenshteinLightning=([a-zA-Z_$][\w$]*)\);?/,
-  "\nexport {$1 as levenshteinLightning};"
-);
+const exports = {
+  levenshteinLightning: findGlobalExport(closureCode, "levenshteinLightning")
+};
 
+let fixedCode = stripGlobalExportBlock(closureCode);
 fixedCode = addUseStrict(fixedCode);
+fixedCode += `\nexport {${exports.levenshteinLightning} as levenshteinLightning};\n`;
+assertExports(fixedCode, ["levenshteinLightning"]);
 writeFileSync(benchOutputFile, fixedCode);
 
 console.log(`Primary v2 output written to: ${benchOutputFile}`);
@@ -98,4 +100,32 @@ function addUseStrict(code) {
   }
 
   return `"use strict";\n` + code;
+}
+
+function findGlobalExport(code, name) {
+  const identifier = "([a-zA-Z_$][\\w$]*)";
+  const dotPattern = new RegExp(`globalThis\\.${name}\\s*=\\s*${identifier}`);
+  const bracketPattern = new RegExp(
+    `globalThis\\[['"]${name}['"]\\]\\s*=\\s*${identifier}`
+  );
+  const match = code.match(dotPattern) || code.match(bracketPattern);
+  if (!match) {
+    throw new Error(`Closure output did not preserve global export: ${name}`);
+  }
+  return match[1];
+}
+
+function stripGlobalExportBlock(code) {
+  return code.replace(
+    /"undefined"!==typeof globalThis&&\([^;]*globalThis[^;]*\);?/g,
+    ""
+  );
+}
+
+function assertExports(code, names) {
+  for (const name of names) {
+    if (!new RegExp(`\\bas\\s+${name}\\b`).test(code)) {
+      throw new Error(`Generated bundle is missing ESM export: ${name}`);
+    }
+  }
 }

@@ -68,12 +68,16 @@ try {
 console.log("Rewriting preserved global exports to ESM export...");
 const closureCode = readFileSync(closureFile, "utf8");
 
-let fixedCode = closureCode.replace(
-  /"undefined"!==typeof globalThis&&\(\s*globalThis\.distance=([a-zA-Z_$][\w$]*),\s*globalThis\.distanceMax=([a-zA-Z_$][\w$]*),\s*globalThis\.closest=([a-zA-Z_$][\w$]*)\);?/,
-  "\nexport {$1 as distance, $2 as distanceMax, $3 as closest};"
-);
+const exports = {
+  distance: findGlobalExport(closureCode, "distance"),
+  distanceMax: findGlobalExport(closureCode, "distanceMax"),
+  closest: findGlobalExport(closureCode, "closest")
+};
 
+let fixedCode = stripGlobalExportBlock(closureCode);
 fixedCode = addUseStrict(fixedCode);
+fixedCode += `\nexport {${exports.distance} as distance, ${exports.distanceMax} as distanceMax, ${exports.closest} as closest};\n`;
+assertExports(fixedCode, ["distance", "distanceMax", "closest"]);
 writeFileSync(closureFile, fixedCode);
 
 console.log(`Output written to: ${closureFile}`);
@@ -96,4 +100,32 @@ function addUseStrict(code) {
   }
 
   return `"use strict";\n` + code;
+}
+
+function findGlobalExport(code, name) {
+  const identifier = "([a-zA-Z_$][\\w$]*)";
+  const dotPattern = new RegExp(`globalThis\\.${name}\\s*=\\s*${identifier}`);
+  const bracketPattern = new RegExp(
+    `globalThis\\[['"]${name}['"]\\]\\s*=\\s*${identifier}`
+  );
+  const match = code.match(dotPattern) || code.match(bracketPattern);
+  if (!match) {
+    throw new Error(`Closure output did not preserve global export: ${name}`);
+  }
+  return match[1];
+}
+
+function stripGlobalExportBlock(code) {
+  return code.replace(
+    /"undefined"!==typeof globalThis&&\([^;]*globalThis[^;]*\);?/g,
+    ""
+  );
+}
+
+function assertExports(code, names) {
+  for (const name of names) {
+    if (!new RegExp(`\\bas\\s+${name}\\b`).test(code)) {
+      throw new Error(`Generated bundle is missing ESM export: ${name}`);
+    }
+  }
 }
