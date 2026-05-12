@@ -1,5 +1,8 @@
 name: CI
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
@@ -33,7 +36,7 @@ jobs:
         run: pnpm run build:all
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm test --runInBand --verbose
 
       - name: Check package contents
         run: npm pack --dry-run
