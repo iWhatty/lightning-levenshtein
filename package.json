@@ -42,6 +42,8 @@
         "build:unicode": "node ./build-gcc-unicode.mjs",
         "build:all": "pnpm run build && pnpm run build:v2 && pnpm run build:unicode",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+        "test:package": "node ./scripts/package-smoke.mjs",
+        "test:package:tarball": "node ./scripts/package-tarball-smoke.mjs",
         "html": "http-server . -p 8000 -c-1",
         "html:open": "start http://localhost:8000/bench/benchmark.html",
         "bench": "node bench/bench.js",

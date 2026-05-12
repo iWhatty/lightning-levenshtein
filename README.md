@@ -11,7 +11,7 @@ npm install lightning-levenshtein
 ```
 ## npm package contents
 
-The published package includes two production builds:
+The published package includes three production builds:
 
 ```text
 dist/
@@ -199,9 +199,9 @@ This is useful because raw throughput can be noisy to read at a glance, while ra
 ## Reproducing the benchmark
 
 ```bash
-npm run bench:packages
-npm run bench:packages:table
-npm run bench:packages:chart
+pnpm run bench:packages
+pnpm run bench:packages:table
+pnpm run bench:packages:chart
 ```
 
 Generated files are written to `bench/packages/`.

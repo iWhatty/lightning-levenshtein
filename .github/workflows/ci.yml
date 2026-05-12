@@ -38,5 +38,11 @@ jobs:
       - name: Run tests
         run: pnpm test --runInBand --verbose
 
+      - name: Check package exports
+        run: pnpm run test:package
+
+      - name: Check packed package install
+        run: pnpm run test:package:tarball
+
       - name: Check package contents
         run: npm pack --dry-run
