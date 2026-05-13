@@ -2,6 +2,8 @@
 
 Use this checklist before publishing `lightning-levenshtein`.
 
+See [`ci-policy.md`](./ci-policy.md) for what CI is expected to catch and why tracked bundle byte-diff checks are intentionally not part of the release gate.
+
 ## Preflight
 
 - Confirm the working tree only contains intended release changes:

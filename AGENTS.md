@@ -8,6 +8,7 @@ Guidance for future Codex/agent runs in this repository.
 - `bench/bolt/` contains the v2 runtime source that builds into `dist/lightning-levenshtein-v2.min.js`.
 - `bench/` and `codegen/` are working areas for experiments before changes graduate into the package entrypoints.
 - `dist/` is published and should be rebuilt with the package scripts after source changes.
+- CI is a Linux/package-shape safety net. Do not re-add byte-for-byte generated bundle diff checks unless the Closure build is made deterministic across OS/toolchain behavior. See `docs/ci-policy.md`.
 
 ## Common Commands
 
@@ -30,7 +31,5 @@ Guidance for future Codex/agent runs in this repository.
 
 ## Polish Backlog
 
-- Add CI on Linux to catch import-case drift.
-- Add TypeScript declarations once the public API settles.
-- Add TypeScript declarations once the public API settles.
+- Keep TypeScript declarations aligned with public package exports.
 - Benchmark a batch-oriented Wasm/AssemblyScript prototype before considering a runtime rewrite. See `bench/assemblyscript-spike/README.md`.
