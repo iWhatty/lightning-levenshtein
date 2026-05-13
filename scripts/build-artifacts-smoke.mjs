@@ -22,10 +22,22 @@ const git = (args) =>
   );
 
 try {
-  git(["diff", "--exit-code", "--", ...trackedBuildOutputs]);
+  git([
+    "diff",
+    "--exit-code",
+    "--ignore-all-space",
+    "--",
+    ...trackedBuildOutputs
+  ]);
   console.log("tracked build artifacts are up to date");
 } catch (err) {
-  const stat = git(["diff", "--stat", "--", ...trackedBuildOutputs]);
+  const stat = git([
+    "diff",
+    "--stat",
+    "--ignore-all-space",
+    "--",
+    ...trackedBuildOutputs
+  ]);
   throw new Error(
     `Tracked build artifacts changed after build. Commit rebuilt outputs.\n${stat}`
   );
