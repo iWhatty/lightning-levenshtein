@@ -28,6 +28,12 @@ pnpm test --runInBand --verbose
 pnpm run test:package
 ```
 
+- Check package declaration paths and exported type names:
+
+```bash
+pnpm run test:package:types
+```
+
 - Pack, install, and import the tarball from a temporary fixture:
 
 ```bash

@@ -41,6 +41,9 @@ jobs:
       - name: Check package exports
         run: pnpm run test:package
 
+      - name: Check package declarations
+        run: pnpm run test:package:types
+
       - name: Check packed package install
         run: pnpm run test:package:tarball
 
