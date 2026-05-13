@@ -23,6 +23,10 @@ pnpm run build:all
 ```
 
 ```bash
+pnpm run test:build:artifacts
+```
+
+```bash
 pnpm test --runInBand --verbose
 ```
 
