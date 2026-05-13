@@ -14,7 +14,8 @@ Guidance for future Codex/agent runs in this repository.
 
 - This workspace currently uses pnpm for dependency locking. Keep `pnpm-lock.yaml` and avoid reintroducing `package-lock.json` unless the maintainer asks.
 - `pnpm test` runs the Jest suite. On Windows PowerShell environments where package-manager shims are blocked, use the `.cmd` shim.
-- `pnpm run build:all` rebuilds both production bundles.
+- `pnpm run build:all` rebuilds all production bundles: default, `/v2`, and `/unicode`.
+- `pnpm run check:ci` runs the local equivalent of the GitHub Actions release gate.
 - `pnpm run bench:packages` runs the public package comparison benchmark.
 - `pnpm run bench:myers32` and `pnpm run bench:myersx` run kernel exploration benches.
 
