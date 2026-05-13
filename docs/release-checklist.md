@@ -74,6 +74,8 @@ pnpm version patch
 npm publish
 ```
 
+`npm publish` runs `pnpm run check:ci` through `prepublishOnly`.
+
 ## Post-Publish
 
 - Verify the package page lists the expected version.

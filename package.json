@@ -43,6 +43,7 @@
         "build:unicode": "node ./build-gcc-unicode.mjs",
         "build:all": "pnpm run build && pnpm run build:v2 && pnpm run build:unicode",
         "check:ci": "pnpm run build:all && pnpm test --runInBand --verbose && pnpm run test:package && pnpm run test:package:types && pnpm run test:package:tarball && pnpm run test:package:pack",
+        "prepublishOnly": "pnpm run check:ci",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
         "test:package": "node ./scripts/package-smoke.mjs",
         "test:package:pack": "node ./scripts/package-pack-dry-run.mjs",

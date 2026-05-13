@@ -27,6 +27,7 @@ const expectedFiles = [
 
 try {
   assert.equal(pkg.sideEffects, false);
+  assert.equal(pkg.scripts.prepublishOnly, "pnpm run check:ci");
 
   const stdout = runNpm([
     "pack",
