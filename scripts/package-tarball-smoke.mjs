@@ -14,6 +14,7 @@ const npm = "npm";
 const node = process.execPath;
 const tempDir = mkdtempSync(join(tmpdir(), "lightning-levenshtein-pack-"));
 const cacheDir = join(tempDir, "npm-cache");
+const expectedPkg = JSON.parse(readFileSync("package.json", "utf8"));
 
 try {
   runNpm(
@@ -51,7 +52,7 @@ try {
   );
 
   assert.equal(installedPkg.name, "lightning-levenshtein");
-  assert.equal(installedPkg.version, "0.0.2");
+  assert.equal(installedPkg.version, expectedPkg.version);
   assert.equal(installedPkg.type, "module");
   assert.equal(installedPkg.sideEffects, false);
   assert.equal(installedPkg.types, "./dist/lightning-levenshtein.min.d.ts");

@@ -41,7 +41,7 @@ try {
 
   const [pack] = JSON.parse(stdout);
   assert.equal(pack.name, "lightning-levenshtein");
-  assert.equal(pack.version, "0.0.2");
+  assert.equal(pack.version, pkg.version);
 
   const actualFiles = pack.files.map((file) => file.path).sort();
   assert.deepEqual(actualFiles, expectedFiles);
