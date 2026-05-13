@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { execFileSync, execSync } from "node:child_process";
 import {
   mkdtempSync,
+  readFileSync,
   readdirSync,
   rmSync,
   writeFileSync
@@ -40,6 +41,37 @@ try {
       join(tempDir, tarball)
     ],
     tempDir
+  );
+
+  const installedPkg = JSON.parse(
+    readFileSync(
+      join(tempDir, "node_modules", "lightning-levenshtein", "package.json"),
+      "utf8"
+    )
+  );
+
+  assert.equal(installedPkg.name, "lightning-levenshtein");
+  assert.equal(installedPkg.version, "0.0.2");
+  assert.equal(installedPkg.type, "module");
+  assert.equal(installedPkg.sideEffects, false);
+  assert.equal(installedPkg.types, "./dist/lightning-levenshtein.min.d.ts");
+  assert.equal(installedPkg.scripts.prepublishOnly, "pnpm run check:ci");
+  assert.deepEqual(Object.keys(installedPkg.exports).sort(), [
+    ".",
+    "./unicode",
+    "./v2"
+  ]);
+  assert.equal(
+    installedPkg.exports["."].types,
+    "./dist/lightning-levenshtein.min.d.ts"
+  );
+  assert.equal(
+    installedPkg.exports["./v2"].types,
+    "./dist/lightning-levenshtein-v2.min.d.ts"
+  );
+  assert.equal(
+    installedPkg.exports["./unicode"].types,
+    "./dist/lightning-levenshtein-unicode.min.d.ts"
   );
 
   writeFileSync(
