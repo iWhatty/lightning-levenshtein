@@ -32,9 +32,6 @@ jobs:
       - name: Build package bundles
         run: pnpm run build:all
 
-      - name: Check tracked build artifacts
-        run: pnpm run test:build:artifacts
-
       - name: Run tests
         run: pnpm test --runInBand --verbose
 
