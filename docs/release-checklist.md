@@ -39,19 +39,7 @@ pnpm run test:package:tarball
 ```
 
 ```bash
-npm pack --dry-run --cache .npm-cache
-```
-
-- Clean up the local npm cache if you used the dry-run cache path. In PowerShell:
-
-```powershell
-Remove-Item -Recurse -Force -LiteralPath .npm-cache
-```
-
-In sh:
-
-```bash
-rm -rf .npm-cache
+pnpm run test:package:pack
 ```
 
 ## Entrypoint Positioning
