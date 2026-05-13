@@ -5,6 +5,7 @@ import {
   mkdirSync,
   unlinkSync,
   readFileSync,
+  readdirSync,
   writeFileSync,
   existsSync
 } from "fs";
@@ -41,7 +42,7 @@ writeFileSync(tempWrappedFile, base + globalExport);
 const cmd = [
   "npx",
   "google-closure-compiler",
-  `--js="${srcDir}/*.js"`,
+  ...closureJsInputs(srcDir),
   `--entry_point="${tempWrappedFile}"`,
   `--externs="${externsFile}"`,
   "--language_in=ECMASCRIPT_NEXT",
@@ -128,4 +129,11 @@ function assertExports(code, names) {
       throw new Error(`Generated bundle is missing ESM export: ${name}`);
     }
   }
+}
+
+function closureJsInputs(dir) {
+  return readdirSync(dir)
+    .filter((file) => file.endsWith(".js"))
+    .sort()
+    .map((file) => `--js="${resolve(dir, file)}"`);
 }
