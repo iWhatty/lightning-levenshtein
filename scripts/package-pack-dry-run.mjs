@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
 import { execFileSync, execSync } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
 const npm = "npm";
 const tempDir = mkdtempSync(join(tmpdir(), "lightning-levenshtein-pack-dry-"));
 const cacheDir = join(tempDir, "npm-cache");
+const pkg = JSON.parse(readFileSync("package.json", "utf8"));
 
 const expectedFiles = [
   "LICENSE.md",
@@ -25,6 +26,8 @@ const expectedFiles = [
 ].sort();
 
 try {
+  assert.equal(pkg.sideEffects, false);
+
   const stdout = runNpm([
     "pack",
     "--dry-run",
