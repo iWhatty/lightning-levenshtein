@@ -10,40 +10,48 @@ Use this checklist before publishing `lightning-levenshtein`.
 git status --short
 ```
 
-- Rebuild all published bundles:
+- Run the local CI-equivalent check:
+
+```bash
+pnpm run check:ci
+```
+
+- Or run the same checks step by step:
 
 ```bash
 pnpm run build:all
 ```
 
-- Run the Jest suite:
-
 ```bash
 pnpm test --runInBand --verbose
 ```
-
-- Check package self-referenced exports:
 
 ```bash
 pnpm run test:package
 ```
 
-- Check package declaration paths and exported type names:
-
 ```bash
 pnpm run test:package:types
 ```
-
-- Pack, install, and import the tarball from a temporary fixture:
 
 ```bash
 pnpm run test:package:tarball
 ```
 
-- Inspect the publish file list:
+```bash
+npm pack --dry-run --cache .npm-cache
+```
+
+- Clean up the local npm cache if you used the dry-run cache path. In PowerShell:
+
+```powershell
+Remove-Item -Recurse -Force -LiteralPath .npm-cache
+```
+
+In sh:
 
 ```bash
-npm pack --dry-run
+rm -rf .npm-cache
 ```
 
 ## Entrypoint Positioning

@@ -41,6 +41,7 @@
         "build:v2": "node ./build-gcc-bolt.mjs",
         "build:unicode": "node ./build-gcc-unicode.mjs",
         "build:all": "pnpm run build && pnpm run build:v2 && pnpm run build:unicode",
+        "check:ci": "pnpm run build:all && pnpm test --runInBand --verbose && pnpm run test:package && pnpm run test:package:types && pnpm run test:package:tarball && npm pack --dry-run --cache .npm-cache",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
         "test:package": "node ./scripts/package-smoke.mjs",
         "test:package:types": "node ./scripts/package-types-smoke.mjs",
