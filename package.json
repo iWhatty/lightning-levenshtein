@@ -34,8 +34,9 @@
         "bench/packages/mean-ops-loglog-chart.svg",
         "bench/packages/relative-performance.svg",
         "bench/packages/mean-rank-log-chart.svg",
-        "LICENSE.md",
-        "README.md"
+        "LICENSE",
+        "README.md",
+        "ADDITIONAL_TERMS.md"
     ],
     "scripts": {
         "build": "node ./build-gcc.mjs",
@@ -88,7 +89,7 @@
         "js"
     ],
     "author": "WATT3D <WATT3D@protonmail.com>",
-    "license": "SEE LICENSE IN LICENSE",
+    "license": "AGPL-3.0-only",
     "devDependencies": {
         "benchmark": "^2.1.4",
         "fast-levenshtein": "^3.0.0",
