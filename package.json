@@ -36,7 +36,8 @@
         "bench/packages/mean-rank-log-chart.svg",
         "LICENSE",
         "README.md",
-        "ADDITIONAL_TERMS.md"
+        "ADDITIONAL_TERMS.md",
+        "robots.txt"
     ],
     "scripts": {
         "build": "node ./build-gcc.mjs",
