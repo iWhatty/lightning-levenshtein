@@ -87,8 +87,8 @@
         "node",
         "js"
     ],
-    "author": "Dr.Watt",
-    "license": "Dr.Watt",
+    "author": "WATT3D <WATT3D@protonmail.com>",
+    "license": "SEE LICENSE IN LICENSE",
     "devDependencies": {
         "benchmark": "^2.1.4",
         "fast-levenshtein": "^3.0.0",
