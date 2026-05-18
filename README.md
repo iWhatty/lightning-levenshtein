@@ -1,5 +1,11 @@
 # ⚡ lightning-levenshtein
 
+[![npm](https://img.shields.io/npm/v/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
+[![downloads](https://img.shields.io/npm/dm/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/lightning-levenshtein)](https://bundlephobia.com/package/lightning-levenshtein)
+[![license](https://img.shields.io/npm/l/lightning-levenshtein)](https://github.com/iWhatty/lightning-Levenshtein.js/blob/main/LICENSE)
+[![stars](https://img.shields.io/github/stars/iWhatty/lightning-Levenshtein.js?style=social)](https://github.com/iWhatty/lightning-Levenshtein.js)
+
 Fast Levenshtein distance in pure JavaScript.
 
 `lightning-levenshtein` ships a compact default API for fast general-purpose edit distance, plus opt-in subpaths for maximum throughput and Unicode-width character tables.
