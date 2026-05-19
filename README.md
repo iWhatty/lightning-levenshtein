@@ -6,24 +6,51 @@
 [![license](https://img.shields.io/npm/l/lightning-levenshtein)](https://github.com/iWhatty/lightning-Levenshtein.js/blob/main/LICENSE)
 [![stars](https://img.shields.io/github/stars/iWhatty/lightning-Levenshtein.js?style=social)](https://github.com/iWhatty/lightning-Levenshtein.js)
 
-Fast Levenshtein distance in pure JavaScript.
+Fast Levenshtein distance in pure JavaScript. Compact default API for general-purpose edit distance, plus opt-in subpaths for maximum throughput and Unicode-width character tables.
 
-`lightning-levenshtein` ships a compact default API for fast general-purpose edit distance, plus opt-in subpaths for maximum throughput and Unicode-width character tables.
+## Features
 
-## Installation
+- Specialized kernels for very short strings
+- Precompiled bit-parallel dispatch for short inputs
+- Fixed-width Myers variants for medium inputs
+- Generalized Myers fallback for large inputs
+- Zero runtime dependencies
+- Works in Node.js and browsers
 
-```bash
-npm install lightning-levenshtein
+---
+
+## Install
+
+```sh
+pnpm add lightning-levenshtein
 ```
-## npm package contents
 
-The published package includes three production builds:
+---
 
-```text
-dist/
-  lightning-levenshtein.min.js
-  lightning-levenshtein-v2.min.js
-  lightning-levenshtein-unicode.min.js
+## Quick start
+
+```js
+import { distance, distanceMax, closest } from "lightning-levenshtein";
+
+distance("kitten", "sitting");                 // 3
+distanceMax("kitten", "sitting", 2);           // -1 (over threshold)
+closest("kitten", ["kitchen", "sitting"]);     // "kitten"-nearest entry
+```
+
+---
+
+## API
+
+The package exposes three entrypoints through `exports`:
+
+```json
+{
+  "exports": {
+    ".": "./dist/lightning-levenshtein.min.js",
+    "./v2": "./dist/lightning-levenshtein-v2.min.js",
+    "./unicode": "./dist/lightning-levenshtein-unicode.min.js"
+  }
+}
 ```
 
 ### Default API
@@ -60,7 +87,11 @@ This resolves to `dist/lightning-levenshtein-unicode.min.js`.
 
 Use this path when your strings can contain code units above `255`, such as many BMP characters. It is intentionally separate from the default entrypoint so the default `distance` hot path does not pay for wider PEQ tables or per-call character-set routing.
 
-### Which one should users pick?
+---
+
+## Notes
+
+### Which one should I pick?
 
 Use the default package entrypoint if you want the stable general-purpose API with the smallest production build:
 
@@ -80,20 +111,6 @@ Use the `unicode` subpath if you need UTF-16 code-unit correctness beyond the de
 import { distanceUnicode } from "lightning-levenshtein/unicode";
 ```
 
-### Current package exports
-
-The package currently exposes three entrypoints through `exports`:
-
-```json
-{
-  "exports": {
-    ".": "./dist/lightning-levenshtein.min.js",
-    "./v2": "./dist/lightning-levenshtein-v2.min.js",
-    "./unicode": "./dist/lightning-levenshtein-unicode.min.js"
-  }
-}
-```
-
 ### Character table strategy
 
 The default API is tuned for the hottest low-memory path and assumes ASCII/Latin-1-style input for its PEQ tables.
@@ -102,54 +119,40 @@ The `unicode` subpath exposes `distanceUnicode`, which is backed by full UTF-16 
 
 The design direction is:
 
-* keep `distance` fast and pre-routed for common ASCII/Latin-1 workloads
-* expose Unicode-correct behavior through the deliberate `/unicode` subpath
-* share kernel implementations by binding the PEQ table before entering the hot function
-* avoid naive automatic routing that scans both strings on every call
+- keep `distance` fast and pre-routed for common ASCII/Latin-1 workloads
+- expose Unicode-correct behavior through the deliberate `/unicode` subpath
+- share kernel implementations by binding the PEQ table before entering the hot function
+- avoid naive automatic routing that scans both strings on every call
 
-## What it does
-
-* Specialized kernels for very short strings
-* Precompiled bit-parallel dispatch for short inputs
-* Fixed-width Myers variants for medium inputs
-* Generalized Myers fallback for large inputs
-* Zero runtime dependencies
-* Works in Node.js and browsers
-
-## Strategy
+### Dispatch strategy
 
 The runtime selects the cheapest correct kernel for the current input size.
 
-* **1–32 chars:** precompiled bit-parallel kernels
-* **33–64 chars:** fixed-width Myers specialization
-* **65–96 chars:** fixed-width Myers specialization
-* **97–128 chars:** fixed-width Myers specialization
-* **129–224 chars:** generalized macro-block Myers dispatch
-* **225–256 chars:** fixed-width Myers specialization
-* **257–512 chars:** generalized macro-block Myers dispatch
-* **513+ chars:** large-input generalized Myers dispatch
+- **1–32 chars:** precompiled bit-parallel kernels
+- **33–64 chars:** fixed-width Myers specialization
+- **65–96 chars:** fixed-width Myers specialization
+- **97–128 chars:** fixed-width Myers specialization
+- **129–224 chars:** generalized macro-block Myers dispatch
+- **225–256 chars:** fixed-width Myers specialization
+- **257–512 chars:** generalized macro-block Myers dispatch
+- **513+ chars:** large-input generalized Myers dispatch
 
 This keeps tiny inputs fast without sacrificing larger-input performance.
 
-## Benchmark
+### Benchmark
 
-The benchmark harness generates the same string pairs for every library at each tested length and seed.
+The benchmark harness generates the same string pairs for every library at each tested length and seed. Benchmarks were run in Node.js `v24.11.0`.
 
-Benchmarks were run in Node.js:
+**Methodology:**
 
-- **Node version:** `v24.11.0`
+- 500 random equal-length string pairs per test size
+- 3 seeds: `1337`, `7331`, `20250321`
+- 500 ms measurement window per seed
+- 3 warm-up rounds before timing
+- alphabet: `A-Z`, `a-z`, `0-9`
+- reported table values: **mean ops/ms across 3 seeds**
 
-
-### Methodology
-
-* 500 random equal-length string pairs per test size
-* 3 seeds: `1337`, `7331`, `20250321`
-* 500 ms measurement window per seed
-* 3 warm-up rounds before timing
-* alphabet: `A-Z`, `a-z`, `0-9`
-* reported table values: **mean ops/ms across 3 seeds**
-
-### Mean ops/sec
+**Mean ops/sec:**
 
 | Test Target | N=1 | N=2 | N=4 | N=8 | N=16 | N=32 | N=64 | N=128 | N=256 | N=512 | N=1024 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -160,51 +163,33 @@ Benchmarks were run in Node.js:
 | leven | 82490 | 41685 | 21482 | 8188 | 1785 | 420.2 | 114.2 | 29.90 | 7.607 | 1.913 | 0.481 |
 | levenshtein-edit-distance | 114674 | 55327 | 24957 | 8463 | 1792 | 396.6 | 106.6 | 27.38 | 6.992 | 1.754 | 0.438 |
 
-
-### Relative throughput vs `fastest-levenshtein`
-
-This chart normalizes `fastest-levenshtein` to **100% at each string length** and shows every other library relative to that baseline.
-
-Use this graph when you want an apples-to-apples comparison against the package most people already know. Values above 100% mean faster than `fastest-levenshtein`; values below 100% mean slower.
-
+**Relative throughput vs `fastest-levenshtein`.** This chart normalizes `fastest-levenshtein` to **100% at each string length** and shows every other library relative to that baseline. Use it for an apples-to-apples comparison against the package most people already know. Values above 100% mean faster than `fastest-levenshtein`; values below 100% mean slower.
 
 ![Relative performance vs fastest-levenshtein](./bench/packages/relative-to-fastest-levenshtein.svg)
 
-### Throughput across input sizes
-
-Mean ops/sec shown on a log-scaled Y axis across the full tested range.
+**Throughput across input sizes.** Mean ops/sec shown on a log-scaled Y axis across the full tested range.
 
 ![Levenshtein throughput by string length](./bench/packages/mean-ops-loglog-chart.svg)
 
-### Relative throughput vs `fastest-levenshtein`
-
-This chart normalizes `fastest-levenshtein` to **100% at each string length** and shows `lightning-levenshtein` relative to that fixed baseline.
-
-We use `fastest-levenshtein` as the canonical public reference point because it is a widely recognized JavaScript Levenshtein implementation. Values above 100% mean faster than `fastest-levenshtein`; values below 100% mean slower.
+**Relative throughput, `lightning-levenshtein` only.** Same baseline as above, narrowed to just `lightning-levenshtein` for a clearer read.
 
 ![Relative performance vs second-fastest competitor](./bench/packages/relative-performance.svg)
 
----
-
-### Rank by input length
-
-This chart shows where each library ranks at each tested string length.
-
-This is useful because raw throughput can be noisy to read at a glance, while rank makes the ordering obvious. If a library is consistently ranked first across the range, you can see that immediately without squinting at the absolute numbers.
+**Rank by input length.** Where each library ranks at each tested string length. Useful because raw throughput can be noisy to read at a glance, while rank makes the ordering obvious. If a library is consistently ranked first across the range, you can see that immediately without squinting at the absolute numbers.
 
 ![Rank by string length](./bench/packages/mean-rank-log-chart.svg)
 
-## Results
+### Results
 
-* `lightning-levenshtein` is the fastest library in this benchmark set at every tested length.
-* It leads at `N=1`, `N=2`, `N=4`, `N=8`, `N=16`, `N=32`, `N=64`, `N=128`, `N=256`, `N=512`, and `N=1024`.
-* At `N=1024`, mean throughput is **9.36 ops/ms** versus **4.98 ops/ms** for `fastest-levenshtein`.
-* At `N=32`, mean throughput is **6568 ops/ms** versus **4240 ops/ms** for `fastest-levenshtein`.
-* At `N=8`, mean throughput is **33126 ops/ms** versus **23288 ops/ms** for `fastest-levenshtein`.
+- `lightning-levenshtein` is the fastest library in this benchmark set at every tested length.
+- It leads at `N=1`, `N=2`, `N=4`, `N=8`, `N=16`, `N=32`, `N=64`, `N=128`, `N=256`, `N=512`, and `N=1024`.
+- At `N=1024`, mean throughput is **9.36 ops/ms** versus **4.98 ops/ms** for `fastest-levenshtein`.
+- At `N=32`, mean throughput is **6568 ops/ms** versus **4240 ops/ms** for `fastest-levenshtein`.
+- At `N=8`, mean throughput is **33126 ops/ms** versus **23288 ops/ms** for `fastest-levenshtein`.
 
-## Reproducing the benchmark
+### Reproducing the benchmark
 
-```bash
+```sh
 pnpm run bench:packages
 pnpm run bench:packages:table
 pnpm run bench:packages:chart
@@ -212,7 +197,7 @@ pnpm run bench:packages:chart
 
 Generated files are written to `bench/packages/`.
 
-## Project layout
+### Project layout
 
 ```text
 bench/bolt/
@@ -237,6 +222,8 @@ bench/packages/
   results.json
 ```
 
+---
+
 ## License
 
-See `LICENSE.md`.
+See [LICENSE](./LICENSE) and [ADDITIONAL_TERMS.md](./ADDITIONAL_TERMS.md). © WATT3D.
