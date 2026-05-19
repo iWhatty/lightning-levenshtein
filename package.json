@@ -101,7 +101,7 @@
         "js"
     ],
     "author": "WATT3D <WATT3D@protonmail.com>",
-    "license": "AGPL-3.0-only",
+    "license": "SEE LICENSE IN LICENSE",
     "devDependencies": {
         "benchmark": "^2.1.4",
         "fast-levenshtein": "^3.0.0",
