@@ -41,27 +41,29 @@ closest("kitten", ["kitchen", "sitting"]);     // "kitten"-nearest entry
 
 ## API
 
-The package exposes three entrypoints through `exports`:
+The package exposes three logical entrypoints, each with an ESM-source path for bundlers and a pre-built minified path for unbundled `<script type="module">` use:
 
-```json
+```jsonc
 {
   "exports": {
-    ".": "./dist/lightning-levenshtein.min.js",
-    "./v2": "./dist/lightning-levenshtein-v2.min.js",
-    "./unicode": "./dist/lightning-levenshtein-unicode.min.js"
+    ".":             { "import": "./src/index.js",       "default": "./dist/lightning-levenshtein.min.js" },
+    "./min":         {                                    "default": "./dist/lightning-levenshtein.min.js" },
+    "./v2":          {                                    "default": "./dist/lightning-levenshtein-v2.min.js" },
+    "./unicode":     { "import": "./src/unicode.js",     "default": "./dist/lightning-levenshtein-unicode.min.js" },
+    "./unicode/min": {                                    "default": "./dist/lightning-levenshtein-unicode.min.js" }
   }
 }
 ```
 
-### Default API
+As of 0.0.4, the `.` and `./unicode` entries route bundlers (esbuild, vite, rollup, webpack 5) at ESM source so unused exports can be tree-shaken. Single-function consumers of `distance` drop ~26% gzipped vs the pre-bundled `.min.js`. The `./v2` entry still ships only the pre-built bundle pending a source-folder refactor.
 
-The default package entrypoint exposes the stable core API and keeps the JavaScript payload small:
+### Default API
 
 ```js
 import { distance, distanceMax, closest } from "lightning-levenshtein";
 ```
 
-This resolves to `dist/lightning-levenshtein.min.js`. It is the best default when you want a small package with strong performance.
+The stable core API. Bundlers receive ESM source; unbundled consumers can use `lightning-levenshtein/min` to point at the pre-built bundle directly.
 
 ### Max-throughput API
 
@@ -71,21 +73,17 @@ The `/v2` subpath exposes the larger max-throughput runtime:
 import { levenshteinLightning } from "lightning-levenshtein/v2";
 ```
 
-This resolves to `dist/lightning-levenshtein-v2.min.js`.
-
-The `v2` build is a separate optimized runtime that uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. Choose it when throughput matters more than the extra JavaScript payload.
+This resolves to `dist/lightning-levenshtein-v2.min.js`. The `v2` build is a separate optimized runtime that uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. Choose it when throughput matters more than the extra JavaScript payload.
 
 ### Unicode API
 
-Unicode-correct UTF-16 code-unit distance is available through a separate subpath:
+Unicode-correct UTF-16 code-unit distance:
 
 ```js
 import { distanceUnicode } from "lightning-levenshtein/unicode";
 ```
 
-This resolves to `dist/lightning-levenshtein-unicode.min.js`.
-
-Use this path when your strings can contain code units above `255`, such as many BMP characters. It is intentionally separate from the default entrypoint so the default `distance` hot path does not pay for wider PEQ tables or per-call character-set routing.
+Use this path when your strings can contain code units above `255`, such as many BMP characters. It is intentionally separate from the default entrypoint so the default `distance` hot path does not pay for wider PEQ tables or per-call character-set routing. Use `lightning-levenshtein/unicode/min` for the pre-built bundle.
 
 ---
 
