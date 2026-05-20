@@ -117,10 +117,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/iWhatty/lightning-Levenshtein.js.git"
+        "url": "git+https://github.com/iWhatty/lightning-levenshtein.git"
     },
     "bugs": {
-        "url": "https://github.com/iWhatty/lightning-Levenshtein.js/issues"
+        "url": "https://github.com/iWhatty/lightning-levenshtein/issues"
     },
-    "homepage": "https://github.com/iWhatty/lightning-Levenshtein.js#readme"
+    "homepage": "https://github.com/iWhatty/lightning-levenshtein#readme"
 }
