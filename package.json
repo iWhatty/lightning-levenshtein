@@ -8,6 +8,9 @@
     "types": "./dist/lightning-levenshtein.min.d.ts",
     "type": "module",
     "sideEffects": false,
+    "engines": {
+        "node": ">=18"
+    },
     "packageManager": "pnpm@10.33.1",
     "exports": {
         ".": {
@@ -34,7 +37,7 @@
         }
     },
     "files": [
-        "src/",
+        "src",
         "dist/lightning-levenshtein.min.js",
         "dist/lightning-levenshtein.min.d.ts",
         "dist/lightning-levenshtein-v2.min.js",
