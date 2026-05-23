@@ -2,6 +2,16 @@
 
 > Initial cut seeded from `git log` by the host repo's `tools/seed-changelogs.mjs` script. Version groupings infer release boundaries from tags and commit subjects; rough cuts are expected — review and tighten as part of normal maintenance.
 
+## 0.0.5 — 2026-05-23
+
+- **feat(exports): `./v2` now routes bundlers at ESM source via the `import` condition.** Pre-0.0.5 the `./v2` export was pre-built-blob only — consumers got the full 41 KB GCC ADVANCED-compiled bundle even if they only called `levenshteinLightning` on short strings (where most of the bit-parallel myers_x kernels are dead code). The v2 source moved from `bench/bolt/` to `src/v2/` (8 files: `index.js` entry + 7 myers kernels) and the `./v2` export now follows the same dual-condition pattern as `.` and `./unicode`:
+  - `import` → `./src/v2/index.js` (raw ESM, tree-shakeable)
+  - `default` → `./dist/lightning-levenshtein-v2.min.js` (pre-built blob fallback for CJS consumers and bundlers that don't honor `import`)
+- **feat(exports): new `./v2/min` subpath** for consumers that explicitly want the pre-built blob. Mirrors the `./unicode/min` and `./min` convention. Same `.d.ts` as `./v2`.
+- **chore(build): `build-gcc-bolt.mjs` now points at `src/v2/`** instead of `bench/bolt/`. Pre-0.0.5, `build:v2` globbed `bench/bolt/*.js` and let Closure's PRUNE dependency mode tree-shake from the entry — that worked but mixed lib source with bench-only experiment files (myers32-fast-v1-hand-1-2.js, lev-dispatch.js, etc.) in the build inputs. Now only the 8 v2 files are inputs; the other bench/bolt/ files remain in place as standalone benchmark variants.
+- **chore(pkg): `files` whitelist unchanged** — `src/` was already included, so `src/v2/` ships in the tarball automatically.
+- No behaviour change for existing consumers of `./v2` (the `default` condition still resolves to the same `.min.js`). Closes the `lightning-levenshtein /v2` ESM-source-routing sub-bullet under host carry-forward #6.
+
 ## Unreleased — 2026-05-19
 
 - chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`

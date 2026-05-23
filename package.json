@@ -1,6 +1,6 @@
 {
     "name": "lightning-levenshtein",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Blazing-fast Levenshtein distance with bit-parallel Myers algorithm and early exits.",
     "main": "./dist/lightning-levenshtein.min.js",
     "module": "./src/index.js",
@@ -23,6 +23,11 @@
             "default": "./dist/lightning-levenshtein.min.js"
         },
         "./v2": {
+            "types": "./dist/lightning-levenshtein-v2.min.d.ts",
+            "import": "./src/v2/index.js",
+            "default": "./dist/lightning-levenshtein-v2.min.js"
+        },
+        "./v2/min": {
             "types": "./dist/lightning-levenshtein-v2.min.d.ts",
             "default": "./dist/lightning-levenshtein-v2.min.js"
         },

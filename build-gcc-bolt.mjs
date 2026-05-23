@@ -13,11 +13,15 @@ import {
 import { execSync } from "child_process";
 import { resolve } from "path";
 
-const srcDir = resolve("./bench/bolt/");
+// v2 source moved from bench/bolt/ → src/v2/ (0.0.5) so the `./v2` package
+// export can route bundlers at raw ESM via the `import` condition rather
+// than only the pre-built blob. See CHANGELOG 0.0.5 + npm-next.md for the
+// rationale.
+const srcDir = resolve("./src/v2/");
 const benchDir = resolve("./bench/");
 const distDir = resolve("./dist/");
 
-const entryFile = resolve(srcDir, "levenshtein-lightning-v2.js");
+const entryFile = resolve(srcDir, "index.js");
 const externsFile = resolve("./", "externs.js");
 
 const benchOutputFile = resolve(benchDir, "lightning-levenshtein-v2.min.js");

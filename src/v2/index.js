@@ -1,8 +1,14 @@
-//  levenshtein-lightning-v2.js
+//  src/v2/index.js
+//
+//  Lightning Levenshtein v2 — length-dispatching wrapper around the
+//  bit-parallel Myers kernels in this directory. Resolved at consumer
+//  bundle time when importing from `lightning-levenshtein/v2` under the
+//  `import` condition; pre-built blob via `default` and `./v2/min`.
+//  Moved here from bench/bolt/ in 0.0.5.
 "use strict";
 
 
-// Core imports (adjust as needed if you modularize)
+// Core imports — sibling kernels in src/v2/
 import { myers_table } from './myers32-unrolledA.js';
 
 // import { lev2_dispatch, lev3_dispatch, lev4_dispatch } from './lev-dispatch.js';
