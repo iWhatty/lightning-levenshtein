@@ -10,7 +10,8 @@ const cacheDir = join(tempDir, "npm-cache");
 const pkg = JSON.parse(readFileSync("package.json", "utf8"));
 
 const expectedFiles = [
-  "LICENSE.md",
+  "ADDITIONAL_TERMS.md",
+  "LICENSE",
   "README.md",
   "bench/packages/mean-ops-loglog-chart.svg",
   "bench/packages/mean-rank-log-chart.svg",
@@ -22,7 +23,33 @@ const expectedFiles = [
   "dist/lightning-levenshtein-v2.min.js",
   "dist/lightning-levenshtein.min.d.ts",
   "dist/lightning-levenshtein.min.js",
-  "package.json"
+  "package.json",
+  "robots.txt",
+  "src/closest.js",
+  "src/distance.js",
+  "src/distanceMax.js",
+  "src/distanceUnicode.js",
+  "src/index.js",
+  "src/myers_32.js",
+  "src/myers_32_factory.js",
+  "src/myers_32_max.js",
+  "src/myers_32_unicode.js",
+  "src/myers_x.js",
+  "src/myers_x64.js",
+  "src/myers_x_factory.js",
+  "src/myers_x_max.js",
+  "src/myers_x_unicode.js",
+  "src/peq.js",
+  "src/peqUnicode.js",
+  "src/unicode.js",
+  "src/v2/index.js",
+  "src/v2/myers32-unrolledA.js",
+  "src/v2/myers_128.js",
+  "src/v2/myers_256.js",
+  "src/v2/myers_64.js",
+  "src/v2/myers_96.js",
+  "src/v2/myers_x128.js",
+  "src/v2/myers_x64.js"
 ].sort();
 
 try {

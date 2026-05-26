@@ -59,8 +59,11 @@ try {
   assert.equal(installedPkg.scripts.prepublishOnly, "pnpm run check:ci");
   assert.deepEqual(Object.keys(installedPkg.exports).sort(), [
     ".",
+    "./min",
     "./unicode",
-    "./v2"
+    "./unicode/min",
+    "./v2",
+    "./v2/min"
   ]);
   assert.equal(
     installedPkg.exports["."].types,
