@@ -63,7 +63,7 @@
         "build:v2": "node ./build-gcc-bolt.mjs",
         "build:unicode": "node ./build-gcc-unicode.mjs",
         "build:all": "pnpm run build && pnpm run build:v2 && pnpm run build:unicode",
-        "check:ci": "pnpm run build:all && pnpm test --runInBand --verbose && pnpm run test:package && pnpm run test:package:types && pnpm run test:package:tarball && pnpm run test:package:pack",
+        "check:ci": "pnpm run codegen:check && pnpm run build:all && pnpm test --runInBand --verbose && pnpm run test:package && pnpm run test:package:types && pnpm run test:package:tarball && pnpm run test:package:pack",
         "prepublishOnly": "pnpm run check:ci",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
         "test:package": "node ./scripts/package-smoke.mjs",
@@ -89,7 +89,8 @@
         "bench:packages:all": "pnpm run bench:packages && pnpm run bench:packages:table && pnpm run bench:packages:chart",
         "codegen:myers32:a": "node ./codegen/tools/generateMyers32-A.cjs",
         "codegen:myers32:b": "node ./codegen/tools/generateMyers32-B.cjs",
-        "codegen:myers32": "pnpm run codegen:myers32:a && pnpm run codegen:myers32:b"
+        "codegen:myers32": "pnpm run codegen:myers32:a && pnpm run codegen:myers32:b",
+        "codegen:check": "node ./codegen/tools/generateMyers32-A.cjs --check"
     },
     "keywords": [
         "levenshtein",

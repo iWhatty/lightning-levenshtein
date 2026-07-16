@@ -1,7 +1,7 @@
 // Auto-generated: Optimized Myers 32-bit variants with fixed A.length
 // Source: codegen/tools/generateMyers32-A.cjs
 const peq = new Uint32Array(65536);
-const myers_table = [];
+export const myers_table = [];
 
 function myers_1(a, b) {
   const m = b.length;

@@ -234,7 +234,13 @@ bench/packages/
   render-relative-bar-chart.js
   render-readme-relative-fastest-chart.js
   results.json
+
+codegen/tools/
+  generateMyers32-A.cjs  # owns the production v2 short-string table
+  generateMyers32-B.cjs  # experimental comparison generator
 ```
+
+Run `pnpm run codegen:myers32:a` after changing the production Myers32 generator. The command refreshes both the comparison artifact and `src/v2/myers32-unrolledA.js`; `pnpm run codegen:check` verifies that neither output has drifted.
 
 ---
 
