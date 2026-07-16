@@ -79,7 +79,7 @@ The `/v2` subpath exposes the larger max-throughput runtime:
 import { levenshteinLightning } from "lightning-levenshtein/v2";
 ```
 
-Bundlers receive `src/v2/index.js`; `lightning-levenshtein/v2/min` exposes the pre-built bundle. The v2 runtime uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. Choose it when throughput matters more than the extra JavaScript payload.
+Bundlers receive `src/v2/index.js`; `lightning-levenshtein/v2/min` exposes the pre-built bundle. The v2 runtime uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. Its specialized kernels currently allocate 6 MiB of UTF-16 code-unit PEQ payload per module realm or worker. Choose it when throughput matters more than the extra JavaScript and memory footprint.
 
 ### Unicode API
 
@@ -89,7 +89,7 @@ Full-width UTF-16 code-unit distance:
 import { distanceUnicode } from "lightning-levenshtein/unicode";
 ```
 
-Use this path when your strings can contain code units above `255`, such as many BMP characters. It is intentionally separate from the default entrypoint so the default `distance` hot path does not pay for wider PEQ tables or per-call character-set routing. Use `lightning-levenshtein/unicode/min` for the pre-built bundle.
+Use this path when your strings can contain code units above `255`, such as many BMP characters, and you need consistent full-width behavior at every input length. It is intentionally pre-routed so the hot loop does not scan each call to select a character table. Use `lightning-levenshtein/unicode/min` for the pre-built bundle.
 
 ---
 
@@ -109,7 +109,7 @@ Use the `v2` subpath if you specifically want the specialized `levenshteinLightn
 import { levenshteinLightning } from "lightning-levenshtein/v2";
 ```
 
-Use the `unicode` subpath if you need full-width UTF-16 code-unit behavior beyond the default low-memory PEQ table:
+Use the `unicode` subpath if you need consistent full-width UTF-16 code-unit behavior:
 
 ```js
 import { distanceUnicode } from "lightning-levenshtein/unicode";
@@ -117,9 +117,9 @@ import { distanceUnicode } from "lightning-levenshtein/unicode";
 
 ### Character table strategy
 
-The default API is tuned for the hottest low-memory path and assumes ASCII/Latin-1-style input for its PEQ tables.
+The default API uses a 256-entry PEQ table through 64 code units, so those tiers assume ASCII/Latin-1-style input. Its long-string fallback uses two full-width PEQ lanes. The default therefore optimizes common short and medium inputs but does not promise one uniform character-table width across every tier.
 
-The `unicode` subpath exposes `distanceUnicode`, which is backed by full UTF-16 code-unit PEQ tables. That path is intentionally separate so callers can opt into wider character support without adding per-call detection to the default `distance` hot path.
+The `unicode` subpath exposes `distanceUnicode`, which is backed by a full UTF-16 code-unit PEQ table at every tier. That path is intentionally separate so callers can opt into consistent wider character support without adding per-call detection to the hot path.
 
 The design direction is:
 
@@ -127,6 +127,8 @@ The design direction is:
 - expose full-width UTF-16 code-unit behavior through the deliberate `/unicode` subpath
 - share kernel implementations by binding the PEQ table before entering the hot function
 - avoid naive automatic routing that scans both strings on every call
+
+The repository design note [Levenshtein Use Cases and Text Profiles](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/use-cases-and-text-profiles.md) covers real-world workloads, precise comparison units, current per-worker memory costs, and the proposed configurable-profile direction.
 
 ### Dispatch strategy
 

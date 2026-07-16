@@ -61,7 +61,7 @@ test("distanceUnicode handles BMP code units above 64 chars", () => {
   expect(distanceUnicode(a, b)).toBe(levenshtein(a, b));
 });
 
-test("default distance remains the low-memory path for wide code units", () => {
+test("default distance retains compact-table semantics for short wide-code-unit input", () => {
   expect(distance("你a", "你b")).not.toBe(levenshtein("你a", "你b"));
   expect(distanceUnicode("你a", "你b")).toBe(levenshtein("你a", "你b"));
 });

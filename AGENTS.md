@@ -28,7 +28,8 @@ Guidance for future Codex/agent runs in this repository.
 - Keep benchmark claims reproducible from checked-in scripts and data generation settings.
 - Prefer proving algorithm changes in `bench/` or `codegen/` before moving them into `src/` or `src/v2/`.
 - Be careful with case-sensitive paths. Windows may pass imports that fail on Linux and npm consumers.
-- Current production builds optimize around small PEQ tables and ASCII/Latin-1-style input. Unicode-width PEQ support should stay explicit and pre-routed, not a silent default change or per-call auto scan in the hot path.
+- The default short and blockwise tiers use a 256-entry PEQ, while its long fallback and all v2 tiers use wider tables. Future PEQ-width support should stay explicit and pre-routed, not a silent default change or per-call auto scan in the hot path.
+- `docs/use-cases-and-text-profiles.md` records the intended configurable alphabet direction, current static PEQ memory costs, and the distinction between code-unit, byte, token, code-point, and grapheme distance.
 - PEQ-width variants should share factory implementations where possible. Bind the table once at module setup, then export a hot function with no inner-loop mode checks.
 - `src/distanceUnicode.js` backs the explicit `/unicode` subpath through `src/unicode.js`. Do not export Unicode code from `src/index.js`; that causes the default dist bundle to pull in wide tables.
 - Do not overwrite unrelated lockfile changes. This repo is currently on pnpm in the maintainer's local system.
