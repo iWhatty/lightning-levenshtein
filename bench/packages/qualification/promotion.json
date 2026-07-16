@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "promotionId": "legacy-windows-intel-node24-2026-07-16",
+  "status": "legacy",
+  "source": {
+    "type": "legacy-results",
+    "path": "../results.json"
+  },
+  "scope": {
+    "runtime": "node",
+    "workload": "random-equal-length-ascii",
+    "target": "lightning-levenshtein-v2",
+    "baseline": "fastest-levenshtein"
+  },
+  "presentation": {
+    "metric": "mean"
+  },
+  "note": "Explicit compatibility pointer for the benchmark currently published in README.md; replace only with a checked-in qualification aggregate."
+}

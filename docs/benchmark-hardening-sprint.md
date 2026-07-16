@@ -26,7 +26,15 @@ Completed in the workload-matrix slice:
 - independent dataset, expected-distance, and consumed timed checksums;
 - correctness-only default behavior with timing behind an explicit flag.
 
-Still open: explicit README promotion, claim linting, quiet-host qualification, diagnostic aggregation, and cross-platform runs.
+Completed in the evidence-promotion slice:
+
+- one validated promotion manifest shared by every README table and chart renderer;
+- strict qualification checks for raw files, run count, revision, runtime, dependency versions, workload, baseline, and metric;
+- generated-claim rejection for unscoped world-fastest or throughput-leadership wording;
+- a durable results index and explicit promotion/render commands;
+- legacy provenance labeling without changing the currently published benchmark values.
+
+Still open: quiet-host qualification, diagnostic aggregation, and cross-platform runs.
 
 ## Operating Rules
 

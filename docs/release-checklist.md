@@ -75,7 +75,9 @@ pnpm run test:package:pack
 ## Benchmark Evidence Review
 
 - If performance claims or benchmark tables changed, identify the named qualification aggregate used for the update.
+- Run `pnpm run bench:packages:promotion:check` and confirm the manifest is not marked `legacy` for new or refreshed claims.
 - Confirm its raw repetitions, source revision, dependency versions, environment, workload, and stability statistics are checked in.
+- Confirm `bench/packages/qualification/RESULTS.md` links the aggregate, raw inputs, rendered outputs, revision, and environment.
 - Confirm results from different machines or JavaScript engines were reported separately rather than pooled.
 - Benchmark refreshes are evidence reviews, not mandatory CI workloads; unchanged claims do not require a fresh run for every release.
 

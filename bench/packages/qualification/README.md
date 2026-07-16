@@ -1,6 +1,6 @@
 # Package Benchmark Qualification
 
-Qualification results are deliberately separate from `bench/packages/results.json`, which remains the currently promoted README dataset.
+Qualification results are deliberately separate from `bench/packages/results.json`. The README renderers consume only the explicit [`promotion.json`](./promotion.json) manifest. See the durable [`RESULTS.md`](./RESULTS.md) evidence index.
 
 ## Correctness-only smoke check
 
@@ -38,6 +38,23 @@ Aggregate an explicit set of raw files:
 node bench/packages/aggregate-runs.js --set=windows-intel-node24-001 bench/packages/qualification/raw/<run-0>.json bench/packages/qualification/raw/<run-1>.json bench/packages/qualification/raw/<run-2>.json
 ```
 
-The aggregate reports mean, median, minimum, maximum, population standard deviation, coefficient of variation, and paired ratio to `fastest-levenshtein`. Inputs must have matching workload configurations; absolute results from different machines must not be combined.
+The aggregate reports mean, median, minimum, maximum, population standard deviation, coefficient of variation, and paired ratio to `fastest-levenshtein`. Inputs must have matching workload configurations; absolute results from different machines must not be combined. It also records the raw input paths so promotion validation can prove the evidence chain remains present.
 
-README promotion is intentionally not automatic yet. Until the promotion slice lands, `results.json` and its charts remain historical published evidence rather than an implicitly latest qualification run.
+## Promotion
+
+Validate the currently selected evidence without changing generated files:
+
+```bash
+pnpm run bench:packages:promotion:check
+```
+
+Promote one named, checked-in aggregate:
+
+```bash
+pnpm run bench:packages:promote -- --id=windows-intel-node24-001 --aggregate=bench/packages/qualification/aggregates/windows-intel-node24-001.json
+pnpm run bench:packages:render
+```
+
+Promotion rejects fewer than three runs, dirty or mixed revisions, mixed runtime/machine metadata, mixed package or competitor versions, missing raw files, workload or baseline mismatches, verification-only inputs, duplicate run IDs, and invalid metrics. The README surface is intentionally scoped to the Node random-equal-length ASCII comparison of `lightning-levenshtein-v2` against `fastest-levenshtein`.
+
+The current manifest points explicitly at legacy `results.json` so existing public numbers remain unchanged. It is labeled legacy because the old format did not record raw repetition paths or a Git revision. The next measured qualification should replace it rather than rewriting its provenance.

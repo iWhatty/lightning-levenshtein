@@ -2,9 +2,9 @@
 
 import fs from "fs";
 import path from "path";
+import { loadPromotedBenchmark } from "./evidence.js";
 
 const ROOT = path.resolve("bench/packages");
-const IN_FILE = path.join(ROOT, "results.json");
 const OUT_FILE = path.join(ROOT, "relative-to-fastest-levenshtein.svg");
 
 
@@ -50,10 +50,6 @@ function escapeXml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&apos;");
-}
-
-function readResults() {
-  return JSON.parse(fs.readFileSync(IN_FILE, "utf8"));
 }
 
 function collectAlgorithms(data) {
@@ -298,7 +294,7 @@ function renderSvg({ algorithms, series, lengths }) {
 }
 
 function main() {
-  const data = readResults();
+  const data = loadPromotedBenchmark();
   const chartData = buildRelativeSeries(data);
   const svg = renderSvg(chartData);
 

@@ -2,8 +2,8 @@
 
 import fs from "fs";
 import path from "path";
+import { loadPromotedBenchmark, validateGeneratedClaims } from "./evidence.js";
 
-const IN_FILE = path.resolve("bench/packages/results.json");
 const OUT_FILE = path.resolve("bench/packages/README-benchmark.md");
 const README_FILE = path.resolve("README.md");
 const START_MARKER = "<!-- benchmark-table:start -->";
@@ -13,7 +13,7 @@ const HIGHLIGHTS_END_MARKER = "<!-- benchmark-highlights:end -->";
 const ENVIRONMENT_START_MARKER = "<!-- benchmark-environment:start -->";
 const ENVIRONMENT_END_MARKER = "<!-- benchmark-environment:end -->";
 
-const data = JSON.parse(fs.readFileSync(IN_FILE, "utf8"));
+const data = loadPromotedBenchmark();
 const lengths = data.meta.lengths;
 
 const targetNames = Object.keys(data.results[lengths[0]]);
@@ -112,6 +112,8 @@ const highlightLines = [
   }),
   HIGHLIGHTS_END_MARKER,
 ];
+
+validateGeneratedClaims(highlightLines, data);
 
 updatedReadme = replaceMarkedBlock(
   updatedReadme,

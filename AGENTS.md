@@ -20,6 +20,7 @@ Guidance for future Codex/agent runs in this repository.
 - `pnpm run test:source` syntax-checks repository JavaScript and verifies relative imports without executing benchmarks.
 - `pnpm run codegen:myers32:a` refreshes the production v2 short-string table and its comparison artifact; `pnpm run codegen:check` verifies both outputs.
 - `pnpm run bench:packages` runs the public package comparison benchmark.
+- `pnpm run bench:packages:promotion:check` validates the selected README evidence; `bench:packages:promote` selects a qualified aggregate and `bench:packages:render` refreshes all generated outputs.
 - `pnpm run bench:myers32` and `pnpm run bench:myersx` run kernel exploration benches.
 - `pnpm run bench:profiles` compares table-bound stable long-kernel widths with the historical implementation.
 - `pnpm run bench:profiles:dispatch` measures checked and unchecked profile prototypes across stable tiers.

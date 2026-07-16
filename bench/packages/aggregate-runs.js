@@ -21,6 +21,9 @@ if (!/^[A-Za-z0-9._-]+$/.test(setName)) throw new TypeError("set name contains u
 const baseline = baselineArgument?.slice(11) || "fastest-levenshtein";
 const runs = inputFiles.map((file) => JSON.parse(fs.readFileSync(path.resolve(file), "utf8")));
 const aggregate = aggregateRuns(runs, baseline);
+aggregate.sourceFiles = inputFiles.map((file) =>
+  path.relative(ROOT_DIR, path.resolve(file)).replaceAll("\\", "/")
+);
 const outDir = path.join(ROOT_DIR, "bench/packages/qualification/aggregates");
 const outFile = path.join(outDir, `${setName}.json`);
 

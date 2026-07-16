@@ -31,6 +31,7 @@
 - docs(strategy): add a durable technical reflection and benchmark-hardening sprint, and reconcile profile/CI documentation drift.
 - bench(packages): add deterministic balanced target ordering, reference and checksum guards, raw qualification runs, reproducibility metadata, and paired multi-run stability aggregation.
 - bench(diagnostics): add deterministic workload families and a correctness-first matrix across every production v2 dispatch boundary and compatible text profile.
+- bench(evidence): route every README renderer through an explicit promotion manifest with qualification, provenance, and public-claim guardrails.
 
 - chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
 - chore(pkg): update GitHub repo URL after rename  `4fa7776`

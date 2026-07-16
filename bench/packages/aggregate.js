@@ -21,6 +21,8 @@ export function aggregateRuns(runs, baselineName = "fastest-levenshtein") {
       generatedAt: run.meta.generatedAt,
       revision: run.meta.revision,
       runtime: run.meta.runtime,
+      packageVersion: run.meta.packageVersion,
+      dependencyVersions: run.meta.dependencyVersions,
     })),
     command: runs[0].meta.command,
     workload: runs[0].meta.workload,

@@ -2,9 +2,9 @@
 
 import fs from "fs";
 import path from "path";
+import { loadPromotedBenchmark } from "./evidence.js";
 
 const ROOT = path.resolve("bench/packages");
-const IN_FILE = path.join(ROOT, "results.json");
 const OUT_FILE = path.join(ROOT, "relative-performance.svg");
 
 const TARGET = "lightning-levenshtein-v2";
@@ -38,11 +38,6 @@ function escapeXml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&apos;");
-}
-
-function readResults() {
-  const raw = fs.readFileSync(IN_FILE, "utf8");
-  return JSON.parse(raw);
 }
 
 function buildRatios(data) {
@@ -175,7 +170,7 @@ function renderSvg(rows) {
 }
 
 function main() {
-  const data = readResults();
+  const data = loadPromotedBenchmark();
   const rows = buildRatios(data);
   const svg = renderSvg(rows);
 

@@ -241,12 +241,11 @@ Node v24.11.0 on win32 x64, 13th Gen Intel(R) Core(TM) i5-13600K. Results genera
 ### Reproducing the benchmark
 
 ```sh
-pnpm run bench:packages
-pnpm run bench:packages:table
-pnpm run bench:packages:chart
+pnpm run bench:packages:verify
+pnpm run bench:packages:promotion:check
 ```
 
-Generated files are written to `bench/packages/`.
+Qualification measurements require a settled host and three separate raw repetitions. The checked-in aggregate must then be promoted explicitly before `pnpm run bench:packages:render` can update this section. See the [package benchmark qualification workflow](./bench/packages/qualification/README.md) and [evidence index](./bench/packages/qualification/RESULTS.md).
 
 ### Project layout
 
