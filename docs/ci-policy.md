@@ -21,7 +21,7 @@ CI should not become a benchmark lab or a byte-for-byte minifier auditor.
 
 We tried checking that rebuilt tracked bundles were identical after `pnpm run build:all`. That caught a real difference between local Windows builds and GitHub Linux builds, but the difference came from Closure/minifier output formatting and ordering details rather than a proven behavior regression. Even after making Closure inputs sorted in JavaScript, the Linux build still produced non-identical minified output.
 
-The Closure compiler, Node.js, and pnpm versions are now pinned. Byte-identical generated artifacts remain too brittle because platform-specific compiler output formatting and line wrapping can still differ without changing behavior.
+The Closure compiler and pnpm versions are pinned. CI deliberately covers both the documented minimum Node.js major and the current development major. Byte-identical generated artifacts remain too brittle because platform-specific compiler output formatting and line wrapping can still differ without changing behavior.
 
 ## Decision
 
@@ -30,6 +30,7 @@ Keep GitHub CI.
 Keep CI focused on:
 
 - fresh Linux install
+- Node.js 18 compatibility and the current Node.js 24 development target
 - package build
 - runtime tests
 - package export smoke tests
