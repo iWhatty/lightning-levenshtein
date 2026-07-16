@@ -1,44 +1,33 @@
 # CI Policy
 
-GitHub Actions should stay as a small release safety net for this package.
+GitHub Actions is disabled because it consumes paid cloud compute without enough value for this repository's current workflow. The retained workflow is named `.github/workflows/ci.yml.disabled`, which GitHub does not execute.
 
-## What CI Should Catch
+Do not rename, dispatch, or otherwise re-enable the workflow unless the maintainer explicitly authorizes cloud CI again. This policy does not change automatically when billing quotas reset.
 
-- Clean install failures from `pnpm-lock.yaml` drift.
-- Linux path and import-case issues that Windows may not reveal.
-- Broken relative imports or syntax in checked-in benchmark and codegen tools.
-- Build failures for the default, `/v2`, `/unicode`, and `/profiles` bundles.
-- Jest regressions.
-- Public package export drift.
-- Declaration-file drift.
-- Packed tarball install failures.
-- Unexpected published file-list changes.
+## Local Release Gate
 
-The current CI job intentionally mirrors `pnpm run check:ci`.
+Run the complete gate on the active development machine:
 
-## What CI Should Not Be
+```bash
+pnpm run check:ci
+```
 
-CI should not become a benchmark lab or a byte-for-byte minifier auditor.
+On Windows systems where PowerShell blocks package-manager shims, use:
 
-We tried checking that rebuilt tracked bundles were identical after `pnpm run build:all`. That caught a real difference between local Windows builds and GitHub Linux builds, but the difference came from Closure/minifier output formatting and ordering details rather than a proven behavior regression. Even after making Closure inputs sorted in JavaScript, the Linux build still produced non-identical minified output.
+```powershell
+pnpm.cmd run check:ci
+```
 
-The Closure compiler and pnpm versions are pinned. CI deliberately covers both the documented minimum Node.js major and the current development major. Byte-identical generated artifacts remain too brittle because platform-specific compiler output formatting and line wrapping can still differ without changing behavior.
+The gate checks code generation, repository source/import integrity, benchmark evidence promotion, all production bundles, Jest behavior, public exports, declarations, packed-tarball installation, and the exact publish file list.
 
-## Decision
+## Cross-Platform Checks
 
-Keep GitHub CI.
+When Linux, macOS, WSL, another CPU family, or another supported Node major matters, ask the maintainer to run the same local gate on an available machine. Record the OS, architecture, CPU, Node, V8, pnpm version, commit, and command result in the relevant release or benchmark evidence.
 
-Keep CI focused on:
+Node 18 remains the documented minimum and Node 24 is the current development target. Exercise both locally when a release or compatibility-sensitive change warrants it; do not start paid GitHub runners merely to reproduce checks already available on local hardware.
 
-- fresh Linux install
-- Node.js 18 compatibility and the current Node.js 24 development target
-- package build
-- runtime tests
-- package export smoke tests
-- declaration smoke tests
-- tarball install smoke tests
-- exact publish file-list smoke tests
+## Scope
 
-Do not re-add a tracked bundle byte-diff guard unless the build pipeline is also made deterministic across OS and line-wrapping behavior.
+Local CI is a correctness and package-shape gate, not a benchmark laboratory or byte-for-byte minifier auditor. Qualification benchmarks follow their own quiet-host protocol and remain outside `check:ci`.
 
-Sorted Closure input enumeration is still useful and should remain in the build scripts. It reduces avoidable nondeterminism even though it does not make the final minified output byte-identical across every environment.
+Do not re-add tracked bundle byte-diff checks unless the Closure build becomes deterministic across operating systems and toolchain behavior. Sorted Closure input enumeration should remain because it reduces avoidable nondeterminism even though cross-platform minified bytes may still differ without a behavior change.

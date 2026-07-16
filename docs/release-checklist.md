@@ -90,7 +90,7 @@ pnpm version patch
 ```
 
 - Commit the version bump and rebuilt artifacts.
-- Push and wait for GitHub Actions to pass.
+- Push only after the required local gates pass. GitHub Actions is intentionally disabled; arrange any Linux, macOS, WSL, CPU-family, or alternate-Node checks on maintainer-provided local machines.
 - Publish:
 
 ```bash

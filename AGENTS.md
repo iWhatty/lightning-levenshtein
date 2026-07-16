@@ -9,14 +9,14 @@ Guidance for future Codex/agent runs in this repository.
 - `bench/bolt/` retains experimental and historical v2 kernel variants.
 - `bench/` and `codegen/` are working areas for experiments before changes graduate into the package entrypoints.
 - `dist/` is published and should be rebuilt with the package scripts after source changes.
-- CI is a Linux/package-shape safety net. Do not re-add byte-for-byte generated bundle diff checks unless the Closure build is made deterministic across OS/toolchain behavior. See `docs/ci-policy.md`.
+- GitHub Actions is intentionally disabled because it consumes paid cloud compute. Never re-enable, dispatch, or watch cloud CI without explicit maintainer authorization. Use local machines for Windows, Linux/WSL, macOS, CPU-family, and Node-version coverage. See `docs/ci-policy.md`.
 
 ## Common Commands
 
 - This workspace currently uses pnpm for dependency locking. Keep `pnpm-lock.yaml` and avoid reintroducing `package-lock.json` unless the maintainer asks.
 - `pnpm test` runs the Jest suite. On Windows PowerShell environments where package-manager shims are blocked, use the `.cmd` shim.
 - `pnpm run build:all` rebuilds all production bundles: default, `/v2`, `/unicode`, and `/profiles`.
-- `pnpm run check:ci` runs the local equivalent of the GitHub Actions release gate.
+- `pnpm run check:ci` runs the complete local release gate.
 - `pnpm run test:source` syntax-checks repository JavaScript and verifies relative imports without executing benchmarks.
 - `pnpm run codegen:myers32:a` refreshes the production v2 short-string table and its comparison artifact; `pnpm run codegen:check` verifies both outputs.
 - `pnpm run bench:packages` runs the public package comparison benchmark.
@@ -39,6 +39,7 @@ Guidance for future Codex/agent runs in this repository.
 - PEQ-width variants should share factory implementations where possible. Bind the table once at module setup, then export a hot function with no inner-loop mode checks.
 - `src/distanceUnicode.js` backs the explicit `/unicode` subpath through `src/unicode.js`. Do not export Unicode code from `src/index.js`; that causes the default dist bundle to pull in wide tables.
 - Do not overwrite unrelated lockfile changes. This repo is currently on pnpm in the maintainer's local system.
+- Do not treat a push as authorization to run GitHub Actions. The retained workflow must stay `.disabled`; request a maintainer-run local platform check when additional coverage is needed.
 
 ## Polish Backlog
 

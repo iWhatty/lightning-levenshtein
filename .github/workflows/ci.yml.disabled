@@ -1,4 +1,7 @@
-name: CI
+# Intentionally disabled: GitHub Actions consumes paid cloud compute for this
+# repository. Use pnpm run check:ci locally. Re-enable only with explicit
+# maintainer authorization; see docs/ci-policy.md.
+name: CI (disabled)
 
 on:
   push:
