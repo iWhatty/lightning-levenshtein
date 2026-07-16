@@ -5,7 +5,7 @@ This bench tests whether direct-matrix dispatch for tiny strings should return t
 The current v2 runtime already has a hand-written length-2 path and then falls through to the generated Myers table for lengths 3-32. The older bench code still contains direct matrix kernels for length 3 and 4. This spike compares:
 
 - current `levenshteinLightning`
-- source `levenshteinLightning` from `bench/bolt/` as a bundling/JIT control
+- source `levenshteinLightning` from `src/v2/` as a bundling/JIT control
 - `v2-inline-direct-3`, a v2-shaped runtime with only length 3 routed to `lev3_dispatch`
 - `tiny-direct-3`, a wrapper that uses `lev3_dispatch` before falling back to current v2
 - `tiny-direct-3-4`, a wrapper that uses `lev3_dispatch` and `lev4_dispatch` before falling back to current v2

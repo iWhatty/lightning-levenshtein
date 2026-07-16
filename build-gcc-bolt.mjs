@@ -15,8 +15,7 @@ import { resolve } from "path";
 
 // v2 source moved from bench/bolt/ → src/v2/ (0.0.5) so the `./v2` package
 // export can route bundlers at raw ESM via the `import` condition rather
-// than only the pre-built blob. See CHANGELOG 0.0.5 + npm-next.md for the
-// rationale.
+// than only the pre-built blob. See CHANGELOG 0.0.5 for the rationale.
 const srcDir = resolve("./src/v2/");
 const benchDir = resolve("./bench/");
 const distDir = resolve("./dist/");

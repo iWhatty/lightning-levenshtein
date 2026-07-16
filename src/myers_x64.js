@@ -1,4 +1,4 @@
-// ./bench/bolt/myers_x64.js
+// ./src/myers_x64.js
 
 "use strict";
 

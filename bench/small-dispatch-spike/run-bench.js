@@ -3,7 +3,7 @@
 import { buildPairs, mean } from "../data.js";
 import { distance as fastestLevenshtein } from "fastest-levenshtein";
 import { levenshteinLightning } from "../lightning-levenshtein-v2.min.js";
-import { levenshteinLightning as levenshteinLightningSource } from "../bolt/levenshtein-lightning-v2.js";
+import { levenshteinLightning as levenshteinLightningSource } from "../../src/v2/index.js";
 import { lev3_dispatch, lev4_dispatch } from "../bolt/lev-dispatch.js";
 import { levenshteinLightningDirect3 } from "./levenshtein-v2-direct3.js";
 

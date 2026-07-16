@@ -18,6 +18,7 @@
 - test(v2): cover source and minified builds against a deterministic reference implementation at every production dispatch boundary.
 - chore(codegen): make the Myers32 A generator own both its benchmark artifact and production v2 output, with a non-mutating drift check in the release gate.
 - ci: validate the documented Node.js 18 minimum alongside the Node.js 24 development target.
+- chore(bench): repair the small-dispatch spike after production v2 kernels moved from `bench/bolt` to `src/v2`.
 
 - chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
 - chore(pkg): update GitHub repo URL after rename  `4fa7776`

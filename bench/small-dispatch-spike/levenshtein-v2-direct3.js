@@ -2,14 +2,14 @@
 
 "use strict";
 
-import { myers_table } from "../bolt/myers32-unrolledA.js";
+import { myers_table } from "../../src/v2/myers32-unrolledA.js";
 import { lev3_dispatch } from "../bolt/lev-dispatch.js";
-import { myers_64 } from "../bolt/myers_64.js";
-import { myers_96 } from "../bolt/myers_96.js";
-import { myers_128 } from "../bolt/myers_128.js";
-import { myers_256 } from "../bolt/myers_256.js";
-import { myers_x64 } from "../bolt/myers_x64.js";
-import { myers_x128 } from "../bolt/myers_x128.js";
+import { myers_64 } from "../../src/v2/myers_64.js";
+import { myers_96 } from "../../src/v2/myers_96.js";
+import { myers_128 } from "../../src/v2/myers_128.js";
+import { myers_256 } from "../../src/v2/myers_256.js";
+import { myers_x64 } from "../../src/v2/myers_x64.js";
+import { myers_x128 } from "../../src/v2/myers_x128.js";
 
 const strategy = myers_table;
 
