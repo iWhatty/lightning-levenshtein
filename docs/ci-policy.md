@@ -6,6 +6,7 @@ GitHub Actions should stay as a small release safety net for this package.
 
 - Clean install failures from `pnpm-lock.yaml` drift.
 - Linux path and import-case issues that Windows may not reveal.
+- Broken relative imports or syntax in checked-in benchmark and codegen tools.
 - Build failures for the default, `/v2`, and `/unicode` bundles.
 - Jest regressions.
 - Public package export drift.
