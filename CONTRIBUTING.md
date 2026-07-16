@@ -11,7 +11,7 @@ pnpm install --frozen-lockfile
 pnpm run check:ci
 ```
 
-GitHub Actions is intentionally disabled. Run verification locally and report the operating system, architecture, Node version, and command result when platform behavior matters.
+GitHub Actions is intentionally disabled. Run verification locally and report the operating system, architecture, Node version, and command result when platform behavior matters. The supported-version matrix, pnpm switching commands, and evidence policy are documented in [`docs/node-version-testing.md`](./docs/node-version-testing.md).
 
 ## Project Constraints
 

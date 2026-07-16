@@ -17,6 +17,7 @@ Guidance for future Codex/agent runs in this repository.
 - `pnpm test` runs the Jest suite. On Windows PowerShell environments where package-manager shims are blocked, use the `.cmd` shim.
 - `pnpm run build:all` rebuilds all production bundles: default, `/v2`, `/unicode`, and `/profiles`.
 - `pnpm run check:ci` runs the complete local release gate.
+- `docs/node-version-testing.md` defines multi-Node switching, evidence recording, and how to distinguish historical matrix results from current-commit results.
 - `pnpm run test:source` syntax-checks repository JavaScript and verifies relative imports without executing benchmarks.
 - `pnpm run codegen:myers32:a` refreshes the production v2 short-string table and its comparison artifact; `pnpm run codegen:check` verifies both outputs.
 - `pnpm run bench:packages` runs the public package comparison benchmark.

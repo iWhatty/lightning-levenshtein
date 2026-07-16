@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+## 0.0.6 — 2026-07-16
+
 - fix(v2): propagate unsigned addition carries in the 33–64 and 65–96 character specialized Myers kernels; the missing carry could overstate distances for mixed and repeated inputs.
 - test(v2): cover source and minified builds against a deterministic reference implementation at every production dispatch boundary.
 - chore(codegen): make the Myers32 A generator own both its benchmark artifact and production v2 output, with a non-mutating drift check in the release gate.
@@ -23,6 +25,7 @@
 - bench(diagnostics): add deterministic workload families and a correctness-first matrix across every production v2 dispatch boundary and compatible text profile.
 - bench(evidence): route every README renderer through an explicit promotion manifest with qualification, provenance, and public-claim guardrails.
 - ci(policy): disable the paid GitHub Actions workflow and make local Windows/Linux/macOS and Node-version gates the maintained verification path.
+- docs(testing): document pnpm-based Node switching, isolated alternatives, primary sources, and rules for separating historical matrix results from current-commit evidence.
 - docs(community): clarify source-available positioning and add contribution and security guidance.
 - chore(pkg): assert licensing, repository, engine, and public-publish metadata in packed-package verification.
 

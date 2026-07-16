@@ -22,9 +22,9 @@ The gate checks code generation, repository source/import integrity, benchmark e
 
 ## Cross-Platform Checks
 
-When Linux, macOS, WSL, another CPU family, or another supported Node major matters, ask the maintainer to run the same local gate on an available machine. Record the OS, architecture, CPU, Node, V8, pnpm version, commit, and command result in the relevant release or benchmark evidence.
+When Linux, macOS, WSL, another CPU family, or another supported Node major matters, ask the maintainer to run the same local gate on an available machine. Record the OS, architecture, CPU, Node, V8, pnpm version, commit, and command result in the relevant release or benchmark evidence. See [`node-version-testing.md`](./node-version-testing.md) for the version-switching procedure and evidence rules.
 
-Node 18 remains the documented minimum and Node 24 is the current development target. Exercise both locally when a release or compatibility-sensitive change warrants it; do not start paid GitHub runners merely to reproduce checks already available on local hardware.
+Node 18 remains the documented minimum and Node 24 is the current development target. Exercise both locally when a release or compatibility-sensitive change warrants it; documentation-only changes do not automatically invalidate earlier runtime evidence. Do not start paid GitHub runners merely to reproduce checks already available on local hardware.
 
 ## Scope
 

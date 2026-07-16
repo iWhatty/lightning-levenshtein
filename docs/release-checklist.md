@@ -3,6 +3,7 @@
 Use this checklist before publishing `lightning-levenshtein`.
 
 See [`ci-policy.md`](./ci-policy.md) for what CI is expected to catch and why tracked bundle byte-diff checks are intentionally not part of the release gate.
+See [`node-version-testing.md`](./node-version-testing.md) for multi-Node commands and the distinction between current and historical compatibility evidence.
 
 ## Preflight
 
@@ -25,6 +26,8 @@ git status --short
 ```bash
 pnpm run check:ci
 ```
+
+- Record the exact Node, V8, pnpm, OS, architecture, CPU, and commit used. State separately which Node results are current-commit checks and which are historical evidence.
 
 - Or run the same checks step by step:
 
@@ -94,11 +97,11 @@ pnpm run test:package:pack
 - Bump the version intentionally:
 
 ```bash
-pnpm version patch
+pnpm version patch --no-git-tag-version
 ```
 
-- Commit the version bump and rebuilt artifacts.
-- Confirm the intended release tag was created and points at that commit.
+- Commit the version bump and rebuilt artifacts after inspecting them.
+- Create the intended release tag only after the release commit passes the required gates, then confirm the tag points at that commit.
 - Push only after the required local gates pass. GitHub Actions is intentionally disabled; arrange any Linux, macOS, WSL, CPU-family, or alternate-Node checks on maintainer-provided local machines.
 - Publish:
 
