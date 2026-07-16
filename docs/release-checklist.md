@@ -100,4 +100,6 @@ npm publish
   - `lightning-levenshtein/v2/min`
   - `lightning-levenshtein/unicode`
   - `lightning-levenshtein/unicode/min`
+  - `lightning-levenshtein/profiles`
+  - `lightning-levenshtein/profiles/min`
 - Confirm the README renders expected benchmark charts on npm.

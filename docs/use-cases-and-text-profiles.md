@@ -164,21 +164,20 @@ An out-of-range typed-array access must never be an undocumented behavior: missi
 
 The stable core binds tables once through shared kernel factories. For v2, build-time generation of separate width variants remains safer than inserting width checks into specialized loops.
 
-## Recommended Delivery Sequence
+## Delivery Status and Remaining Sequence
 
-1. **Document and benchmark the baseline.** Measure module-load memory, retained typed-array memory, cold start, and throughput for the existing default, `/unicode`, and `/v2` entrypoints.
-2. **Prototype core string factories.** Benchmark 128-, 256-, and 65,536-entry tables with `throw` and `assume-valid` policies. Prove that factory binding does not regress the inner loop.
-3. **Parameterize v2 code generation.** Generate ASCII, Latin-1, and full code-unit kernels from shared templates. Verify every dispatch boundary for every width.
-4. **Measure parallel scaling.** Run one, two, four, and eight workers while recording throughput, resident memory, typed-array memory, and startup time.
-5. **Prototype dense token input.** Start with DNA and word-token fixtures because their semantics and alphabet sizes are clear.
-6. **Consider public subpaths only after evidence.** Candidate names are `/ascii`, `/latin1`, `/unicode`, `/v2/ascii`, `/v2/latin1`, and `/v2/unicode`, with compatibility preserved for existing exports.
-7. **Treat code-point and grapheme modes as separate products.** Their preprocessing and semantic costs should not be hidden behind a table-width flag.
+1. **Complete — Baseline and profile evidence.** The repository records stable/v2 package benchmarks, profile throughput, static PEQ payload, and 1/2/4/8-worker measurements.
+2. **Complete — Stable string factories.** `/profiles` exposes ASCII, Latin-1, and code-unit factories with `throw` and `assume-valid` policies.
+3. **Next — Harden benchmark qualification.** Add balanced target ordering, repeated-run aggregation, broader workloads, and cross-platform evidence. See [Benchmark Hardening Sprint](./benchmark-hardening-sprint.md).
+4. **Later — Parameterize v2 generation.** Generate width variants from shared templates and verify every dispatch boundary for every width.
+5. **Later — Prototype dense token input.** Start with DNA and word-token fixtures because their semantics and alphabets are clear.
+6. **Later — Treat code-point and grapheme modes as separate products.** Their preprocessing and semantic costs should not be hidden behind a table-width flag.
 
 ## Recommendation
 
 The operator should own semantic normalization and know the domain. Lightning Levenshtein should own fast, explicit sequence profiles; validation options; accurate memory documentation; and reproducible benchmarks.
 
-The first implementation experiment should be ASCII/Latin-1/code-unit factories for the stable core, followed by generated v2 variants and worker-scaling measurements. A generic arbitrary-alphabet string map should not be the first design: dense token input provides clearer semantics, lower memory, and a cleaner hot path.
+The stable string-profile and worker experiments are complete. The next measurement work is benchmark hardening; generated v2 width variants and dense token input remain separate future projects. A generic arbitrary-alphabet string map should not be the next design: dense token input provides clearer semantics, lower memory, and a cleaner hot path.
 
 The stable-core implementation scope and acceptance gates are tracked in [Text Profile Integration Plan](./text-profile-integration-plan.md).
 

@@ -42,7 +42,7 @@ closest("kitten", ["kitchen", "sitting"]);     // "kitchen"
 
 ## API
 
-The package exposes three logical entrypoints, each with an ESM-source path for bundlers and a pre-built minified path for unbundled `<script type="module">` use:
+The package exposes four logical entrypoints, each with an ESM-source path for bundlers and a pre-built minified path for unbundled `<script type="module">` use:
 
 ```jsonc
 {
@@ -52,12 +52,14 @@ The package exposes three logical entrypoints, each with an ESM-source path for 
     "./v2":          { "import": "./src/v2/index.js",    "default": "./dist/lightning-levenshtein-v2.min.js" },
     "./v2/min":      {                                    "default": "./dist/lightning-levenshtein-v2.min.js" },
     "./unicode":     { "import": "./src/unicode.js",     "default": "./dist/lightning-levenshtein-unicode.min.js" },
-    "./unicode/min": {                                    "default": "./dist/lightning-levenshtein-unicode.min.js" }
+    "./unicode/min": {                                    "default": "./dist/lightning-levenshtein-unicode.min.js" },
+    "./profiles":     { "import": "./src/profiles.js",   "default": "./dist/lightning-levenshtein-profiles.min.js" },
+    "./profiles/min": {                                    "default": "./dist/lightning-levenshtein-profiles.min.js" }
   }
 }
 ```
 
-The `.`, `./v2`, and `./unicode` entrypoints route bundlers at ESM source so unused code can be tree-shaken. Explicit `/min` subpaths expose the pre-built Closure bundles for consumers that want them directly.
+The `.`, `./v2`, `./unicode`, and `./profiles` entrypoints route bundlers at ESM source so unused code can be tree-shaken. Explicit `/min` subpaths expose the pre-built Closure bundles for consumers that want them directly.
 
 ### Default API
 
@@ -144,7 +146,7 @@ The design direction is:
 
 The `/profiles` factory implements that direction without changing the default entrypoint. Each returned function owns its mutable tables and scratch state, so create one per worker or independent execution context and reuse it synchronously.
 
-The repository design note [Levenshtein Use Cases and Text Profiles](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/use-cases-and-text-profiles.md) covers real-world workloads, precise comparison units, current per-worker memory costs, and the proposed configurable-profile direction.
+The repository design note [Levenshtein Use Cases and Text Profiles](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/use-cases-and-text-profiles.md) covers real-world workloads, precise comparison units, current per-worker memory costs, and configurable-profile design.
 
 ### PEQ memory inventory
 
@@ -162,7 +164,7 @@ These figures count PEQ typed-array payload, not total process memory, JavaScrip
 
 Dense integer sequences remain the preferred future shape for DNA, proteins, phonemes, transcript words, and custom alphabets because they can use a table sized to the encoded symbol range. That separate token API is planned, not currently published.
 
-See the checked-in [stable-core integration plan](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/text-profile-integration-plan.md) for the proposed API, validation policies, file scope, test matrix, worker benchmarks, and v2 deferral criteria.
+See the checked-in [stable-core integration plan](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/text-profile-integration-plan.md) for the implemented API, validation policies, file scope, test matrix, worker benchmarks, and v2 deferral criteria. The [technical reflection](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/technical-reflection.md) and [benchmark-hardening sprint](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/benchmark-hardening-sprint.md) record the broader architectural assessment and next measurement work.
 
 ### Dispatch strategy
 
