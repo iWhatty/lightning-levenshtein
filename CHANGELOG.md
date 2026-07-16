@@ -2,16 +2,6 @@
 
 > Initial cut seeded from `git log` by the host repo's `tools/seed-changelogs.mjs` script. Version groupings infer release boundaries from tags and commit subjects; rough cuts are expected — review and tighten as part of normal maintenance.
 
-## 0.0.5 — 2026-05-23
-
-- **feat(exports): `./v2` now routes bundlers at ESM source via the `import` condition.** Pre-0.0.5 the `./v2` export was pre-built-blob only — consumers got the full 41 KB GCC ADVANCED-compiled bundle even if they only called `levenshteinLightning` on short strings (where most of the bit-parallel myers_x kernels are dead code). The v2 source moved from `bench/bolt/` to `src/v2/` (8 files: `index.js` entry + 7 myers kernels) and the `./v2` export now follows the same dual-condition pattern as `.` and `./unicode`:
-  - `import` → `./src/v2/index.js` (raw ESM, tree-shakeable)
-  - `default` → `./dist/lightning-levenshtein-v2.min.js` (pre-built blob fallback for CJS consumers and bundlers that don't honor `import`)
-- **feat(exports): new `./v2/min` subpath** for consumers that explicitly want the pre-built blob. Mirrors the `./unicode/min` and `./min` convention. Same `.d.ts` as `./v2`.
-- **chore(build): `build-gcc-bolt.mjs` now points at `src/v2/`** instead of `bench/bolt/`. Pre-0.0.5, `build:v2` globbed `bench/bolt/*.js` and let Closure's PRUNE dependency mode tree-shake from the entry — that worked but mixed lib source with bench-only experiment files (myers32-fast-v1-hand-1-2.js, lev-dispatch.js, etc.) in the build inputs. Now only the 8 v2 files are inputs; the other bench/bolt/ files remain in place as standalone benchmark variants.
-- **chore(pkg): `files` whitelist unchanged** — `src/` was already included, so `src/v2/` ships in the tarball automatically.
-- No behaviour change for existing consumers of `./v2` (the `default` condition still resolves to the same `.min.js`). Closes the `lightning-levenshtein /v2` ESM-source-routing sub-bullet under host carry-forward #6.
-
 ## Unreleased
 
 - fix(v2): propagate unsigned addition carries in the 33–64 and 65–96 character specialized Myers kernels; the missing carry could overstate distances for mixed and repeated inputs.
@@ -33,9 +23,16 @@
 - bench(diagnostics): add deterministic workload families and a correctness-first matrix across every production v2 dispatch boundary and compatible text profile.
 - bench(evidence): route every README renderer through an explicit promotion manifest with qualification, provenance, and public-claim guardrails.
 - ci(policy): disable the paid GitHub Actions workflow and make local Windows/Linux/macOS and Node-version gates the maintained verification path.
+- docs(community): clarify source-available positioning and add contribution and security guidance.
+- chore(pkg): assert licensing, repository, engine, and public-publish metadata in packed-package verification.
 
-- chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
-- chore(pkg): update GitHub repo URL after rename  `4fa7776`
+## 0.0.5 — 2026-05-26
+
+- **feat(exports): `./v2` routes bundlers to ESM source via the `import` condition.** The v2 runtime source moved from `bench/bolt/` into `src/v2/`, while the `default` condition retains the pre-built bundle.
+- **feat(exports): add `./v2/min`** for consumers that explicitly select the pre-built v2 bundle.
+- **chore(pkg): declare Node.js 18 as the minimum runtime**, align package smoke tests with every published subpath, and rebuild release artifacts.
+- **chore(pkg): update repository, issue, and homepage metadata** after the canonical GitHub repository rename.
+- No behavior change for existing consumers of the v2 pre-built bundle.
 
 ## 0.0.4 — 2026-05-19
 
@@ -47,6 +44,8 @@
 - chore: rider v3 — remove gameable 0.1% safe harbor  `3697a44`
 - chore: rider v4 — Commercial Use restricted to Fully Open Source  `8c3b37b`
 - docs(README): apply @whatty README template  `fb1630b`
+- feat(exports): route default and `/unicode` ESM consumers to source while retaining explicit pre-built bundle subpaths  `8950a2d`
+- chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
 
 ## 0.0.3 — 2026-05-13
 

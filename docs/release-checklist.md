@@ -6,6 +6,14 @@ See [`ci-policy.md`](./ci-policy.md) for what CI is expected to catch and why tr
 
 ## Preflight
 
+- Compare the local version with the registry and confirm the changelog describes every unpublished public change:
+
+```bash
+npm view lightning-levenshtein version
+```
+
+- Confirm README, npm metadata, and announcements describe the custom license as source-available rather than OSI-approved open source. See [`licensing-position.md`](./licensing-position.md).
+
 - Confirm the working tree only contains intended release changes:
 
 ```bash
@@ -90,6 +98,7 @@ pnpm version patch
 ```
 
 - Commit the version bump and rebuilt artifacts.
+- Confirm the intended release tag was created and points at that commit.
 - Push only after the required local gates pass. GitHub Actions is intentionally disabled; arrange any Linux, macOS, WSL, CPU-family, or alternate-Node checks on maintainer-provided local machines.
 - Publish:
 

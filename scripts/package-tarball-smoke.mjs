@@ -55,6 +55,10 @@ try {
   assert.equal(installedPkg.version, expectedPkg.version);
   assert.equal(installedPkg.type, "module");
   assert.equal(installedPkg.sideEffects, false);
+  assert.equal(installedPkg.license, "SEE LICENSE IN LICENSE");
+  assert.equal(installedPkg.publishConfig?.access, "public");
+  assert.equal(installedPkg.repository?.url, "git+https://github.com/iWhatty/lightning-levenshtein.git");
+  assert.equal(installedPkg.engines?.node, ">=18");
   assert.equal(installedPkg.types, "./dist/lightning-levenshtein.min.d.ts");
   assert.equal(installedPkg.scripts.prepublishOnly, "pnpm run check:ci");
   assert.deepEqual(Object.keys(installedPkg.exports).sort(), [

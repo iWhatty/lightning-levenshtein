@@ -36,6 +36,7 @@ Guidance for future Codex/agent runs in this repository.
 - The default short and blockwise tiers use a 256-entry PEQ, while its long fallback and all v2 tiers use wider tables. Future PEQ-width support should stay explicit and pre-routed, not a silent default change or per-call auto scan in the hot path.
 - `docs/use-cases-and-text-profiles.md` records the intended configurable alphabet direction, current static PEQ memory costs, and the distinction between code-unit, byte, token, code-point, and grapheme distance.
 - `docs/text-profile-integration-plan.md` scopes stable-core profiles first and defers v2 width variants until shared generation and worker-memory evidence exist.
+- `docs/licensing-position.md` records the source-available classification and custom-license metadata. Do not describe the project as OSI-approved open source or edit legal terms without maintainer direction and legal review.
 - PEQ-width variants should share factory implementations where possible. Bind the table once at module setup, then export a hot function with no inner-loop mode checks.
 - `src/distanceUnicode.js` backs the explicit `/unicode` subpath through `src/unicode.js`. Do not export Unicode code from `src/index.js`; that causes the default dist bundle to pull in wide tables.
 - Do not overwrite unrelated lockfile changes. This repo is currently on pnpm in the maintainer's local system.

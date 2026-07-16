@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
 [![downloads](https://img.shields.io/npm/dm/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/lightning-levenshtein)](https://bundlephobia.com/package/lightning-levenshtein)
-[![license](https://img.shields.io/npm/l/lightning-levenshtein)](https://github.com/iWhatty/lightning-levenshtein/blob/main/LICENSE)
+[![license](https://img.shields.io/badge/license-source--available-blue)](https://github.com/iWhatty/lightning-levenshtein/blob/main/LICENSE)
 [![stars](https://img.shields.io/github/stars/iWhatty/lightning-levenshtein?style=social)](https://github.com/iWhatty/lightning-levenshtein)
 [![types](https://img.shields.io/npm/types/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
 
@@ -283,4 +283,4 @@ Run `pnpm run codegen:myers32:a` after changing the production Myers32 generator
 
 ## License
 
-Licensed under AGPL-3.0 with WATT3D Additional Terms. See [LICENSE](./LICENSE) and [ADDITIONAL_TERMS.md](./ADDITIONAL_TERMS.md). Commercial AI/model-training use requires compliance with those terms or a separate WATT3D license. © WATT3D.
+Source-available under AGPL-3.0 with WATT3D Additional Terms. The project is not represented as OSI-approved open source because the additional terms restrict commercial and AI-training uses. See [LICENSE](./LICENSE), [ADDITIONAL_TERMS.md](./ADDITIONAL_TERMS.md), and the [licensing position](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/licensing-position.md). The legal texts control; commercial use outside the public terms requires a separate WATT3D license. © WATT3D.

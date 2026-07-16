@@ -12,6 +12,9 @@
         "node": ">=18"
     },
     "packageManager": "pnpm@10.33.1",
+    "publishConfig": {
+        "access": "public"
+    },
     "exports": {
         ".": {
             "types": "./dist/lightning-levenshtein.min.d.ts",
@@ -60,6 +63,7 @@
         "dist/lightning-levenshtein-unicode.min.d.ts",
         "dist/lightning-levenshtein-profiles.min.js",
         "dist/lightning-levenshtein-profiles.min.d.ts",
+        "docs/licensing-position.md",
         "bench/packages/relative-to-fastest-levenshtein.svg",
         "bench/packages/mean-ops-loglog-chart.svg",
         "bench/packages/relative-performance.svg",

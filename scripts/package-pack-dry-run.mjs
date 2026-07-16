@@ -25,6 +25,7 @@ const expectedFiles = [
   "dist/lightning-levenshtein-v2.min.js",
   "dist/lightning-levenshtein.min.d.ts",
   "dist/lightning-levenshtein.min.js",
+  "docs/licensing-position.md",
   "package.json",
   "robots.txt",
   "src/closest.js",
@@ -60,6 +61,9 @@ const expectedFiles = [
 try {
   assert.equal(pkg.sideEffects, false);
   assert.equal(pkg.scripts.prepublishOnly, "pnpm run check:ci");
+  assert.equal(pkg.license, "SEE LICENSE IN LICENSE");
+  assert.equal(pkg.publishConfig?.access, "public");
+  assert.equal(pkg.repository?.url, "git+https://github.com/iWhatty/lightning-levenshtein.git");
 
   const stdout = runNpm([
     "pack",
