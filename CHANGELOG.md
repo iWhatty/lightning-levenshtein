@@ -29,6 +29,7 @@
 - feat(profiles): add `/profiles` and `/profiles/min` factories for explicit ASCII, Latin-1, and code-unit workloads with checked or prevalidated input policies.
 - fix(build): remove temporary `globalThis` export bridges from generated ESM bundles under current Closure output syntax.
 - docs(strategy): add a durable technical reflection and benchmark-hardening sprint, and reconcile profile/CI documentation drift.
+- bench(packages): add deterministic balanced target ordering, reference and checksum guards, raw qualification runs, reproducibility metadata, and paired multi-run stability aggregation.
 
 - chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
 - chore(pkg): update GitHub repo URL after rename  `4fa7776`

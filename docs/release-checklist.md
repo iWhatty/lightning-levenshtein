@@ -72,6 +72,13 @@ pnpm run test:package:pack
   - Keeps profile tables out of the default bundle and owns state per returned function.
   - `lightning-levenshtein/profiles/min` explicitly selects the pre-built Closure bundle.
 
+## Benchmark Evidence Review
+
+- If performance claims or benchmark tables changed, identify the named qualification aggregate used for the update.
+- Confirm its raw repetitions, source revision, dependency versions, environment, workload, and stability statistics are checked in.
+- Confirm results from different machines or JavaScript engines were reported separately rather than pooled.
+- Benchmark refreshes are evidence reviews, not mandatory CI workloads; unchanged claims do not require a fresh run for every release.
+
 ## Publish
 
 - Bump the version intentionally:

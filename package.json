@@ -96,6 +96,8 @@
         "bench:small": "node ./bench/small_kernals/bench-2x-small.js",
         "bench:small-dispatch": "node ./bench/small-dispatch-spike/run-bench.js",
         "bench:packages": "node ./bench/packages/run-bench.js",
+        "bench:packages:verify": "node ./bench/packages/run-bench.js --verify-only",
+        "bench:packages:aggregate": "node ./bench/packages/aggregate-runs.js",
         "bench:packages:table": "node ./bench/packages/render-readme-table.js",
         "bench:packages:bar": "node ./bench/packages/render-relative-bar-chart.js",
         "bench:packages:linechart": "node ./bench/packages/render-readme-line-chart.js",

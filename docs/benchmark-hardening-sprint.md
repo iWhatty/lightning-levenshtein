@@ -6,6 +6,19 @@ Strengthen the benchmark harness so algorithm decisions and public claims remain
 
 This sprint changes measurement design and reporting. It does not select a new production kernel, publish a new npm version, or run benchmarks on a busy machine.
 
+## Progress
+
+Completed in the first harness slice:
+
+- uniquely named raw-run output with revision, dependency, runtime, protocol, and command metadata;
+- deterministic seeded target shuffling with repetition-based rotation;
+- reference verification and stable dataset checksums before timing;
+- consumed timed checksums;
+- an explicit multi-run aggregator with distribution statistics and paired baseline ratios;
+- correctness-only smoke mode and focused harness tests.
+
+Still open: workload-family generators, dispatch-edge diagnostics, explicit README promotion, claim linting, quiet-host qualification, and cross-platform runs.
+
 ## Operating Rules
 
 - Do not run qualification benchmarks while substantial background work is active.
