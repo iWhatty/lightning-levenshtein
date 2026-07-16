@@ -77,6 +77,7 @@
         "bench:char-table": "node ./bench/char-table-spike/run-bench.js",
         "bench:peq": "node ./bench/peq-benchmark.mjs",
         "bench:profiles": "node ./bench/text-profile-spike/run-long-factory-bench.js",
+        "bench:profiles:dispatch": "node ./bench/text-profile-spike/run-dispatch-bench.js",
         "bench:myersx": "node ./bench/myers-x-variants/run-bench.js",
         "bench:myers32": "node ./bench/myers32-variants/run-bench.js",
         "bench:small": "node ./bench/small_kernals/bench-2x-small.js",

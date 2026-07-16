@@ -23,6 +23,8 @@
 - docs(design): map real-world Levenshtein uses to explicit string, byte, and dense-token profiles, including current per-worker PEQ memory costs and a staged configuration proposal.
 - docs(design): add a source register, stable-core integration scope, public PEQ memory inventory, correctness gates, and worker-scaling benchmark plan.
 - refactor(core): expose the stable two-lane long kernel through a table-bound factory while retaining the existing pre-bound export.
+- bench(profiles): add a bench-only stable dispatcher prototype covering ASCII, Latin-1, and full code-unit widths with checked and unchecked policies.
+- docs(memory): correct `/unicode` static PEQ payload to three full-width lanes, or 768 KiB per worker.
 
 - chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
 - chore(pkg): update GitHub repo URL after rename  `4fa7776`

@@ -22,6 +22,7 @@ Guidance for future Codex/agent runs in this repository.
 - `pnpm run bench:packages` runs the public package comparison benchmark.
 - `pnpm run bench:myers32` and `pnpm run bench:myersx` run kernel exploration benches.
 - `pnpm run bench:profiles` compares table-bound stable long-kernel widths with the historical implementation.
+- `pnpm run bench:profiles:dispatch` measures checked and unchecked profile prototypes across stable tiers.
 
 ## Maintainer Notes
 

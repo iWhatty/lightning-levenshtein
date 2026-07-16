@@ -84,12 +84,24 @@ The code-point row illustrates why a direct table is the wrong representation fo
 ### Current entrypoints
 
 - The default entrypoint is mixed-width. `peq.js` supplies one 256-entry table for the 32-bit and blockwise kernels, while the long-string `myers_x64` kernel owns two 65,536-entry tables. Static PEQ storage is therefore about **513 KiB**, plus small retained scratch buffers.
-- The explicit `/unicode` entrypoint owns one 65,536-entry table: **256 KiB**, plus scratch buffers.
+- The explicit `/unicode` entrypoint uses one shared 65,536-entry table for its short and blockwise tiers plus the long kernel's two full-width lanes: **768 KiB**, plus scratch buffers.
 - The `/v2` entrypoint owns 24 65,536-entry lanes: **6 MiB**, plus scratch buffers retained by its generalized kernels.
 
 These figures describe typed-array payloads and exclude JavaScript object, module, and allocator overhead. They also explain why worker count matters: eight workers loading v2 can account for roughly 48 MiB of PEQ payload alone.
 
 The README now reflects this mixed-width default behavior and the v2 per-worker PEQ cost.
+
+### Proposed stable profile totals
+
+The stable profile prototype binds one table to the mutually exclusive short and blockwise tiers, plus two tables to the long tier. Each factory instance therefore owns three PEQ lanes:
+
+| Profile | PEQ payload per instance | 4 instances/workers | 8 instances/workers |
+| --- | ---: | ---: | ---: |
+| `ascii` | 1.5 KiB | 6 KiB | 12 KiB |
+| `latin1` | 3 KiB | 12 KiB | 24 KiB |
+| `codeUnit` | 768 KiB | 3 MiB | 6 MiB |
+
+These remain arithmetic payload figures until the worker harness measures allocator, module, scratch-buffer, and process overhead.
 
 ## Proposed Profile Semantics
 

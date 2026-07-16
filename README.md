@@ -137,7 +137,7 @@ Static typed-array payload currently scales with each worker or module realm:
 | Entrypoint | PEQ payload per worker | 4 workers | 8 workers |
 | --- | ---: | ---: | ---: |
 | default | about 513 KiB | about 2 MiB | about 4 MiB |
-| `/unicode` | 256 KiB | 1 MiB | 2 MiB |
+| `/unicode` | 768 KiB | 3 MiB | 6 MiB |
 | `/v2` | 6 MiB | 24 MiB | 48 MiB |
 
 These figures count PEQ typed-array payload, not total process memory, JavaScript objects, or retained scratch buffers. Module tables are reused by synchronous calls in one realm; separate workers load separate state.

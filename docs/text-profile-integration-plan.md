@@ -14,7 +14,7 @@ The stable runtime has three dispatch tiers:
 2. `myers_x` for lengths 33 through 64;
 3. `myers_x64` for longer inputs.
 
-The first two are already created from table-bound factories. The long two-lane kernel still owns its PEQ tables directly. This makes the stable core a contained refactor with one meaningful performance risk.
+All three now have table-bound factories. The long two-lane extraction retains the pre-bound legacy export and has a focused correctness and throughput spike. This makes the remaining stable-core prototype contained and keeps its policy costs measurable outside the kernels.
 
 V2 statically imports seven kernel families containing 24 PEQ lanes. Supporting three widths there requires shared generation or factories across every dispatch boundary, new bundles, and a much larger benchmark matrix. Adding a runtime width branch to those loops would work against v2's purpose.
 
@@ -77,7 +77,7 @@ Each factory instance owns mutable PEQ and scratch state. Calls are synchronous 
 
 Refactor `src/myers_x64.js` into a factory accepting two PEQ arrays, mirroring the existing core factories. Retain a module-bound export for the current default entrypoint so existing imports and bundles do not change behavior.
 
-This is the highest-risk step. Closure output, JIT behavior, long-input correctness, scratch-buffer ownership, and throughput must be compared before promotion.
+This was the highest-risk first step. Closure output, JIT behavior, long-input correctness, scratch-buffer ownership, and throughput remain delivery-gate evidence before promotion.
 
 ### Validation
 
@@ -189,6 +189,10 @@ Promotion requires correctness at every v2 dispatch edge, reproducible package b
 ### Factory Spike Status
 
 The table-bound `myers_x64` extraction and focused benchmark now live in `src/myers_x64_factory.js` and `bench/text-profile-spike/`. Correctness covers 128-, 256-, and 65,536-entry bindings plus isolated factory state. The initial Node 24 Windows run found no obvious long-input throughput regression; detailed conditions and directional ranges are recorded with the benchmark. Node 18/24 repetition and worker-memory evidence remain open gates before a public profile API.
+
+### Stable Profile Prototype Status
+
+The bench-only dispatcher now binds all three stable tiers for `ascii`, `latin1`, and `codeUnit`, with `throw` and `assume-valid` selected once at construction. Tests cover dispatch boundaries, maximum profile values, rejection before fast paths, configuration errors, symmetry, and instance isolation. Initial throughput shows unchecked dispatch close to current controls while per-call validation remains a measurable policy cost. The package exports remain unchanged.
 
 ## Complexity Assessment
 
