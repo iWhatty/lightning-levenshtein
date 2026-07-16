@@ -23,6 +23,7 @@ const distDir = resolve("./dist/");
 
 const entryFile = resolve(srcDir, "index.js");
 const externsFile = resolve("./", "externs.js");
+const closureCli = resolve("./node_modules/google-closure-compiler/cli.js");
 
 const benchOutputFile = resolve(benchDir, "lightning-levenshtein-v2.min.js");
 const distOutputFile = resolve(distDir, "lightning-levenshtein-v2.min.js");
@@ -44,8 +45,8 @@ if (typeof globalThis !== 'undefined') {
 writeFileSync(tempWrappedFile, base + globalExport);
 
 const cmd = [
-  "npx",
-  "google-closure-compiler",
+  `"${process.execPath}"`,
+  `"${closureCli}"`,
   ...closureJsInputs(srcDir),
   `--entry_point="${tempWrappedFile}"`,
   "--language_in=ECMASCRIPT_NEXT",
