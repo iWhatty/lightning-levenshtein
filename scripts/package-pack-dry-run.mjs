@@ -8,6 +8,7 @@ const npm = "npm";
 const tempDir = mkdtempSync(join(tmpdir(), "lightning-levenshtein-pack-dry-"));
 const cacheDir = join(tempDir, "npm-cache");
 const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+const report = process.argv.includes("--report");
 
 const expectedFiles = [
   "ADDITIONAL_TERMS.md",
@@ -27,7 +28,6 @@ const expectedFiles = [
   "dist/lightning-levenshtein.min.js",
   "docs/licensing-position.md",
   "package.json",
-  "robots.txt",
   "src/closest.js",
   "src/distance.js",
   "src/distanceMax.js",
@@ -82,7 +82,28 @@ try {
   const actualFiles = pack.files.map((file) => file.path).sort();
   assert.deepEqual(actualFiles, expectedFiles);
 
-  console.log("package pack dry-run check passed");
+  console.log(
+    `package pack dry-run check passed (${pack.name}@${pack.version}, ${actualFiles.length} files, ${formatBytes(pack.size)} packed, ${formatBytes(pack.unpackedSize)} unpacked)`
+  );
+
+  if (report) {
+    console.log(
+      JSON.stringify(
+        {
+          name: pack.name,
+          version: pack.version,
+          filename: pack.filename,
+          packedBytes: pack.size,
+          unpackedBytes: pack.unpackedSize,
+          shasum: pack.shasum,
+          integrity: pack.integrity,
+          files: pack.files.map(({ path, size }) => ({ path, size }))
+        },
+        null,
+        2
+      )
+    );
+  }
 } finally {
   rmSync(tempDir, { recursive: true, force: true });
 }
@@ -107,4 +128,8 @@ function runNpm(args) {
 function quoteWindowsArg(value) {
   if (!/[\s"]/.test(value)) return value;
   return `"${value.replace(/"/g, '\\"')}"`;
+}
+
+function formatBytes(bytes) {
+  return `${(bytes / 1024).toFixed(1)} KiB`;
 }

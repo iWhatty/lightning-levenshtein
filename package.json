@@ -70,8 +70,7 @@
         "bench/packages/mean-rank-log-chart.svg",
         "LICENSE",
         "README.md",
-        "ADDITIONAL_TERMS.md",
-        "robots.txt"
+        "ADDITIONAL_TERMS.md"
     ],
     "scripts": {
         "build": "node ./build-gcc.mjs",
@@ -79,13 +78,15 @@
         "build:unicode": "node ./build-gcc-unicode.mjs",
         "build:profiles": "node ./build-gcc-profiles.mjs",
         "build:all": "pnpm run build && pnpm run build:v2 && pnpm run build:unicode && pnpm run build:profiles",
-        "check:ci": "pnpm run codegen:check && pnpm run test:source && pnpm run bench:packages:promotion:check && pnpm run build:all && pnpm test --runInBand --verbose && pnpm run test:package && pnpm run test:package:types && pnpm run test:package:tarball && pnpm run test:package:pack",
+        "check:ci": "pnpm run codegen:check && pnpm run test:source && pnpm run test:docs && pnpm run bench:packages:promotion:check && pnpm run build:all && pnpm test --runInBand --verbose && pnpm run test:package && pnpm run test:package:types && pnpm run test:package:tarball && pnpm run test:package:pack",
         "prepublishOnly": "pnpm run check:ci",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
         "test:package": "node ./scripts/package-smoke.mjs",
         "test:package:pack": "node ./scripts/package-pack-dry-run.mjs",
+        "test:package:pack:report": "node ./scripts/package-pack-dry-run.mjs --report",
         "test:package:types": "node ./scripts/package-types-smoke.mjs",
         "test:package:tarball": "node ./scripts/package-tarball-smoke.mjs",
+        "test:docs": "node ./scripts/docs-smoke.mjs",
         "test:source": "node ./scripts/source-smoke.mjs",
         "html": "http-server . -p 8000 -c-1",
         "html:open": "start http://localhost:8000/bench/benchmark.html",

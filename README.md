@@ -24,7 +24,11 @@ Fast Levenshtein distance in pure JavaScript. Compact default API for general-pu
 
 ```sh
 pnpm add lightning-levenshtein
+# or
+npm install lightning-levenshtein
 ```
+
+Node.js consumers require Node 18 or newer. Browser consumers can use a bundler-facing source entrypoint or an explicit `/min` bundle.
 
 ---
 
@@ -92,6 +96,22 @@ import { distanceUnicode } from "lightning-levenshtein/unicode";
 ```
 
 Use this path when your strings can contain code units above `255`, such as many BMP characters, and you need consistent full-width behavior at every input length. It is intentionally pre-routed so the hot loop does not scan each call to select a character table. Use `lightning-levenshtein/unicode/min` for the pre-built bundle.
+
+### Profiles API
+
+Create a reusable distance function with an explicit character-table width:
+
+```js
+import { createDistance } from "lightning-levenshtein/profiles";
+
+const distanceAscii = createDistance({ profile: "ascii" });
+const distanceLatin1 = createDistance({
+  profile: "latin1",
+  outOfRange: "assume-valid"
+});
+```
+
+Available profiles are `ascii`, `latin1`, and `codeUnit`. The default `outOfRange: "throw"` policy validates the selected range. Use `assume-valid` only when inputs were validated or normalized before the call. `lightning-levenshtein/profiles/min` exposes the pre-built bundle.
 
 ---
 

@@ -55,6 +55,14 @@ pnpm run test:package:tarball
 pnpm run test:package:pack
 ```
 
+- Produce the human-readable npm dry-run manifest and review every path, packed size, and unpacked size:
+
+```bash
+pnpm run test:package:pack:report
+```
+
+- Confirm runtime source dependencies, bundles, declarations, README assets, and controlling legal files are present. Confirm tests, build tools, experimental benches, CI configuration, contributor-only documents, and repository crawler policy are absent.
+
 ## Entrypoint Positioning
 
 - Default entrypoint: `lightning-levenshtein`

@@ -26,8 +26,10 @@
 - bench(evidence): route every README renderer through an explicit promotion manifest with qualification, provenance, and public-claim guardrails.
 - ci(policy): disable the paid GitHub Actions workflow and make local Windows/Linux/macOS and Node-version gates the maintained verification path.
 - docs(testing): document pnpm-based Node switching, isolated alternatives, primary sources, and rules for separating historical matrix results from current-commit evidence.
+- docs(api): document npm installation, the Node minimum, and the complete `/profiles` API alongside the other public entrypoints.
+- test(docs): validate local Markdown targets and retain external citations in the source-backed design, licensing, and Node-version documents.
 - docs(community): clarify source-available positioning and add contribution and security guidance.
-- chore(pkg): assert licensing, repository, engine, and public-publish metadata in packed-package verification.
+- chore(pkg): assert licensing, repository, engine, public-publish metadata, and the exact tarball allowlist; add report-mode pack inspection and exclude the repository-only crawler policy.
 
 ## 0.0.5 — 2026-05-26
 
