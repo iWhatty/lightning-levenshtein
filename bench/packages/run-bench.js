@@ -6,7 +6,7 @@ import { createRequire } from "module";
 import { fileURLToPath } from "url";
 
 import { buildPairs, mean, median } from "../data.js";
-import { balancedTargetOrder, verifyTargets } from "../harness.js";
+import { balancedTargetOrder, checksumPairs, verifyTargets } from "../harness.js";
 import { referenceDistance } from "../reference-distance.js";
 
 import { distance as fastestLevenshtein } from "fastest-levenshtein";
@@ -108,9 +108,10 @@ for (const length of options.lengths) {
       seed,
       alphabet: ALPHABET,
     });
-    const verificationChecksum = verifyTargets(referenceDistance, TARGETS, pairs);
+    const datasetChecksum = checksumPairs(pairs);
+    const expectedDistanceChecksum = verifyTargets(referenceDistance, TARGETS, pairs);
     const order = balancedTargetOrder(TARGETS, seed ^ length, options.repetition);
-    console.log(`Seed ${seed} | verify ${verificationChecksum} | ${order.map(([name]) => name).join(" -> ")}`);
+    console.log(`Seed ${seed} | data ${datasetChecksum} | distances ${expectedDistanceChecksum} | ${order.map(([name]) => name).join(" -> ")}`);
 
     if (options.verifyOnly) continue;
 
@@ -120,7 +121,8 @@ for (const length of options.lengths) {
       results.results[length][name].seedRuns.push({
         seed,
         orderPosition: order.findIndex(([targetName]) => targetName === name),
-        verificationChecksum,
+        datasetChecksum,
+        expectedDistanceChecksum,
         ...run,
       });
       console.log(`${name.padEnd(28)} ${run.opsPerMs.toFixed(2).padStart(12)} ops/ms`);

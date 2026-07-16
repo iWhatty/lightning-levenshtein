@@ -1,5 +1,6 @@
 import {
   balancedTargetOrder,
+  checksumPairs,
   pairedRatios,
   summarize,
   verifyTargets,
@@ -34,6 +35,14 @@ describe("benchmark harness", () => {
       [["incorrect", () => 0]],
       pairs
     )).toThrow("incorrect returned 0 for pair 0; expected 3");
+  });
+
+  test("dataset checksums identify inputs independently from their distances", () => {
+    const first = [["abc", "axc"]];
+    const second = [["def", "dxf"]];
+    expect(referenceDistance(...first[0])).toBe(referenceDistance(...second[0]));
+    expect(checksumPairs(first)).not.toBe(checksumPairs(second));
+    expect(checksumPairs(first)).toBe(checksumPairs(first));
   });
 
   test("summary and paired-ratio statistics retain raw sample meaning", () => {

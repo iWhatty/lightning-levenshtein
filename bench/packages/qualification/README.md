@@ -26,7 +26,7 @@ node bench/packages/run-bench.js --repetition=1
 node bench/packages/run-bench.js --repetition=2
 ```
 
-Each invocation writes a uniquely named schema-v2 document under `qualification/raw/`. The document includes revision state, dependency and runtime versions, command configuration, deterministic target order, verification checksums, consumed timed checksums, and individual seed samples.
+Each invocation writes a uniquely named schema-v2 document under `qualification/raw/`. The document includes revision state, dependency and runtime versions, command configuration, deterministic target order, separate dataset and expected-distance checksums, consumed timed checksums, and individual seed samples.
 
 Do not rename a run to conceal its origin. Add a short companion note when background load, power policy, affinity, or other conditions materially differ from the host's normal qualification state.
 

@@ -91,6 +91,8 @@
         "bench:profiles": "node ./bench/text-profile-spike/run-long-factory-bench.js",
         "bench:profiles:dispatch": "node ./bench/text-profile-spike/run-dispatch-bench.js",
         "bench:profiles:workers": "node ./bench/text-profile-spike/run-worker-memory-bench.js",
+        "bench:diagnostics:verify": "node ./bench/diagnostics/run-workload-matrix.js",
+        "bench:diagnostics": "node ./bench/diagnostics/run-workload-matrix.js --measure",
         "bench:myersx": "node ./bench/myers-x-variants/run-bench.js",
         "bench:myers32": "node ./bench/myers32-variants/run-bench.js",
         "bench:small": "node ./bench/small_kernals/bench-2x-small.js",

@@ -24,6 +24,7 @@ Guidance for future Codex/agent runs in this repository.
 - `pnpm run bench:profiles` compares table-bound stable long-kernel widths with the historical implementation.
 - `pnpm run bench:profiles:dispatch` measures checked and unchecked profile prototypes across stable tiers.
 - `pnpm run bench:profiles:workers` isolates 1/2/4/8-worker profile throughput and memory measurements.
+- `pnpm run bench:diagnostics:verify` checks all workload families and v2 dispatch edges without timing; `pnpm run bench:diagnostics` enables measurement explicitly.
 
 ## Maintainer Notes
 

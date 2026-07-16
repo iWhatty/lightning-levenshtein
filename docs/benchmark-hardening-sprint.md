@@ -17,7 +17,16 @@ Completed in the first harness slice:
 - an explicit multi-run aggregator with distribution statistics and paired baseline ratios;
 - correctness-only smoke mode and focused harness tests.
 
-Still open: workload-family generators, dispatch-edge diagnostics, explicit README promotion, claim linting, quiet-host qualification, and cross-platform runs.
+Completed in the workload-matrix slice:
+
+- seven deterministic workload families with documented symbol domains;
+- a separate diagnostic runner covering every required v2 boundary;
+- explicit ASCII, Latin-1, and BMP target compatibility;
+- pre-bound checked and assume-valid profile targets;
+- independent dataset, expected-distance, and consumed timed checksums;
+- correctness-only default behavior with timing behind an explicit flag.
+
+Still open: explicit README promotion, claim linting, quiet-host qualification, diagnostic aggregation, and cross-platform runs.
 
 ## Operating Rules
 

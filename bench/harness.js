@@ -41,6 +41,17 @@ export function verifyTargets(reference, targets, pairs, invoke = defaultInvoke)
   return expectedChecksum;
 }
 
+export function checksumPairs(pairs) {
+  let hash = 2166136261;
+  for (const [a, b] of pairs) {
+    hash = mix(hash, a.length);
+    for (let i = 0; i < a.length; i++) hash = mix(hash, a.charCodeAt(i));
+    hash = mix(hash, b.length);
+    for (let i = 0; i < b.length; i++) hash = mix(hash, b.charCodeAt(i));
+  }
+  return hash.toString(16).padStart(8, "0");
+}
+
 export function summarize(values) {
   if (!values.length) {
     throw new TypeError("cannot summarize an empty sample");
@@ -83,8 +94,11 @@ function defaultInvoke(fn, a, b) {
 function checksum(values) {
   let hash = 2166136261;
   for (let i = 0; i < values.length; i++) {
-    hash ^= (values[i] + Math.imul(i, 16777619)) >>> 0;
-    hash = Math.imul(hash, 16777619) >>> 0;
+    hash = mix(hash, (values[i] + Math.imul(i, 16777619)) >>> 0);
   }
   return hash.toString(16).padStart(8, "0");
+}
+
+function mix(hash, value) {
+  return Math.imul(hash ^ value, 16777619) >>> 0;
 }
