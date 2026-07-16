@@ -1,11 +1,11 @@
 import { parentPort, workerData } from "node:worker_threads";
 import { performance } from "node:perf_hooks";
-import { createProfileDistance } from "./create-profile-distance.js";
+import { createDistance } from "../../src/profiles.js";
 
 globalThis.gc?.();
 const beforeFactory = memorySnapshot();
 const factoryStarted = performance.now();
-const distance = createProfileDistance({
+const distance = createDistance({
   profile: workerData.profile,
   outOfRange: "assume-valid"
 });

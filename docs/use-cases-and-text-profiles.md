@@ -91,9 +91,9 @@ These figures describe typed-array payloads and exclude JavaScript object, modul
 
 The README now reflects this mixed-width default behavior and the v2 per-worker PEQ cost.
 
-### Proposed stable profile totals
+### Stable profile totals
 
-The stable profile prototype binds one table to the mutually exclusive short and blockwise tiers, plus two tables to the long tier. Each factory instance therefore owns three PEQ lanes:
+The stable `/profiles` factory binds one table to the mutually exclusive short and blockwise tiers, plus two tables to the long tier. Each factory instance therefore owns three PEQ lanes:
 
 | Profile | PEQ payload per instance | 4 instances/workers | 8 instances/workers |
 | --- | ---: | ---: | ---: |
@@ -101,9 +101,9 @@ The stable profile prototype binds one table to the mutually exclusive short and
 | `latin1` | 3 KiB | 12 KiB | 24 KiB |
 | `codeUnit` | 768 KiB | 3 MiB | 6 MiB |
 
-These remain arithmetic payload figures until the worker harness measures allocator, module, scratch-buffer, and process overhead.
+The worker harness confirms these typed-array payload figures and separately reports allocator, module, scratch-buffer, and process overhead.
 
-## Proposed Profile Semantics
+## Profile Semantics
 
 ### String profiles
 
@@ -135,7 +135,7 @@ Code-point and grapheme-aware distance should be preprocessing adapters over den
 
 Configuration should happen once when selecting an entrypoint or creating an instance, not once per character and preferably not once per call.
 
-Illustrative API only:
+Implemented string-profile shape, followed by the illustrative future token shape:
 
 ```js
 const distanceAscii = createDistance({
@@ -153,15 +153,16 @@ const distanceTokens = createTokenDistance({
 });
 ```
 
-Recommended policies:
+String-profile policies:
 
 - `throw`: scan and reject out-of-profile input. Safe for boundary APIs, with an O(n) validation cost.
-- `fallback`: scan and route to a wide implementation. Convenient but adds per-call work and requires the wide tables to remain resident, defeating the main memory goal.
 - `assume-valid`: no scan and no hot-loop branch. Fastest and smallest, but correct only when the operator validates or constructs the data upstream.
+
+`fallback` is deliberately not exposed. It would scan and route to a wide implementation, adding per-call work while requiring the wide tables to remain resident and defeating the main memory goal.
 
 An out-of-range typed-array access must never be an undocumented behavior: missing PEQ entries can silently produce incorrect distances.
 
-For the stable core, factories can bind one table to the existing kernel factories. For v2, build-time generation of separate width variants is safer than inserting width checks into specialized loops. Export subpaths can then let bundlers include only the selected profile.
+The stable core binds tables once through shared kernel factories. For v2, build-time generation of separate width variants remains safer than inserting width checks into specialized loops.
 
 ## Recommended Delivery Sequence
 

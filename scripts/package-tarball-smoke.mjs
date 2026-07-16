@@ -60,6 +60,8 @@ try {
   assert.deepEqual(Object.keys(installedPkg.exports).sort(), [
     ".",
     "./min",
+    "./profiles",
+    "./profiles/min",
     "./unicode",
     "./unicode/min",
     "./v2",
@@ -77,6 +79,10 @@ try {
     installedPkg.exports["./unicode"].types,
     "./dist/lightning-levenshtein-unicode.min.d.ts"
   );
+  assert.equal(
+    installedPkg.exports["./profiles"].types,
+    "./dist/lightning-levenshtein-profiles.min.d.ts"
+  );
 
   writeFileSync(
     join(tempDir, "smoke.mjs"),
@@ -88,6 +94,8 @@ import * as v2 from "lightning-levenshtein/v2";
 import * as v2Min from "lightning-levenshtein/v2/min";
 import * as unicode from "lightning-levenshtein/unicode";
 import * as unicodeMin from "lightning-levenshtein/unicode/min";
+import * as profiles from "lightning-levenshtein/profiles";
+import * as profilesMin from "lightning-levenshtein/profiles/min";
 
 assert.deepEqual(Object.keys(root).sort(), ["closest", "distance", "distanceMax"]);
 assert.deepEqual(Object.keys(rootMin).sort(), Object.keys(root).sort());
@@ -95,6 +103,8 @@ assert.deepEqual(Object.keys(v2).sort(), ["levenshteinLightning"]);
 assert.deepEqual(Object.keys(v2Min).sort(), Object.keys(v2).sort());
 assert.deepEqual(Object.keys(unicode).sort(), ["distanceUnicode"]);
 assert.deepEqual(Object.keys(unicodeMin).sort(), Object.keys(unicode).sort());
+assert.deepEqual(Object.keys(profiles).sort(), ["createDistance"]);
+assert.deepEqual(Object.keys(profilesMin).sort(), Object.keys(profiles).sort());
 
 assert.equal(root.distance("kitten", "sitting"), 3);
 assert.equal(rootMin.distance("kitten", "sitting"), 3);
@@ -107,6 +117,14 @@ assert.equal(v2Min.levenshteinLightning("kitten", "sitting"), 3);
 assert.equal(root.distance("\\u4f60a", "\\u4f60b"), 2);
 assert.equal(unicode.distanceUnicode("\\u4f60a", "\\u4f60b"), 1);
 assert.equal(unicodeMin.distanceUnicode("\\u4f60a", "\\u4f60b"), 1);
+const ascii = profiles.createDistance({ profile: "ascii" });
+const asciiMin = profilesMin.createDistance({ profile: "ascii" });
+const asciiMinUnchecked = profilesMin.createDistance({ profile: "ascii", outOfRange: "assume-valid" });
+assert.equal(ascii("kitten", "sitting"), 3);
+assert.equal(asciiMin("kitten", "sitting"), 3);
+assert.equal(asciiMinUnchecked("kitten", "sitting"), 3);
+assert.throws(() => ascii("a\\u0080", "a"), RangeError);
+assert.throws(() => asciiMin("a\\u0080", "a\\u0080"), RangeError);
 `.trimStart()
   );
 

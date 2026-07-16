@@ -45,6 +45,10 @@ process.stdout.write(JSON.stringify({
   workerArrayBuffersAfterFactory: sumDelta(ready, "afterFactory", "beforeFactory", "arrayBuffers"),
   workerArrayBuffersAfterScratch: sumDelta(ready, "afterScratch", "beforeFactory", "arrayBuffers"),
   workerExternalAfterFactory: sumDelta(ready, "afterFactory", "beforeFactory", "external"),
+  workerExternalAfterFactoryTotal: ready.reduce(
+    (sum, value) => sum + value.afterFactory.external,
+    0
+  ),
   workerArrayBuffersAfterWork: results.reduce(
     (sum, result, index) => sum + result.afterWork.arrayBuffers - ready[index].beforeFactory.arrayBuffers,
     0

@@ -1,7 +1,7 @@
 import { buildPairs, mean } from "../data.js";
 import { distance } from "../../src/distance.js";
 import { distanceUnicode } from "../../src/distanceUnicode.js";
-import { createProfileDistance } from "./create-profile-distance.js";
+import { createDistance } from "../../src/profiles.js";
 
 const LENGTHS = [16, 48, 96, 256];
 const SEEDS = [1337, 7331];
@@ -9,17 +9,17 @@ const PAIRS = 160;
 const DURATION_MS = 175;
 const WARM_ROUNDS = 3;
 
-const asciiUnchecked = createProfileDistance({
+const asciiUnchecked = createDistance({
   profile: "ascii",
   outOfRange: "assume-valid"
 });
-const asciiChecked = createProfileDistance({ profile: "ascii", outOfRange: "throw" });
-const latin1Unchecked = createProfileDistance({
+const asciiChecked = createDistance({ profile: "ascii", outOfRange: "throw" });
+const latin1Unchecked = createDistance({
   profile: "latin1",
   outOfRange: "assume-valid"
 });
-const latin1Checked = createProfileDistance({ profile: "latin1", outOfRange: "throw" });
-const codeUnit = createProfileDistance({ profile: "codeUnit", outOfRange: "throw" });
+const latin1Checked = createDistance({ profile: "latin1", outOfRange: "throw" });
+const codeUnit = createDistance({ profile: "codeUnit", outOfRange: "throw" });
 
 const workloads = [
   {

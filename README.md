@@ -115,6 +115,20 @@ Use the `unicode` subpath if you need consistent full-width UTF-16 code-unit beh
 import { distanceUnicode } from "lightning-levenshtein/unicode";
 ```
 
+Use the `profiles` subpath when you want an isolated distance function with an explicit character range and predictable per-instance memory:
+
+```js
+import { createDistance } from "lightning-levenshtein/profiles";
+
+const distanceAscii = createDistance({ profile: "ascii" });
+const distanceLatin1 = createDistance({
+  profile: "latin1",
+  outOfRange: "assume-valid"
+});
+```
+
+Profiles are `ascii` (`0..127`), `latin1` (`0..255`), and `codeUnit` (`0..65535`). The default `outOfRange` policy is `throw`. Use `assume-valid` only when the application has already validated or normalized both strings; out-of-profile input under that policy has undefined results.
+
 ### Character table strategy
 
 The default API uses a 256-entry PEQ table through 64 code units, so those tiers assume ASCII/Latin-1-style input. Its long-string fallback uses two full-width PEQ lanes. The default therefore optimizes common short and medium inputs but does not promise one uniform character-table width across every tier.
@@ -128,6 +142,8 @@ The design direction is:
 - share kernel implementations by binding the PEQ table before entering the hot function
 - avoid naive automatic routing that scans both strings on every call
 
+The `/profiles` factory implements that direction without changing the default entrypoint. Each returned function owns its mutable tables and scratch state, so create one per worker or independent execution context and reuse it synchronously.
+
 The repository design note [Levenshtein Use Cases and Text Profiles](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/use-cases-and-text-profiles.md) covers real-world workloads, precise comparison units, current per-worker memory costs, and the proposed configurable-profile direction.
 
 ### PEQ memory inventory
@@ -140,9 +156,11 @@ Static typed-array payload currently scales with each worker or module realm:
 | `/unicode` | 768 KiB | 3 MiB | 6 MiB |
 | `/v2` | 6 MiB | 24 MiB | 48 MiB |
 
-These figures count PEQ typed-array payload, not total process memory, JavaScript objects, or retained scratch buffers. Module tables are reused by synchronous calls in one realm; separate workers load separate state.
+Profile factories allocate three PEQ lanes per returned function: 1.5 KiB for ASCII, 3 KiB for Latin-1, or 768 KiB for full code-unit coverage.
 
-Future configurable profiles are scoped around 128-entry ASCII tables, 256-entry Latin-1 tables, and 65,536-entry full code-unit tables. Dense integer sequences are the preferred future shape for DNA, proteins, phonemes, transcript words, and custom alphabets because they can use a table sized to the encoded symbol range. These APIs are **planned, not currently published**.
+These figures count PEQ typed-array payload, not total process memory, JavaScript objects, or retained scratch buffers. Module tables and profile instances are reused by synchronous calls; separate workers load separate state.
+
+Dense integer sequences remain the preferred future shape for DNA, proteins, phonemes, transcript words, and custom alphabets because they can use a table sized to the encoded symbol range. That separate token API is planned, not currently published.
 
 See the checked-in [stable-core integration plan](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/text-profile-integration-plan.md) for the proposed API, validation policies, file scope, test matrix, worker benchmarks, and v2 deferral criteria.
 

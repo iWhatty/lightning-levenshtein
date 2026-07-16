@@ -33,7 +33,7 @@ pnpm run bench:profiles:dispatch
 pnpm run bench:profiles:workers
 ```
 
-The second command measures the bench-only dispatcher in `create-profile-distance.js` across the short, blockwise, and long tiers. It compares `throw` with `assume-valid`; factory construction remains outside the timed loop.
+The second command measures the profile dispatcher in `src/distanceProfile.js` across the short, blockwise, and long tiers. It compares `throw` with `assume-valid`; factory construction remains outside the timed loop.
 
 The worker command launches each profile/count combination in a fresh child process, starts workers sequentially for clean before/after allocation deltas, and then runs them concurrently. It covers 1, 2, 4, and 8 workers and reports:
 

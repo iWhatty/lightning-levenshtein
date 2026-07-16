@@ -32,14 +32,14 @@ for (const profile of profiles) {
   }
 }
 
-console.log("\nprofile   workers   factory ms   worker heap delta   factory external delta");
+console.log("\nprofile   workers   factory ms   worker heap delta   factory external total");
 for (const result of results) {
   console.log([
     result.profile.padEnd(10),
     String(result.workerCount).padStart(7),
     result.meanFactoryMs.toFixed(3).padStart(12),
     formatBytes(result.workerHeapUsedAfterWork).padStart(19),
-    formatBytes(result.workerExternalAfterFactory).padStart(24)
+    formatBytes(result.workerExternalAfterFactoryTotal).padStart(24)
   ].join(" "));
 }
 

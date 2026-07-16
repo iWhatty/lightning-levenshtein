@@ -4,7 +4,7 @@
 
 Add explicit, memory-tunable text profiles to the stable API first, while preserving the existing default, `/unicode`, and `/v2` behavior and performance. Keep v2 profile generation as a later project after the stable design is measured.
 
-This plan implements the semantics in [Levenshtein Use Cases and Text Profiles](./use-cases-and-text-profiles.md). It is a scope document, not a promise that the illustrative API is already published.
+This plan implements the semantics in [Levenshtein Use Cases and Text Profiles](./use-cases-and-text-profiles.md). The `/profiles` source, minified bundle, declarations, and package exports are implemented in the repository; npm publication remains a separate release decision.
 
 ## Why Stable Core First
 
@@ -18,7 +18,7 @@ All three now have table-bound factories. The long two-lane extraction retains t
 
 V2 statically imports seven kernel families containing 24 PEQ lanes. Supporting three widths there requires shared generation or factories across every dispatch boundary, new bundles, and a much larger benchmark matrix. Adding a runtime width branch to those loops would work against v2's purpose.
 
-## Proposed Public Surface
+## Public Surface
 
 Preserve the default API:
 
@@ -26,7 +26,7 @@ Preserve the default API:
 import { distance, distanceMax, closest } from "lightning-levenshtein";
 ```
 
-Add a separate, tree-shakeable subpath rather than growing `src/index.js`:
+Use a separate, tree-shakeable subpath rather than growing `src/index.js`:
 
 ```js
 import { createDistance } from "lightning-levenshtein/profiles";
@@ -85,20 +85,20 @@ Validation should run in the factory wrapper, not the dispatcher or kernels. The
 
 The unchecked policy must be named explicitly. Out-of-range typed-array access is not a safe implicit fallback and can produce incorrect distance values.
 
-## Expected File Scope
+## Implemented File Scope
 
-Likely production changes:
+Production integration:
 
-| Area | Expected change |
+| Area | Implemented change |
 | --- | --- |
 | `src/myers_x64.js` | retain the existing public kernel through a new table-bound factory |
 | `src/myers_x64_factory.js` | own two-lane kernel construction and instance scratch buffers |
 | `src/distanceProfile.js` | create profile tables, validation wrappers, and stable dispatcher |
 | `src/profiles.js` | new subpath entrypoint exporting `createDistance` |
-| `dist/*profiles*.js` | optional pre-built Closure bundle if `/profiles/min` is offered |
+| `dist/*profiles*.js` | pre-built Closure bundle for `/profiles/min` |
 | `dist/*profiles*.d.ts` | public TypeScript declarations |
-| `package.json` | add explicit `./profiles` and possibly `./profiles/min` exports |
-| build scripts | add a profile bundle only if the pre-built subpath is justified |
+| `package.json` | explicit `./profiles` and `./profiles/min` exports |
+| build scripts | independent profile bundle in `build:all` |
 | package smoke scripts | verify exports, declarations, tarball installation, and exact file list |
 | tests | profile correctness, validation, boundaries, and unchanged legacy behavior |
 | benchmarks | throughput and worker-memory measurements |
@@ -179,20 +179,20 @@ Promotion requires correctness at every v2 dispatch edge, reproducible package b
 
 ## Delivery Gates
 
-1. **Factory spike:** prove table-bound `myers_x64` correctness and compare long-input throughput.
-2. **Stable profile prototype:** implement ASCII, Latin-1, and code-unit factories behind a bench-only entrypoint.
-3. **Memory harness:** produce repeatable 1/2/4/8-worker measurements.
-4. **API review:** finalize subpath names and validation policy after evidence.
-5. **Package integration:** add declarations, exports, build, smoke tests, and README examples.
-6. **Release decision:** publish only if the profile API is measurably useful and legacy performance remains within an agreed tolerance.
+1. **Complete — Factory spike:** table-bound `myers_x64` correctness and long-input throughput.
+2. **Complete — Stable profile prototype:** ASCII, Latin-1, and code-unit factories across all stable tiers.
+3. **Complete — Memory harness:** repeatable 1/2/4/8-worker measurements.
+4. **Complete — API review:** `/profiles`, `createDistance`, safe `throw` default, and explicit `assume-valid` policy.
+5. **Complete — Package integration:** declarations, source/min exports, build, smoke tests, and README examples.
+6. **Open — Release decision:** npm publication and versioning remain maintainer actions.
 
 ### Factory Spike Status
 
-The table-bound `myers_x64` extraction and focused benchmark now live in `src/myers_x64_factory.js` and `bench/text-profile-spike/`. Correctness covers 128-, 256-, and 65,536-entry bindings plus isolated factory state. The initial Node 24 Windows run found no obvious long-input throughput regression; detailed conditions and directional ranges are recorded with the benchmark. Node 18/24 repetition and worker-memory evidence remain open gates before a public profile API.
+The table-bound `myers_x64` extraction and focused benchmark live in `src/myers_x64_factory.js` and `bench/text-profile-spike/`. Correctness covers 128-, 256-, and 65,536-entry bindings plus isolated factory state. The initial Node 24 Windows run found no obvious long-input throughput regression; detailed conditions and directional ranges are recorded with the benchmark.
 
 ### Stable Profile Prototype Status
 
-The bench-only dispatcher now binds all three stable tiers for `ascii`, `latin1`, and `codeUnit`, with `throw` and `assume-valid` selected once at construction. Tests cover dispatch boundaries, maximum profile values, rejection before fast paths, configuration errors, symmetry, and instance isolation. Initial throughput shows unchecked dispatch close to current controls while per-call validation remains a measurable policy cost. The package exports remain unchanged.
+The dispatcher binds all three stable tiers for `ascii`, `latin1`, and `codeUnit`, with `throw` and `assume-valid` selected once at construction. Tests cover dispatch boundaries, maximum profile values, rejection before fast paths, configuration errors, symmetry, and instance isolation. Initial throughput shows unchecked dispatch close to current controls while per-call validation remains a measurable policy cost. It is exported only through `/profiles` and `/profiles/min`; the default API remains unchanged.
 
 ### Worker Harness Status
 

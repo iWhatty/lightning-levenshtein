@@ -1,22 +1,25 @@
-import { createMyers32 } from "../../src/myers_32_factory.js";
-import { createMyersX } from "../../src/myers_x_factory.js";
-import { createMyersX64 } from "../../src/myers_x64_factory.js";
+"use strict";
+
+import { createMyers32 } from "./myers_32_factory.js";
+import { createMyersX } from "./myers_x_factory.js";
+import { createMyersX64 } from "./myers_x64_factory.js";
 
 const PROFILE_WIDTHS = {
-  ascii: 128,
-  latin1: 256,
-  codeUnit: 65536
+  "ascii": 128,
+  "latin1": 256,
+  "codeUnit": 65536
 };
 
 /**
- * Bench-only prototype of the proposed stable text-profile dispatcher.
+ * Creates an isolated, table-bound Levenshtein distance function.
  *
  * @param {{profile: "ascii"|"latin1"|"codeUnit", outOfRange?: "throw"|"assume-valid"}} options
  * @returns {(a: string, b: string) => number}
  */
-export function createProfileDistance(options) {
-  const profile = options?.profile;
-  const outOfRange = options?.outOfRange ?? "throw";
+export function createDistance(options) {
+  // Quoted public keys must survive Closure ADVANCED property renaming.
+  const profile = options?.["profile"];
+  const outOfRange = options?.["outOfRange"] ?? "throw";
   const width = PROFILE_WIDTHS[profile];
 
   if (width === undefined) {

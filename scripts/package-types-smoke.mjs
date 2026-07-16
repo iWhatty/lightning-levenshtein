@@ -9,7 +9,9 @@ const expected = {
   "./v2": ["levenshteinLightning"],
   "./v2/min": ["levenshteinLightning"],
   "./unicode": ["distanceUnicode"],
-  "./unicode/min": ["distanceUnicode"]
+  "./unicode/min": ["distanceUnicode"],
+  "./profiles": ["createDistance"],
+  "./profiles/min": ["createDistance"]
 };
 
 assert.equal(pkg.types, pkg.exports["."].types);

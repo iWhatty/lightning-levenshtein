@@ -65,6 +65,13 @@ pnpm run test:package:pack
   - Keeps wider PEQ tables out of the default hot path.
   - `lightning-levenshtein/unicode/min` explicitly selects the pre-built Closure bundle.
 
+- Profile entrypoint: `lightning-levenshtein/profiles`
+  - Routes ESM consumers to `src/profiles.js`.
+  - Exports `createDistance` with explicit ASCII, Latin-1, or code-unit profiles.
+  - Defaults to rejecting out-of-profile input; unchecked use must be explicit.
+  - Keeps profile tables out of the default bundle and owns state per returned function.
+  - `lightning-levenshtein/profiles/min` explicitly selects the pre-built Closure bundle.
+
 ## Publish
 
 - Bump the version intentionally:

@@ -1,8 +1,8 @@
-import { createProfileDistance } from "../bench/text-profile-spike/create-profile-distance.js";
+import { createDistance } from "../src/profiles.js";
 
 const boundaries = [0, 1, 2, 3, 31, 32, 33, 63, 64, 65, 96, 128, 257];
 
-test("every prototype profile matches the reference across stable dispatch boundaries", () => {
+test("every public profile matches the reference across stable dispatch boundaries", () => {
   const cases = [
     ["ascii", "AZaz09\u007f"],
     ["latin1", "AZaz09\u00c0\u00e9\u00ff"],
@@ -11,7 +11,7 @@ test("every prototype profile matches the reference across stable dispatch bound
 
   for (const [profile, alphabet] of cases) {
     for (const outOfRange of ["throw", "assume-valid"]) {
-      const distance = createProfileDistance({ profile, outOfRange });
+      const distance = createDistance({ profile, outOfRange });
       for (const length of boundaries) {
         const a = patternedString(length, alphabet, 0);
         const b = patternedString(Math.max(0, length - 3), alphabet, 2);
@@ -23,8 +23,8 @@ test("every prototype profile matches the reference across stable dispatch bound
 });
 
 test("throw policy rejects the first out-of-profile code unit before dispatch", () => {
-  const ascii = createProfileDistance({ profile: "ascii", outOfRange: "throw" });
-  const latin1 = createProfileDistance({ profile: "latin1", outOfRange: "throw" });
+  const ascii = createDistance({ profile: "ascii", outOfRange: "throw" });
+  const latin1 = createDistance({ profile: "latin1", outOfRange: "throw" });
 
   expect(() => ascii("same\u0080", "same\u0080")).toThrow(RangeError);
   expect(() => ascii("valid", "x\u0080y")).toThrow(/code unit 128 at index 1/);
@@ -39,7 +39,7 @@ test("each profile accepts its maximum code unit at every stable tier", () => {
   ];
 
   for (const [profile, symbol] of cases) {
-    const distance = createProfileDistance({ profile, outOfRange: "throw" });
+    const distance = createDistance({ profile, outOfRange: "throw" });
     for (const length of [32, 64, 65]) {
       const a = symbol.repeat(length);
       const b = `${symbol.repeat(length - 1)}A`;
@@ -49,14 +49,14 @@ test("each profile accepts its maximum code unit at every stable tier", () => {
 });
 
 test("factory rejects unknown configuration values", () => {
-  expect(() => createProfileDistance({ profile: "utf8" })).toThrow(TypeError);
-  expect(() => createProfileDistance({ profile: "ascii", outOfRange: "fallback" })).toThrow(TypeError);
-  expect(() => createProfileDistance()).toThrow(TypeError);
+  expect(() => createDistance({ profile: "utf8" })).toThrow(TypeError);
+  expect(() => createDistance({ profile: "ascii", outOfRange: "fallback" })).toThrow(TypeError);
+  expect(() => createDistance()).toThrow(TypeError);
 });
 
 test("separate profile instances retain isolated mutable state", () => {
-  const first = createProfileDistance({ profile: "ascii", outOfRange: "assume-valid" });
-  const second = createProfileDistance({ profile: "ascii", outOfRange: "assume-valid" });
+  const first = createDistance({ profile: "ascii", outOfRange: "assume-valid" });
+  const second = createDistance({ profile: "ascii", outOfRange: "assume-valid" });
   const pairs = [
     ["A".repeat(32), "B".repeat(29)],
     ["ACGT".repeat(16), "AGGT".repeat(15)],
