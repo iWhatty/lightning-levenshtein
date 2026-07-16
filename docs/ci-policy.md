@@ -21,7 +21,7 @@ CI should not become a benchmark lab or a byte-for-byte minifier auditor.
 
 We tried checking that rebuilt tracked bundles were identical after `pnpm run build:all`. That caught a real difference between local Windows builds and GitHub Linux builds, but the difference came from Closure/minifier output formatting and ordering details rather than a proven behavior regression. Even after making Closure inputs sorted in JavaScript, the Linux build still produced non-identical minified output.
 
-The lesson: byte-identical generated artifacts are too brittle for this repo unless the entire build environment is pinned more tightly than we currently need.
+The Closure compiler, Node.js, and pnpm versions are now pinned. Byte-identical generated artifacts remain too brittle because platform-specific compiler output formatting and line wrapping can still differ without changing behavior.
 
 ## Decision
 
@@ -37,6 +37,6 @@ Keep CI focused on:
 - tarball install smoke tests
 - exact publish file-list smoke tests
 
-Do not re-add a tracked bundle byte-diff guard unless the build pipeline is made deterministic across OS, Node, Closure compiler, and line wrapping behavior.
+Do not re-add a tracked bundle byte-diff guard unless the build pipeline is also made deterministic across OS and line-wrapping behavior.
 
 Sorted Closure input enumeration is still useful and should remain in the build scripts. It reduces avoidable nondeterminism even though it does not make the final minified output byte-identical across every environment.

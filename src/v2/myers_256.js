@@ -1,4 +1,4 @@
-// bench/bolt/myers_256.js
+// src/v2/myers_256.js
 "use strict";
 
 const peq0 = new Uint32Array(65536);

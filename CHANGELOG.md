@@ -12,7 +12,7 @@
 - **chore(pkg): `files` whitelist unchanged** — `src/` was already included, so `src/v2/` ships in the tarball automatically.
 - No behaviour change for existing consumers of `./v2` (the `default` condition still resolves to the same `.min.js`). Closes the `lightning-levenshtein /v2` ESM-source-routing sub-bullet under host carry-forward #6.
 
-## Unreleased — 2026-05-19
+## Unreleased
 
 - fix(v2): propagate unsigned addition carries in the 33–64 and 65–96 character specialized Myers kernels; the missing carry could overstate distances for mixed and repeated inputs.
 - test(v2): cover source and minified builds against a deterministic reference implementation at every production dispatch boundary.

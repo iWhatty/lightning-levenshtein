@@ -1,5 +1,5 @@
 
-// bench\bolt\myers_x128.js
+// src/v2/myers_x128.js
 
 "use strict";
 

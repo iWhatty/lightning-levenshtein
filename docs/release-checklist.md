@@ -47,18 +47,23 @@ pnpm run test:package:pack
 ## Entrypoint Positioning
 
 - Default entrypoint: `lightning-levenshtein`
-  - Compact payload.
+  - Routes ESM consumers to `src/index.js` for tree shaking.
   - Stable public API: `distance`, `distanceMax`, `closest`.
   - Best default for users who want fast distance checks without the larger specialized runtime.
+  - `lightning-levenshtein/min` explicitly selects the pre-built Closure bundle.
 
 - Max-throughput entrypoint: `lightning-levenshtein/v2`
+  - Routes ESM consumers to `src/v2/index.js` for tree shaking.
   - Larger JavaScript payload.
   - Uses aggressive length-based dispatch and specialized kernels.
   - Best for users who prefer maximum speed over package size.
+  - `lightning-levenshtein/v2/min` explicitly selects the pre-built Closure bundle.
 
 - Unicode entrypoint: `lightning-levenshtein/unicode`
+  - Routes ESM consumers to `src/unicode.js` for tree shaking.
   - Explicit UTF-16 code-unit path.
   - Keeps wider PEQ tables out of the default hot path.
+  - `lightning-levenshtein/unicode/min` explicitly selects the pre-built Closure bundle.
 
 ## Publish
 
@@ -83,6 +88,9 @@ npm publish
 - Verify the package page lists the expected version.
 - Install the published version in a fresh fixture and import:
   - `lightning-levenshtein`
+  - `lightning-levenshtein/min`
   - `lightning-levenshtein/v2`
+  - `lightning-levenshtein/v2/min`
   - `lightning-levenshtein/unicode`
+  - `lightning-levenshtein/unicode/min`
 - Confirm the README renders expected benchmark charts on npm.
