@@ -24,6 +24,7 @@ import { distance as levenshteinLightning_v1 } from "../../dist/lightning-levens
 
 const OUT_DIR = path.resolve("bench/packages");
 const OUT_FILE = path.join(OUT_DIR, "results.json");
+const PACKAGE_VERSION = JSON.parse(fs.readFileSync("package.json", "utf8")).version;
 
 const LENGTHS = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
 const SEEDS = [1337, 7331, 20250321];
@@ -77,6 +78,7 @@ const benchOne = (fn, pairs, durationMs) => {
 const results = {
     meta: {
         generatedAt: new Date().toISOString(),
+        packageVersion: PACKAGE_VERSION,
         pairs: PAIRS,
         durationMs: DURATION_MS,
         warmRounds: WARM_ROUNDS,

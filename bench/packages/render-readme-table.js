@@ -10,6 +10,8 @@ const START_MARKER = "<!-- benchmark-table:start -->";
 const END_MARKER = "<!-- benchmark-table:end -->";
 const HIGHLIGHTS_START_MARKER = "<!-- benchmark-highlights:start -->";
 const HIGHLIGHTS_END_MARKER = "<!-- benchmark-highlights:end -->";
+const ENVIRONMENT_START_MARKER = "<!-- benchmark-environment:start -->";
+const ENVIRONMENT_END_MARKER = "<!-- benchmark-environment:end -->";
 
 const data = JSON.parse(fs.readFileSync(IN_FILE, "utf8"));
 const lengths = data.meta.lengths;
@@ -34,6 +36,14 @@ lines.push("");
 lines.push(
   `Reported values are mean ops/ms across ${data.meta.seeds.length} seeds.`
 );
+lines.push("");
+
+const runtime = data.meta.runtime;
+const environmentLine = runtime
+  ? `Node ${runtime.node} on ${runtime.platform} ${runtime.arch}, ${runtime.cpu}.`
+  : "Runtime details were not recorded for this benchmark run.";
+
+lines.push(environmentLine);
 lines.push("");
 
 const tableLines = [];
@@ -93,7 +103,7 @@ const winningLengths = lengths.filter((len) => {
 const highlightLines = [
   HIGHLIGHTS_START_MARKER,
   winningLengths.length === lengths.length
-    ? `- \`${fastestName}\` is the fastest implementation in this checked-in Node benchmark at every tested length.`
+    ? `- \`${fastestName}\` records the highest mean throughput in this checked-in Node benchmark at every tested length.`
     : `- \`${fastestName}\` leads at ${winningLengths.length} of ${lengths.length} tested lengths.`,
   `- Winning lengths: ${winningLengths.map((len) => `\`N=${len}\``).join(", ")}.`,
   ...[1024, 32, 8].map((len) => {
@@ -108,6 +118,19 @@ updatedReadme = replaceMarkedBlock(
   HIGHLIGHTS_START_MARKER,
   HIGHLIGHTS_END_MARKER,
   highlightLines.join("\n")
+);
+
+const environmentBlock = [
+  ENVIRONMENT_START_MARKER,
+  `${environmentLine} Results generated ${data.meta.generatedAt.slice(0, 10)}.`,
+  ENVIRONMENT_END_MARKER,
+].join("\n");
+
+updatedReadme = replaceMarkedBlock(
+  updatedReadme,
+  ENVIRONMENT_START_MARKER,
+  ENVIRONMENT_END_MARKER,
+  environmentBlock
 );
 
 fs.writeFileSync(README_FILE, updatedReadme, "utf8");

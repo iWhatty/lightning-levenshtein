@@ -145,7 +145,11 @@ This keeps tiny inputs fast without sacrificing larger-input performance.
 
 ### Benchmark
 
-The benchmark harness generates the same string pairs for every library at each tested length and seed. Benchmarks were run in Node.js `v24.11.0`.
+The benchmark harness generates the same string pairs for every library at each tested length and seed.
+
+<!-- benchmark-environment:start -->
+Node v24.11.0 on win32 x64, 13th Gen Intel(R) Core(TM) i5-13600K. Results generated 2026-07-16.
+<!-- benchmark-environment:end -->
 
 **Methodology:**
 
@@ -161,12 +165,12 @@ The benchmark harness generates the same string pairs for every library at each 
 
 | Test Target | N=1 | N=2 | N=4 | N=8 | N=16 | N=32 | N=64 | N=128 | N=256 | N=512 | N=1024 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| lightning-levenshtein-v2 | 177370 | 88988 | 50529 | 32045 | 11954 | 6480 | 1805 | 577.3 | 156.1 | 39.39 | 10.31 |
-| lightning-levenshtein-v1 | 95215 | 61582 | 40223 | 25487 | 8519 | 4889 | 1224 | 480.7 | 134.0 | 35.08 | 9.122 |
-| fastest-levenshtein | 96497 | 74506 | 43428 | 23097 | 8104 | 4218 | 1060 | 301.4 | 80.81 | 19.35 | 4.977 |
-| js-levenshtein | 99165 | 87103 | 22492 | 10966 | 3209 | 918.2 | 240.6 | 61.62 | 16.01 | 4.028 | 1.009 |
-| leven | 72613 | 41947 | 21441 | 8117 | 1788 | 418.3 | 114.5 | 29.98 | 7.634 | 1.930 | 0.482 |
-| levenshtein-edit-distance | 114695 | 54474 | 24222 | 8345 | 1753 | 394.0 | 106.2 | 27.47 | 7.004 | 1.761 | 0.439 |
+| lightning-levenshtein-v2 | 176959 | 87310 | 45325 | 29719 | 11565 | 6559 | 1582 | 557.3 | 136.1 | 34.14 | 10.22 |
+| lightning-levenshtein-v1 | 89792 | 59605 | 40893 | 25256 | 8702 | 5080 | 1211 | 419.8 | 123.0 | 33.25 | 8.580 |
+| fastest-levenshtein | 95025 | 73865 | 43340 | 22888 | 8073 | 4404 | 1024 | 288.2 | 77.55 | 19.27 | 4.968 |
+| js-levenshtein | 100407 | 86948 | 22572 | 10990 | 3226 | 915.9 | 238.8 | 60.73 | 15.77 | 4.014 | 1.004 |
+| leven | 73872 | 43095 | 21606 | 8014 | 1778 | 415.8 | 113.5 | 29.13 | 7.573 | 1.908 | 0.480 |
+| levenshtein-edit-distance | 116046 | 56325 | 24109 | 8368 | 1776 | 394.7 | 104.9 | 26.94 | 6.886 | 1.750 | 0.429 |
 
 <!-- benchmark-table:end -->
 
@@ -189,11 +193,11 @@ The benchmark harness generates the same string pairs for every library at each 
 ### Results
 
 <!-- benchmark-highlights:start -->
-- `lightning-levenshtein-v2` is the fastest implementation in this checked-in Node benchmark at every tested length.
+- `lightning-levenshtein-v2` records the highest mean throughput in this checked-in Node benchmark at every tested length.
 - Winning lengths: `N=1`, `N=2`, `N=4`, `N=8`, `N=16`, `N=32`, `N=64`, `N=128`, `N=256`, `N=512`, `N=1024`.
-- At `N=1024`, mean throughput is **10.31 ops/ms** versus **4.977 ops/ms** for `fastest-levenshtein`.
-- At `N=32`, mean throughput is **6480 ops/ms** versus **4218 ops/ms** for `fastest-levenshtein`.
-- At `N=8`, mean throughput is **32045 ops/ms** versus **23097 ops/ms** for `fastest-levenshtein`.
+- At `N=1024`, mean throughput is **10.22 ops/ms** versus **4.968 ops/ms** for `fastest-levenshtein`.
+- At `N=32`, mean throughput is **6559 ops/ms** versus **4404 ops/ms** for `fastest-levenshtein`.
+- At `N=8`, mean throughput is **29719 ops/ms** versus **22888 ops/ms** for `fastest-levenshtein`.
 <!-- benchmark-highlights:end -->
 
 ### Reproducing the benchmark

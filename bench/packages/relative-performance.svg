@@ -18,39 +18,39 @@
 <text x="80" y="74" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">2.1x</text>
 <line x1="90" y1="70" x2="90" y2="480" stroke="#94a3b8" stroke-width="1.5" />
 <line x1="90" y1="480" x2="950" y2="480" stroke="#94a3b8" stroke-width="1.5" />
-<rect x="104.85" y="121.14" width="48.47" height="358.86" rx="6" fill="#38bdf8"><title>N=1 | ratio=1.84x | target=177369564.15 | baseline=96497419.92 | leader=lightning-levenshtein-v2</title></rect>
+<rect x="104.85" y="116.42" width="48.47" height="363.58" rx="6" fill="#38bdf8"><title>N=1 | ratio=1.86x | target=176958530.40 | baseline=95024701.77 | leader=lightning-levenshtein-v2</title></rect>
 <text x="129.0909090909091" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">1</text>
-<text x="129.0909090909091" y="113.13759841660033" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.84x</text>
-<rect x="183.04" y="246.81" width="48.47" height="233.19" rx="6" fill="#38bdf8"><title>N=2 | ratio=1.19x | target=88988231.34 | baseline=74506173.82 | leader=lightning-levenshtein-v2</title></rect>
+<text x="129.0909090909091" y="108.42036474081789" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.86x</text>
+<rect x="183.04" y="249.23" width="48.47" height="230.77" rx="6" fill="#38bdf8"><title>N=2 | ratio=1.18x | target=87309668.79 | baseline=73865489.03 | leader=lightning-levenshtein-v2</title></rect>
 <text x="207.27272727272728" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">2</text>
-<text x="207.27272727272728" y="238.81270967977653" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.19x</text>
-<rect x="261.22" y="252.84" width="48.47" height="227.16" rx="6" fill="#38bdf8"><title>N=4 | ratio=1.16x | target=50528821.31 | baseline=43427552.80 | leader=lightning-levenshtein-v2</title></rect>
+<text x="207.27272727272728" y="241.22682496482145" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.18x</text>
+<rect x="261.22" y="275.82" width="48.47" height="204.18" rx="6" fill="#38bdf8"><title>N=4 | ratio=1.05x | target=45325268.51 | baseline=43339546.38 | leader=lightning-levenshtein-v2</title></rect>
 <text x="285.4545454545455" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">4</text>
-<text x="285.4545454545455" y="244.83659358126337" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.16x</text>
-<rect x="339.40" y="209.13" width="48.47" height="270.87" rx="6" fill="#38bdf8"><title>N=8 | ratio=1.39x | target=32044981.95 | baseline=23097492.37 | leader=lightning-levenshtein-v2</title></rect>
+<text x="285.4545454545455" y="267.81652718897834" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.05x</text>
+<rect x="339.40" y="226.49" width="48.47" height="253.51" rx="6" fill="#38bdf8"><title>N=8 | ratio=1.30x | target=29718514.84 | baseline=22887837.68 | leader=lightning-levenshtein-v2</title></rect>
 <text x="363.6363636363636" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">8</text>
-<text x="363.6363636363636" y="201.1307153286013" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.39x</text>
-<rect x="417.58" y="192.04" width="48.47" height="287.96" rx="6" fill="#38bdf8"><title>N=16 | ratio=1.47x | target=11953562.97 | baseline=8104493.53 | leader=lightning-levenshtein-v2</title></rect>
+<text x="363.6363636363636" y="218.4947841263192" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.30x</text>
+<rect x="417.58" y="200.33" width="48.47" height="279.67" rx="6" fill="#38bdf8"><title>N=16 | ratio=1.43x | target=11564705.60 | baseline=8073350.37 | leader=lightning-levenshtein-v2</title></rect>
 <text x="441.81818181818187" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">16</text>
-<text x="441.81818181818187" y="184.03742017208782" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.47x</text>
-<rect x="495.76" y="180.07" width="48.47" height="299.93" rx="6" fill="#38bdf8"><title>N=32 | ratio=1.54x | target=6479863.39 | baseline=4218010.09 | leader=lightning-levenshtein-v2</title></rect>
+<text x="441.81818181818187" y="192.33034764222384" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.43x</text>
+<rect x="495.76" y="189.27" width="48.47" height="290.73" rx="6" fill="#38bdf8"><title>N=32 | ratio=1.49x | target=6558537.20 | baseline=4404292.19 | leader=lightning-levenshtein-v2</title></rect>
 <text x="520" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">32</text>
-<text x="520" y="172.068003751922" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.54x</text>
-<rect x="573.95" y="147.43" width="48.47" height="332.57" rx="6" fill="#38bdf8"><title>N=64 | ratio=1.70x | target=1804884.66 | baseline=1059581.34 | leader=lightning-levenshtein-v2</title></rect>
+<text x="520" y="181.2662671742886" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.49x</text>
+<rect x="573.95" y="178.54" width="48.47" height="301.46" rx="6" fill="#38bdf8"><title>N=64 | ratio=1.54x | target=1581837.84 | baseline=1024477.96 | leader=lightning-levenshtein-v2</title></rect>
 <text x="598.1818181818182" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">64</text>
-<text x="598.1818181818182" y="139.43256840220766" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.70x</text>
-<rect x="652.13" y="106.00" width="48.47" height="374.00" rx="6" fill="#38bdf8"><title>N=128 | ratio=1.92x | target=577335.33 | baseline=301384.07 | leader=lightning-levenshtein-v2</title></rect>
+<text x="598.1818181818182" y="170.54402083198283" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.54x</text>
+<rect x="652.13" y="102.42" width="48.47" height="377.58" rx="6" fill="#38bdf8"><title>N=128 | ratio=1.93x | target=557283.67 | baseline=288159.31 | leader=lightning-levenshtein-v2</title></rect>
 <text x="676.3636363636364" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">128</text>
-<text x="676.3636363636364" y="97.99930570855196" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.92x</text>
-<rect x="730.31" y="102.88" width="48.47" height="377.12" rx="6" fill="#38bdf8"><title>N=256 | ratio=1.93x | target=156082.40 | baseline=80805.27 | leader=lightning-levenshtein-v2</title></rect>
+<text x="676.3636363636364" y="94.42065660196192" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.93x</text>
+<rect x="730.31" y="137.33" width="48.47" height="342.67" rx="6" fill="#38bdf8"><title>N=256 | ratio=1.76x | target=136111.61 | baseline=77550.41 | leader=lightning-levenshtein-v2</title></rect>
 <text x="754.5454545454546" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">256</text>
-<text x="754.5454545454546" y="94.88064862229328" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.93x</text>
-<rect x="808.49" y="82.66" width="48.47" height="397.34" rx="6" fill="#38bdf8"><title>N=512 | ratio=2.04x | target=39388.38 | baseline=19354.03 | leader=lightning-levenshtein-v2</title></rect>
+<text x="754.5454545454546" y="129.3303531028057" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.76x</text>
+<rect x="808.49" y="134.06" width="48.47" height="345.94" rx="6" fill="#38bdf8"><title>N=512 | ratio=1.77x | target=34142.26 | baseline=19268.79 | leader=lightning-levenshtein-v2</title></rect>
 <text x="832.7272727272729" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">512</text>
-<text x="832.7272727272729" y="74.6609218339097" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">2.04x</text>
-<rect x="886.67" y="75.68" width="48.47" height="404.32" rx="6" fill="#38bdf8"><title>N=1024 | ratio=2.07x | target=10307.58 | baseline=4977.33 | leader=lightning-levenshtein-v2</title></rect>
+<text x="832.7272727272729" y="126.05873075071531" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">1.77x</text>
+<rect x="886.67" y="78.38" width="48.47" height="401.62" rx="6" fill="#38bdf8"><title>N=1024 | ratio=2.06x | target=10218.58 | baseline=4967.54 | leader=lightning-levenshtein-v2</title></rect>
 <text x="910.909090909091" y="502" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#94a3b8">1024</text>
-<text x="910.909090909091" y="67.68036882831308" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">2.07x</text>
+<text x="910.909090909091" y="70.38104894743788" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#e5e7eb">2.06x</text>
 <text x="520" y="536" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#e5e7eb">String length (N)</text>
 <text x="24" y="275" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#e5e7eb" transform="rotate(-90 24 275)">Times faster vs fastest-levenshtein</text>
 <g transform="translate(730, 530)">

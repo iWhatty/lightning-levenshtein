@@ -9,6 +9,7 @@ Benchmark the production lightning-levenshtein builds against other npm Levensht
 - 500 pairs per dataset
 - Arithmetic mean across 3 seeds
 - README table reported as ops/ms; raw results retain ops/ms and ops/sec
+- Microbenchmark results vary by runtime and machine; use the recorded environment and reproduce on the target platform before making deployment decisions
 
 ## Included packages
 - lightning-levenshtein-v2 (max-throughput production build)
