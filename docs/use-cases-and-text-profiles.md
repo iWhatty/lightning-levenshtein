@@ -89,7 +89,7 @@ The code-point row illustrates why a direct table is the wrong representation fo
 
 These figures describe typed-array payloads and exclude JavaScript object, module, and allocator overhead. They also explain why worker count matters: eight workers loading v2 can account for roughly 48 MiB of PEQ payload alone.
 
-The current README description of the default path as uniformly low-memory should eventually be refined because long inputs route to the two-lane wide kernel.
+The README now reflects this mixed-width default behavior and the v2 per-worker PEQ cost.
 
 ## Proposed Profile Semantics
 
@@ -166,3 +166,24 @@ For the stable core, factories can bind one table to the existing kernel factori
 The operator should own semantic normalization and know the domain. Lightning Levenshtein should own fast, explicit sequence profiles; validation options; accurate memory documentation; and reproducible benchmarks.
 
 The first implementation experiment should be ASCII/Latin-1/code-unit factories for the stable core, followed by generated v2 variants and worker-scaling measurements. A generic arbitrary-alphabet string map should not be the first design: dense token input provides clearer semantics, lower memory, and a cleaner hot path.
+
+The stable-core implementation scope and acceptance gates are tracked in [Text Profile Integration Plan](./text-profile-integration-plan.md).
+
+## Source Register
+
+Sources reviewed for this design, with the claim each source supports. Links were verified on 2026-07-16.
+
+| Source | Role in this design |
+| --- | --- |
+| [ECMAScript `String.prototype.charCodeAt`](https://tc39.es/ecma262/multipage/text-processing.html#sec-string.prototype.charcodeat) | JavaScript string indexing returns 16-bit UTF-16 code units, establishing the semantics of the current kernels. |
+| [Unicode UAX #15: Normalization Forms](https://unicode.org/reports/tr15/) | Normalization provides canonical/compatibility forms; it is distinct from transliteration or arbitrary alphabet reduction. |
+| [Unicode UAX #29: Text Segmentation](https://unicode.org/reports/tr29/) | Grapheme clusters are a separate, tailorable approximation of user-perceived characters. |
+| [WHATWG Encoding Standard](https://encoding.spec.whatwg.org/) | `TextEncoder` produces UTF-8 bytes, supporting the distinction between byte distance and string/code-unit distance. |
+| [W3C Character Model: String Matching](https://www.w3.org/TR/charmod-norm/) | Matching, normalization, and case behavior should follow the vocabulary; ASCII-only behavior is appropriate only for restricted vocabularies. |
+| [Elasticsearch fuzzy query](https://www.elastic.co/docs/reference/query-languages/query-dsl/query-dsl-fuzzy-query) | Search systems use small bounded edit distances to expand similar terms. |
+| [PostgreSQL `fuzzystrmatch`](https://www.postgresql.org/docs/current/fuzzystrmatch.html) | Databases expose exact and bounded Levenshtein over arbitrary strings, including multibyte data. |
+| [NIST OpenSAT 2019 evaluation plan](https://www.nist.gov/system/files/documents/2019/02/06/opensat19_evaluation_plan_v3_2-6-19.pdf) | Speech-recognition word error rate aligns transcript tokens using Levenshtein-style dynamic programming. |
+| [Levenshtein Distance, Sequence Comparison and Biological Database Search](https://pmc.ncbi.nlm.nih.gov/articles/PMC8274556/) | Edit distance is central to biological sequence comparison, while production biology often needs generalized scoring and alignment. |
+| [Improved Spelling Error Detection and Correction for Arabic](https://aclanthology.org/C12-2011.pdf) | Multilingual spelling correction is a concrete non-ASCII workload using small edit-distance candidate bounds. |
+
+Repository-derived memory counts come from the module-level typed arrays in `src/peq.js`, `src/peqUnicode.js`, `src/myers_x64.js`, and `src/v2/`. They are arithmetic inventory figures, not externally sourced benchmark measurements.

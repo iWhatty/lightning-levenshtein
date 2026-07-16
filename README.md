@@ -130,6 +130,22 @@ The design direction is:
 
 The repository design note [Levenshtein Use Cases and Text Profiles](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/use-cases-and-text-profiles.md) covers real-world workloads, precise comparison units, current per-worker memory costs, and the proposed configurable-profile direction.
 
+### PEQ memory inventory
+
+Static typed-array payload currently scales with each worker or module realm:
+
+| Entrypoint | PEQ payload per worker | 4 workers | 8 workers |
+| --- | ---: | ---: | ---: |
+| default | about 513 KiB | about 2 MiB | about 4 MiB |
+| `/unicode` | 256 KiB | 1 MiB | 2 MiB |
+| `/v2` | 6 MiB | 24 MiB | 48 MiB |
+
+These figures count PEQ typed-array payload, not total process memory, JavaScript objects, or retained scratch buffers. Module tables are reused by synchronous calls in one realm; separate workers load separate state.
+
+Future configurable profiles are scoped around 128-entry ASCII tables, 256-entry Latin-1 tables, and 65,536-entry full code-unit tables. Dense integer sequences are the preferred future shape for DNA, proteins, phonemes, transcript words, and custom alphabets because they can use a table sized to the encoded symbol range. These APIs are **planned, not currently published**.
+
+See the checked-in [stable-core integration plan](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/text-profile-integration-plan.md) for the proposed API, validation policies, file scope, test matrix, worker benchmarks, and v2 deferral criteria.
+
 ### Dispatch strategy
 
 The runtime selects the cheapest correct kernel for the current input size.
