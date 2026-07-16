@@ -1,22 +1,22 @@
 # packages benchmark notes
 
 ## Goal
-Benchmark the shipped lightning-levenshtein package against other npm Levenshtein libraries.
+Benchmark the production lightning-levenshtein builds against other npm Levenshtein libraries.
 
 ## Rules
 - Equal-length random string pairs
 - Same dataset for all libraries per seed/length
 - 500 pairs per dataset
-- Median across 3 seeds
-- Throughput reported as ops/sec
+- Arithmetic mean across 3 seeds
+- README table reported as ops/ms; raw results retain ops/ms and ops/sec
 
 ## Included packages
-- lightning-levenshtein
+- lightning-levenshtein-v2 (max-throughput production build)
+- lightning-levenshtein-v1 (default production build)
 - fastest-levenshtein
 - js-levenshtein
 - leven
-- fast-levenshtein
 - levenshtein-edit-distance
 
 ## Excluded
-Internal kernels and bench-only variants. Those belong in internal optimization benches, not README marketing tables.
+Internal kernels and bench-only variants. `fast-levenshtein` is also excluded because it delegates to `fastest-levenshtein`; benchmarking both would duplicate the same implementation.

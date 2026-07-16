@@ -2,7 +2,7 @@
 
 I generated 500 pairs of strings with length N. I measured the throughput each library achieved across the same dataset. Higher is better.
 
-Reported values are median ops/ms across 3 seeds.
+Reported values are mean ops/ms across 3 seeds.
 
 | Test Target | N=1 | N=2 | N=4 | N=8 | N=16 | N=32 | N=64 | N=128 | N=256 | N=512 | N=1024 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|

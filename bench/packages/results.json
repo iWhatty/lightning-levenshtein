@@ -24,7 +24,9 @@
     ],
     "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
     "unit": "ops/sec",
-    "note": "Median across seeds. 500 random equal-length string pairs per N."
+    "primaryMetric": "meanOpsPerMs",
+    "aggregation": "arithmetic mean across seeds",
+    "note": "Mean across seeds. 500 random equal-length string pairs per N."
   },
   "results": {
     "1": {

@@ -4,6 +4,7 @@
 
 
 import fs from "fs";
+import os from "os";
 import path from "path";
 
 import { buildPairs, median, mean } from "../data.js";
@@ -83,7 +84,15 @@ const results = {
         seeds: SEEDS,
         alphabet: ALPHABET,
         unit: "ops/sec",
-        note: "Median across seeds. 500 random equal-length string pairs per N.",
+        primaryMetric: "meanOpsPerMs",
+        aggregation: "arithmetic mean across seeds",
+        runtime: {
+            node: process.version,
+            platform: process.platform,
+            arch: process.arch,
+            cpu: os.cpus()[0]?.model ?? "unknown",
+        },
+        note: "Mean across seeds. 500 random equal-length string pairs per N.",
     },
     results: {},
 };

@@ -34,8 +34,8 @@ pnpm add lightning-levenshtein
 import { distance, distanceMax, closest } from "lightning-levenshtein";
 
 distance("kitten", "sitting");                 // 3
-distanceMax("kitten", "sitting", 2);           // -1 (over threshold)
-closest("kitten", ["kitchen", "sitting"]);     // "kitten"-nearest entry
+distanceMax("kitten", "sitting", 2) > 2;       // true (over threshold)
+closest("kitten", ["kitchen", "sitting"]);     // "kitchen"
 ```
 
 ---
@@ -49,14 +49,15 @@ The package exposes three logical entrypoints, each with an ESM-source path for 
   "exports": {
     ".":             { "import": "./src/index.js",       "default": "./dist/lightning-levenshtein.min.js" },
     "./min":         {                                    "default": "./dist/lightning-levenshtein.min.js" },
-    "./v2":          {                                    "default": "./dist/lightning-levenshtein-v2.min.js" },
+    "./v2":          { "import": "./src/v2/index.js",    "default": "./dist/lightning-levenshtein-v2.min.js" },
+    "./v2/min":      {                                    "default": "./dist/lightning-levenshtein-v2.min.js" },
     "./unicode":     { "import": "./src/unicode.js",     "default": "./dist/lightning-levenshtein-unicode.min.js" },
     "./unicode/min": {                                    "default": "./dist/lightning-levenshtein-unicode.min.js" }
   }
 }
 ```
 
-As of 0.0.4, the `.` and `./unicode` entries route bundlers (esbuild, vite, rollup, webpack 5) at ESM source so unused exports can be tree-shaken. Single-function consumers of `distance` drop ~26% gzipped vs the pre-bundled `.min.js`. The `./v2` entry still ships only the pre-built bundle pending a source-folder refactor.
+The `.`, `./v2`, and `./unicode` entrypoints route bundlers at ESM source so unused code can be tree-shaken. Explicit `/min` subpaths expose the pre-built Closure bundles for consumers that want them directly.
 
 ### Default API
 
@@ -74,11 +75,11 @@ The `/v2` subpath exposes the larger max-throughput runtime:
 import { levenshteinLightning } from "lightning-levenshtein/v2";
 ```
 
-This resolves to `dist/lightning-levenshtein-v2.min.js`. The `v2` build is a separate optimized runtime that uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. Choose it when throughput matters more than the extra JavaScript payload.
+Bundlers receive `src/v2/index.js`; `lightning-levenshtein/v2/min` exposes the pre-built bundle. The v2 runtime uses more aggressive length-based dispatch, tiny-string fast paths, precompiled 32-bit kernels, fixed-width Myers variants, and a generalized large-input fallback. Choose it when throughput matters more than the extra JavaScript payload.
 
 ### Unicode API
 
-Unicode-correct UTF-16 code-unit distance:
+Full-width UTF-16 code-unit distance:
 
 ```js
 import { distanceUnicode } from "lightning-levenshtein/unicode";
@@ -151,16 +152,19 @@ The benchmark harness generates the same string pairs for every library at each 
 - alphabet: `A-Z`, `a-z`, `0-9`
 - reported table values: **mean ops/ms across 3 seeds**
 
-**Mean ops/sec:**
+<!-- benchmark-table:start -->
+**Mean ops/ms:**
 
 | Test Target | N=1 | N=2 | N=4 | N=8 | N=16 | N=32 | N=64 | N=128 | N=256 | N=512 | N=1024 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| lightning-levenshtein-v2 | 180629 | 91386 | 50257 | 32369 | 11949 | 6514 | 1805 | 581.9 | 158.0 | 35.92 | 9.327 |
-| lightning-levenshtein-v1 | 94625 | 61719 | 40905 | 25507 | 8577 | 4938 | 1224 | 466.0 | 134.5 | 35.25 | 9.117 |
-| fastest-levenshtein | 100634 | 74359 | 43909 | 23150 | 8307 | 4240 | 1087 | 290.2 | 78.41 | 19.55 | 5.092 |
-| js-levenshtein | 115773 | 87076 | 23668 | 11343 | 3373 | 924.0 | 241.7 | 61.35 | 15.92 | 3.985 | 1.006 |
-| leven | 82490 | 41685 | 21482 | 8188 | 1785 | 420.2 | 114.2 | 29.90 | 7.607 | 1.913 | 0.481 |
-| levenshtein-edit-distance | 114674 | 55327 | 24957 | 8463 | 1792 | 396.6 | 106.6 | 27.38 | 6.992 | 1.754 | 0.438 |
+| lightning-levenshtein-v2 | 177370 | 88988 | 50529 | 32045 | 11954 | 6480 | 1805 | 577.3 | 156.1 | 39.39 | 10.31 |
+| lightning-levenshtein-v1 | 95215 | 61582 | 40223 | 25487 | 8519 | 4889 | 1224 | 480.7 | 134.0 | 35.08 | 9.122 |
+| fastest-levenshtein | 96497 | 74506 | 43428 | 23097 | 8104 | 4218 | 1060 | 301.4 | 80.81 | 19.35 | 4.977 |
+| js-levenshtein | 99165 | 87103 | 22492 | 10966 | 3209 | 918.2 | 240.6 | 61.62 | 16.01 | 4.028 | 1.009 |
+| leven | 72613 | 41947 | 21441 | 8117 | 1788 | 418.3 | 114.5 | 29.98 | 7.634 | 1.930 | 0.482 |
+| levenshtein-edit-distance | 114695 | 54474 | 24222 | 8345 | 1753 | 394.0 | 106.2 | 27.47 | 7.004 | 1.761 | 0.439 |
+
+<!-- benchmark-table:end -->
 
 **Relative throughput vs `fastest-levenshtein`.** This chart normalizes `fastest-levenshtein` to **100% at each string length** and shows every other library relative to that baseline. Use it for an apples-to-apples comparison against the package most people already know. Values above 100% mean faster than `fastest-levenshtein`; values below 100% mean slower.
 
@@ -180,11 +184,13 @@ The benchmark harness generates the same string pairs for every library at each 
 
 ### Results
 
-- `lightning-levenshtein` is the fastest library in this benchmark set at every tested length.
-- It leads at `N=1`, `N=2`, `N=4`, `N=8`, `N=16`, `N=32`, `N=64`, `N=128`, `N=256`, `N=512`, and `N=1024`.
-- At `N=1024`, mean throughput is **9.36 ops/ms** versus **4.98 ops/ms** for `fastest-levenshtein`.
-- At `N=32`, mean throughput is **6568 ops/ms** versus **4240 ops/ms** for `fastest-levenshtein`.
-- At `N=8`, mean throughput is **33126 ops/ms** versus **23288 ops/ms** for `fastest-levenshtein`.
+<!-- benchmark-highlights:start -->
+- `lightning-levenshtein-v2` is the fastest implementation in this checked-in Node benchmark at every tested length.
+- Winning lengths: `N=1`, `N=2`, `N=4`, `N=8`, `N=16`, `N=32`, `N=64`, `N=128`, `N=256`, `N=512`, `N=1024`.
+- At `N=1024`, mean throughput is **10.31 ops/ms** versus **4.977 ops/ms** for `fastest-levenshtein`.
+- At `N=32`, mean throughput is **6480 ops/ms** versus **4218 ops/ms** for `fastest-levenshtein`.
+- At `N=8`, mean throughput is **32045 ops/ms** versus **23097 ops/ms** for `fastest-levenshtein`.
+<!-- benchmark-highlights:end -->
 
 ### Reproducing the benchmark
 
@@ -199,17 +205,18 @@ Generated files are written to `bench/packages/`.
 ### Project layout
 
 ```text
-bench/bolt/
-  lev-dispatch.js
-  levenshtein-lightning-v2.js
-  levenshtein_Direct_Matrix.js
-  myers32_v4.js
+src/v2/
+  index.js
+  myers32-unrolledA.js
   myers_64.js
   myers_96.js
   myers_128.js
   myers_256.js
-  myers_x.js
   myers_x64.js
+  myers_x128.js
+
+bench/bolt/
+  experimental and historical kernel variants
 
 bench/packages/
   run-bench.js

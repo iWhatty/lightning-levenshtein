@@ -5,7 +5,8 @@ Guidance for future Codex/agent runs in this repository.
 ## Project Shape
 
 - `src/` contains the stable public API used for the default package entrypoint.
-- `bench/bolt/` contains the v2 runtime source that builds into `dist/lightning-levenshtein-v2.min.js`.
+- `src/v2/` contains the max-throughput runtime source that builds into `dist/lightning-levenshtein-v2.min.js`.
+- `bench/bolt/` retains experimental and historical v2 kernel variants.
 - `bench/` and `codegen/` are working areas for experiments before changes graduate into the package entrypoints.
 - `dist/` is published and should be rebuilt with the package scripts after source changes.
 - CI is a Linux/package-shape safety net. Do not re-add byte-for-byte generated bundle diff checks unless the Closure build is made deterministic across OS/toolchain behavior. See `docs/ci-policy.md`.
@@ -23,7 +24,7 @@ Guidance for future Codex/agent runs in this repository.
 
 - Keep the default API small: `distance`, `distanceMax`, and `closest`.
 - Keep benchmark claims reproducible from checked-in scripts and data generation settings.
-- Prefer proving algorithm changes in `bench/` or `codegen/` before moving them into `src/` or `bench/bolt/`.
+- Prefer proving algorithm changes in `bench/` or `codegen/` before moving them into `src/` or `src/v2/`.
 - Be careful with case-sensitive paths. Windows may pass imports that fail on Linux and npm consumers.
 - Current production builds optimize around small PEQ tables and ASCII/Latin-1-style input. Unicode-width PEQ support should stay explicit and pre-routed, not a silent default change or per-call auto scan in the hot path.
 - PEQ-width variants should share factory implementations where possible. Bind the table once at module setup, then export a hot function with no inner-loop mode checks.
