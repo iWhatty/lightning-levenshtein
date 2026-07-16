@@ -30,9 +30,20 @@ The whole-dispatch prototype adds one shared short/blockwise lane, bringing its 
 ```bash
 pnpm run bench:profiles
 pnpm run bench:profiles:dispatch
+pnpm run bench:profiles:workers
 ```
 
 The second command measures the bench-only dispatcher in `create-profile-distance.js` across the short, blockwise, and long tiers. It compares `throw` with `assume-valid`; factory construction remains outside the timed loop.
+
+The worker command launches each profile/count combination in a fresh child process, starts workers sequentially for clean before/after allocation deltas, and then runs them concurrently. It covers 1, 2, 4, and 8 workers and reports:
+
+- aggregate operations per second on 256-code-unit inputs;
+- spawn-to-ready and factory construction time;
+- process-wide RSS before and after work;
+- worker-local heap, `external`, and `arrayBuffers` deltas;
+- retained array-buffer payload after touching every tier through 1,024 code units.
+
+The harness uses `--expose-gc` to reduce unrelated startup churn. RSS and `external` still include runtime allocation behavior and should be treated as noisy; the dedicated `arrayBuffers` delta most directly confirms PEQ payload.
 
 Treat a single run as directional. Compare multiple runs and Node versions before setting a performance tolerance or promoting a public profile API.
 
@@ -56,3 +67,15 @@ The first Node 24.11.0 Windows dispatcher run found:
 - `throw` validation cost was most visible on short inputs, ranging from `0.656x` to `0.970x` of the default controls across the measured ASCII and Latin-1 workloads.
 
 The unchecked result supports keeping mode selection outside the hot kernels. The checked result supports exposing an explicit unchecked policy for pipelines that validate or normalize once upstream.
+
+### Worker observation
+
+The first Node 24.11.0 Windows worker run measured:
+
+| Profile | 1-worker ops/s | 8-worker ops/s | 8-worker scaling | Factory arrays, 8 workers | Arrays after largest input |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| ASCII | 149,693 | 1,028,261 | 6.87x | 12 KiB | 14 KiB |
+| Latin-1 | 148,641 | 1,067,065 | 7.18x | 24 KiB | 26 KiB |
+| Code unit | 163,956 | 1,069,710 | 6.52x | 6 MiB | about 6 MiB |
+
+Eight-worker ready-state RSS was about 101 MiB for ASCII/Latin-1 and 111 MiB for code-unit profiles in this run. That gap is directionally consistent with the 6 MiB code-unit PEQ payload, but RSS is too allocator- and runtime-sensitive to infer table cost by subtraction from one run. Repeat on Node 18, Linux, and the deployment hardware before capacity planning.

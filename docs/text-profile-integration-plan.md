@@ -194,6 +194,10 @@ The table-bound `myers_x64` extraction and focused benchmark now live in `src/my
 
 The bench-only dispatcher now binds all three stable tiers for `ascii`, `latin1`, and `codeUnit`, with `throw` and `assume-valid` selected once at construction. Tests cover dispatch boundaries, maximum profile values, rejection before fast paths, configuration errors, symmetry, and instance isolation. Initial throughput shows unchecked dispatch close to current controls while per-call validation remains a measurable policy cost. The package exports remain unchanged.
 
+### Worker Harness Status
+
+The isolated worker harness now covers 1, 2, 4, and 8 workers per profile in fresh child processes. It records concurrent throughput, sequential spawn-to-ready time, factory time, process RSS, worker heap/external memory, exact factory `arrayBuffers`, and retained buffers after touching every stable tier. Initial Node 24 Windows results confirm three-lane PEQ arithmetic and useful parallel scaling; cross-version and deployment-hardware repetitions remain necessary before capacity claims or API promotion.
+
 ## Complexity Assessment
 
 The stable string-profile work is **moderate and well-contained**. Existing factories remove much of the risk. The two-lane long kernel and validation cost are the main unknowns.

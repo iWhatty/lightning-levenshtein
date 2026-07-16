@@ -23,6 +23,7 @@ Guidance for future Codex/agent runs in this repository.
 - `pnpm run bench:myers32` and `pnpm run bench:myersx` run kernel exploration benches.
 - `pnpm run bench:profiles` compares table-bound stable long-kernel widths with the historical implementation.
 - `pnpm run bench:profiles:dispatch` measures checked and unchecked profile prototypes across stable tiers.
+- `pnpm run bench:profiles:workers` isolates 1/2/4/8-worker profile throughput and memory measurements.
 
 ## Maintainer Notes
 
