@@ -22,6 +22,7 @@
 - test(tooling): syntax-check repository JavaScript and resolve relative imports in the release gate without executing benchmark workloads.
 - docs(design): map real-world Levenshtein uses to explicit string, byte, and dense-token profiles, including current per-worker PEQ memory costs and a staged configuration proposal.
 - docs(design): add a source register, stable-core integration scope, public PEQ memory inventory, correctness gates, and worker-scaling benchmark plan.
+- refactor(core): expose the stable two-lane long kernel through a table-bound factory while retaining the existing pre-bound export.
 
 - chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
 - chore(pkg): update GitHub repo URL after rename  `4fa7776`

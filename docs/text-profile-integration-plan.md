@@ -186,6 +186,10 @@ Promotion requires correctness at every v2 dispatch edge, reproducible package b
 5. **Package integration:** add declarations, exports, build, smoke tests, and README examples.
 6. **Release decision:** publish only if the profile API is measurably useful and legacy performance remains within an agreed tolerance.
 
+### Factory Spike Status
+
+The table-bound `myers_x64` extraction and focused benchmark now live in `src/myers_x64_factory.js` and `bench/text-profile-spike/`. Correctness covers 128-, 256-, and 65,536-entry bindings plus isolated factory state. The initial Node 24 Windows run found no obvious long-input throughput regression; detailed conditions and directional ranges are recorded with the benchmark. Node 18/24 repetition and worker-memory evidence remain open gates before a public profile API.
+
 ## Complexity Assessment
 
 The stable string-profile work is **moderate and well-contained**. Existing factories remove much of the risk. The two-lane long kernel and validation cost are the main unknowns.

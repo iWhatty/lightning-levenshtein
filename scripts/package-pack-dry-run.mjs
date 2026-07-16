@@ -36,6 +36,7 @@ const expectedFiles = [
   "src/myers_32_unicode.js",
   "src/myers_x.js",
   "src/myers_x64.js",
+  "src/myers_x64_factory.js",
   "src/myers_x_factory.js",
   "src/myers_x_max.js",
   "src/myers_x_unicode.js",
