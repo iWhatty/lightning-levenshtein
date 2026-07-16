@@ -1,8 +1,6 @@
 
 // ./src/myers_32_max.js
 
-// Global pattern equality table shared across invocations
-// const peq = new Uint32Array(0x10000); // One bitmask per Unicode char (up to 16-bit space)
 import { peq } from './peq.js';
 
 
@@ -10,12 +8,10 @@ import { peq } from './peq.js';
  * Bit-parallel Myers' algorithm for Levenshtein distance.
  * Optimized for pattern strings ≤ 32 characters.
  *
- * @param {string} a - Pattern string (must be longer or equal to `b`)
- * @param {string} b - Text string to compare
- * @param {number} n - Length of `a`
- * @param {number} m - Length of `b`
+ * @param {string} a1 - Pattern string (must be longer or equal to `b1`).
+ * @param {string} b1 - Text string to compare.
  * @param {number} maxDistance - Maximum allowable edit distance.
- * @returns {number} Edit distance between `a` and `b`
+ * @returns {number} Exact distance within the threshold, otherwise a value above it.
  */
 export function myers_32_max(a1, b1, maxDistance) {
 

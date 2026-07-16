@@ -1,6 +1,18 @@
 
 /// test\closest.test.js
-import { closest, distance } from "../dist/lightning-levenshtein.min.js";
+import { closest, distance } from "../src/index.js";
+
+const random = createRandom(0x51f15e);
+
+function createRandom(seed) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let value = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    value ^= value + Math.imul(value ^ (value >>> 7), 61 | value);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
 
 const levenshtein = (a, b) => {
@@ -46,15 +58,15 @@ const makeid = (length) => {
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    result += characters.charAt(Math.floor(random() * charactersLength));
   }
   return result;
 };
 
-test("test compare", () => {
+test("distance matches the reference implementation", () => {
   for (let i = 0; i < 100; i++) {
-    const rnd_num1 = (Math.random() * 1000) | 0;
-    const rnd_num2 = (Math.random() * 1000) | 0;
+    const rnd_num1 = (random() * 1000) | 0;
+    const rnd_num2 = (random() * 1000) | 0;
     const rnd_string1 = makeid(rnd_num1);
     const rnd_string2 = makeid(rnd_num2);
     const actual = distance(rnd_string1, rnd_string2);
@@ -63,7 +75,7 @@ test("test compare", () => {
   }
 });
 
-test("test find", () => {
+test("finds the nearest candidate", () => {
   const actual = closest("fast", ["slow", "faster", "fastest"]);
   const expected = "faster";
   expect(actual).toBe(expected);
@@ -79,9 +91,9 @@ test("returns the closest by edit distance", () => {
   expect(actual).toBe("faster");
 });
 
-test("prefers shorter strings in case of tie", () => {
-  const actual = closest("cat", ["cut", "cart"]);
-  expect(actual).toBe("cut"); // both 1 edit away, but "cut" is shorter
+test("keeps the first candidate in case of a tie", () => {
+  const actual = closest("cat", ["cart", "cut"]);
+  expect(actual).toBe("cart");
 });
 
 test("handles completely unrelated strings", () => {
@@ -104,7 +116,7 @@ test("handles case sensitivity", () => {
   expect(actual).toBe("fast"); // or normalize input if needed
 });
 
-test("works with unicode characters", () => {
+test("works with Latin-1 characters", () => {
   const actual = closest("café", ["cafe", "caff", "cafeteria"]);
   expect(actual).toBe("cafe");
 });
@@ -124,9 +136,9 @@ test("respects maxDistance cutoff", () => {
   expect(actual).toBe("hell"); // Only "hell" is within 2 edits
 });
 
-test("resolves tie with common prefix", () => {
+test("prefers a smaller distance over a longer common prefix", () => {
   const actual = closest("abc", ["adc", "abcde"]);
-  expect(actual).toBe("adc"); // Same distance, but shorter string
+  expect(actual).toBe("adc");
 });
 
 test("handles empty target string", () => {
@@ -200,8 +212,8 @@ test("random compare against reference", () => {
   const lengths = [0, 1, 2, 3, 4, 5, 31, 32, 33, 63, 64, 65, 100, 250];
 
   for (let i = 0; i < 2000; i++) {
-    const la = lengths[(Math.random() * lengths.length) | 0];
-    const lb = lengths[(Math.random() * lengths.length) | 0];
+    const la = lengths[(random() * lengths.length) | 0];
+    const lb = lengths[(random() * lengths.length) | 0];
     const a = makeid(la);
     const b = makeid(lb);
 
@@ -229,8 +241,8 @@ test("distance is symmetric", () => {
   const lengths = [0, 1, 2, 3, 4, 5, 31, 32, 33, 63, 64, 65, 100];
 
   for (let i = 0; i < 1000; i++) {
-    const la = lengths[(Math.random() * lengths.length) | 0];
-    const lb = lengths[(Math.random() * lengths.length) | 0];
+    const la = lengths[(random() * lengths.length) | 0];
+    const lb = lengths[(random() * lengths.length) | 0];
     const a = makeid(la);
     const b = makeid(lb);
 
@@ -305,7 +317,7 @@ test("repeated character boundary stress cases", () => {
 function makeidFromAlphabet(length, alphabet = "ab") {
   let result = "";
   for (let i = 0; i < length; i++) {
-    result += alphabet.charAt((Math.random() * alphabet.length) | 0);
+    result += alphabet.charAt((random() * alphabet.length) | 0);
   }
   return result;
 }
@@ -314,8 +326,8 @@ test("tiny alphabet random compare near tier edges", () => {
   const lengths = [33, 64, 65, 96, 97, 128];
 
   for (let i = 0; i < 5000; i++) {
-    const la = lengths[(Math.random() * lengths.length) | 0];
-    const lb = lengths[(Math.random() * lengths.length) | 0];
+    const la = lengths[(random() * lengths.length) | 0];
+    const lb = lengths[(random() * lengths.length) | 0];
 
     const a = makeidFromAlphabet(la, "ab");
     const b = makeidFromAlphabet(lb, "ab");
@@ -370,8 +382,8 @@ test("100 and 128 length random compare against reference", () => {
   const lengths = [100, 127, 128];
 
   for (let i = 0; i < 3000; i++) {
-    const la = lengths[(Math.random() * lengths.length) | 0];
-    const lb = lengths[(Math.random() * lengths.length) | 0];
+    const la = lengths[(random() * lengths.length) | 0];
+    const lb = lengths[(random() * lengths.length) | 0];
 
     const a = makeidFromAlphabet(la, "abc");
     const b = makeidFromAlphabet(lb, "abc");

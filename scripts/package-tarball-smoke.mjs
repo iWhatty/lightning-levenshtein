@@ -83,19 +83,30 @@ try {
     `
 import assert from "node:assert/strict";
 import * as root from "lightning-levenshtein";
+import * as rootMin from "lightning-levenshtein/min";
 import * as v2 from "lightning-levenshtein/v2";
+import * as v2Min from "lightning-levenshtein/v2/min";
 import * as unicode from "lightning-levenshtein/unicode";
+import * as unicodeMin from "lightning-levenshtein/unicode/min";
 
 assert.deepEqual(Object.keys(root).sort(), ["closest", "distance", "distanceMax"]);
+assert.deepEqual(Object.keys(rootMin).sort(), Object.keys(root).sort());
 assert.deepEqual(Object.keys(v2).sort(), ["levenshteinLightning"]);
+assert.deepEqual(Object.keys(v2Min).sort(), Object.keys(v2).sort());
 assert.deepEqual(Object.keys(unicode).sort(), ["distanceUnicode"]);
+assert.deepEqual(Object.keys(unicodeMin).sort(), Object.keys(unicode).sort());
 
 assert.equal(root.distance("kitten", "sitting"), 3);
+assert.equal(rootMin.distance("kitten", "sitting"), 3);
 assert.equal(root.distanceMax("kitten", "sitting", 10), 3);
+assert.equal(rootMin.distanceMax("kitten", "sitting", 10), 3);
 assert.equal(root.closest("sittin", ["kitten", "sitting", "bitten"]), "sitting");
+assert.equal(rootMin.closest("sittin", ["kitten", "sitting", "bitten"]), "sitting");
 assert.equal(v2.levenshteinLightning("kitten", "sitting"), 3);
+assert.equal(v2Min.levenshteinLightning("kitten", "sitting"), 3);
 assert.equal(root.distance("\\u4f60a", "\\u4f60b"), 2);
 assert.equal(unicode.distanceUnicode("\\u4f60a", "\\u4f60b"), 1);
+assert.equal(unicodeMin.distanceUnicode("\\u4f60a", "\\u4f60b"), 1);
 `.trimStart()
   );
 

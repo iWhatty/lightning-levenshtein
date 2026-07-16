@@ -5,8 +5,11 @@ const pkg = JSON.parse(readFileSync("package.json", "utf8"));
 
 const expected = {
   ".": ["closest", "distance", "distanceMax"],
+  "./min": ["closest", "distance", "distanceMax"],
   "./v2": ["levenshteinLightning"],
-  "./unicode": ["distanceUnicode"]
+  "./v2/min": ["levenshteinLightning"],
+  "./unicode": ["distanceUnicode"],
+  "./unicode/min": ["distanceUnicode"]
 };
 
 assert.equal(pkg.types, pkg.exports["."].types);

@@ -1,8 +1,6 @@
 
 // ./src/myers_x_max.js
 
-// Global pattern equality table shared across invocations
-// const peq = new Uint32Array(0x10000); // One bitmask per Unicode char (up to 16-bit space)
 import { peq } from './peq.js';
 
 /**
@@ -12,10 +10,8 @@ import { peq } from './peq.js';
  *
  * @param {string} a1 - The query string.
  * @param {string} b1 - The reference string.
- * @param {number} n - Length of `a`.
- * @param {number} m - Length of `b`.
  * @param {number} maxDistance - Maximum acceptable edit distance; exits early if exceeded.
- * @returns {number} Final score (edit distance), or partial score if early exit occurred.
+ * @returns {number} Exact distance within the threshold, otherwise a value above it.
  */
 export function myers_x_max(a1, b1, maxDistance) {
 
@@ -102,9 +98,7 @@ export function myers_x_max(a1, b1, maxDistance) {
     let ph = mv | ~(xh | pv);
     let mh = pv & xh;
 
-    // Adjust score from bit shifted to the far right (MSB of final block)
-    // score += ((ph >>> shift) & 1) - ((mh >>> shift) & 1);
-    // Update score based on bit shifted to `shift` position (MSB in final block)
+    // Update score from the last live bit in the final block.
     score += ((ph >>> shift) & 1);
     score -= ((mh >>> shift) & 1);
 

@@ -17,7 +17,8 @@ import { myers_x } from './myers_x.js';
  * @param {string} a - First string (typically the user-input search term).
  * @param {string} b - Second string to compare.
  * @param {number} [maxDistance=Number.MAX_SAFE_INTEGER] - Max absolute or relative edit distance.
- * @returns {number} Levenshtein distance between `a` and `b`, or cutoff if threshold is exceeded.
+ * @returns {number} Exact distance when it is within the effective threshold;
+ * otherwise, a value greater than that threshold.
  */
 export function distanceMax(a, b, maxDistance = Number.MAX_SAFE_INTEGER) {
   if (a === b) return 0;

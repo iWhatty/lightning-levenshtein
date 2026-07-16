@@ -13,25 +13,23 @@ import { distanceMax } from './distanceMax.js';
  * @returns {string | null} The closest match found, or `null` if no string is within the threshold.
  */
 export function closest(
-    str,
-    arr,
-    maxDistance = Number.MAX_SAFE_INTEGER
-  ) {
-    let minIndex = -1;              // Tracks index of best match
-    let minDist = maxDistance + 1;  // Initialize with out-of-bounds sentinel
-  
-    for (let i = 0; i < arr.length; i++) {
-      const limit = minDist - 1;                     // Progressive tightening of early-exit bound
-      const dist = distanceMax(str, arr[i], minDist);  // Bounded Levenshtein distance
-  
-      if (dist < minDist) {
-        minDist = dist;
-        minIndex = i;
-        if (dist === 0) break;                       // Early exit: exact match found
-      }
+  str,
+  arr,
+  maxDistance = Number.MAX_SAFE_INTEGER
+) {
+  let minIndex = -1;
+  let minDist = maxDistance + 1;
+
+  for (let i = 0; i < arr.length; i++) {
+    const dist = distanceMax(str, arr[i], minDist);
+
+    if (dist < minDist) {
+      minDist = dist;
+      minIndex = i;
+      if (dist === 0) break;
     }
-  
-    return minIndex >= 0 ? arr[minIndex] : null;
-  };
-  
+  }
+
+  return minIndex >= 0 ? arr[minIndex] : null;
+}
 

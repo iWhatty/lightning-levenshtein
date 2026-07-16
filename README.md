@@ -67,6 +67,10 @@ import { distance, distanceMax, closest } from "lightning-levenshtein";
 
 The stable core API. Bundlers receive ESM source; unbundled consumers can use `lightning-levenshtein/min` to point at the pre-built bundle directly.
 
+`distanceMax(a, b, maxDistance)` returns the exact distance when it is within the effective threshold. When the threshold is exceeded, it returns a value greater than the threshold rather than a sentinel such as `-1`. A fractional threshold between `0` and `1` is interpreted relative to the original length of `a` and rounded up.
+
+`closest(str, candidates, maxDistance)` returns the first best candidate within the threshold. Candidate order breaks equal-distance ties.
+
 ### Max-throughput API
 
 The `/v2` subpath exposes the larger max-throughput runtime:
@@ -105,7 +109,7 @@ Use the `v2` subpath if you specifically want the specialized `levenshteinLightn
 import { levenshteinLightning } from "lightning-levenshtein/v2";
 ```
 
-Use the `unicode` subpath if you need UTF-16 code-unit correctness beyond the default low-memory PEQ table:
+Use the `unicode` subpath if you need full-width UTF-16 code-unit behavior beyond the default low-memory PEQ table:
 
 ```js
 import { distanceUnicode } from "lightning-levenshtein/unicode";
@@ -120,7 +124,7 @@ The `unicode` subpath exposes `distanceUnicode`, which is backed by full UTF-16 
 The design direction is:
 
 - keep `distance` fast and pre-routed for common ASCII/Latin-1 workloads
-- expose Unicode-correct behavior through the deliberate `/unicode` subpath
+- expose full-width UTF-16 code-unit behavior through the deliberate `/unicode` subpath
 - share kernel implementations by binding the PEQ table before entering the hot function
 - avoid naive automatic routing that scans both strings on every call
 
