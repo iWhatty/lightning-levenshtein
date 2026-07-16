@@ -42,11 +42,13 @@ export function myers_64(a1, b1) {
         const ch = b.charCodeAt(i);
 
         // ---- word 0 ----
-        let eq0 = peqLo[ch];
+        const eq0 = peqLo[ch];
         const xv0 = eq0 | mv0;
-        eq0 |= ((eq0 & pv0) + pv0) ^ pv0;
-        let ph0 = mv0 | ~(eq0 | pv0);
-        let mh0 = pv0 & eq0;
+        const t0 = ((eq0 & pv0) >>> 0) + (pv0 >>> 0);
+        const carryEq = t0 > 0xffffffff ? 1 : 0;
+        const xh0 = ((t0 >>> 0) ^ pv0) | eq0;
+        let ph0 = mv0 | ~(xh0 | pv0);
+        let mh0 = pv0 & xh0;
 
         // carry out of low word before shift
         const carryPh0 = (ph0 >>> 31) & 1;
@@ -64,11 +66,12 @@ export function myers_64(a1, b1) {
         mv0 = ph0 & xv0;
 
         // ---- word 1 ----
-        let eq1 = peqHi[ch];
+        const eq1 = peqHi[ch];
         const xv1 = eq1 | mv1;
-        eq1 |= ((eq1 & pv1) + pv1) ^ pv1;
-        let ph1 = mv1 | ~(eq1 | pv1);
-        let mh1 = pv1 & eq1;
+        const t1 = ((eq1 & pv1) >>> 0) + (pv1 >>> 0) + carryEq;
+        const xh1 = ((t1 >>> 0) ^ pv1) | eq1;
+        let ph1 = mv1 | ~(xh1 | pv1);
+        let mh1 = pv1 & xh1;
 
         // if (lastWord === 1) {
         if (ph1 & lastMask) score++;

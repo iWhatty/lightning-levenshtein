@@ -14,6 +14,9 @@
 
 ## Unreleased — 2026-05-19
 
+- fix(v2): propagate unsigned addition carries in the 33–64 and 65–96 character specialized Myers kernels; the missing carry could overstate distances for mixed and repeated inputs.
+- test(v2): cover source and minified builds against a deterministic reference implementation at every production dispatch boundary.
+
 - chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
 - chore(pkg): update GitHub repo URL after rename  `4fa7776`
 

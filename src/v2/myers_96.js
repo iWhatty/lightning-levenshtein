@@ -47,13 +47,16 @@ export function myers_96(a1, b1) {
 
     for (i = 0; i < m; i++) {
         const ch = b.charCodeAt(i);
+        let carryEq = 0;
 
         // ---- word 0 ----
-        let eq0 = peq0[ch];
+        const eq0 = peq0[ch];
         const xv0 = eq0 | mv0;
-        eq0 |= ((eq0 & pv0) + pv0) ^ pv0;
-        let ph0 = mv0 | ~(eq0 | pv0);
-        let mh0 = pv0 & eq0;
+        const t0 = ((eq0 & pv0) >>> 0) + (pv0 >>> 0) + carryEq;
+        carryEq = t0 > 0xffffffff ? 1 : 0;
+        const xh0 = ((t0 >>> 0) ^ pv0) | eq0;
+        let ph0 = mv0 | ~(xh0 | pv0);
+        let mh0 = pv0 & xh0;
 
         const carryPh0 = (ph0 >>> 31) & 1;
         const carryMh0 = (mh0 >>> 31) & 1;
@@ -70,11 +73,13 @@ export function myers_96(a1, b1) {
         mv0 = ph0 & xv0;
 
         // ---- word 1 ----
-        let eq1 = peq1[ch];
+        const eq1 = peq1[ch];
         const xv1 = eq1 | mv1;
-        eq1 |= ((eq1 & pv1) + pv1) ^ pv1;
-        let ph1 = mv1 | ~(eq1 | pv1);
-        let mh1 = pv1 & eq1;
+        const t1 = ((eq1 & pv1) >>> 0) + (pv1 >>> 0) + carryEq;
+        carryEq = t1 > 0xffffffff ? 1 : 0;
+        const xh1 = ((t1 >>> 0) ^ pv1) | eq1;
+        let ph1 = mv1 | ~(xh1 | pv1);
+        let mh1 = pv1 & xh1;
 
         const carryPh1 = (ph1 >>> 31) & 1;
         const carryMh1 = (mh1 >>> 31) & 1;
@@ -91,11 +96,12 @@ export function myers_96(a1, b1) {
         mv1 = ph1 & xv1;
 
         // ---- word 2 ----
-        let eq2 = peq2[ch];
+        const eq2 = peq2[ch];
         const xv2 = eq2 | mv2;
-        eq2 |= ((eq2 & pv2) + pv2) ^ pv2;
-        let ph2 = mv2 | ~(eq2 | pv2);
-        let mh2 = pv2 & eq2;
+        const t2 = ((eq2 & pv2) >>> 0) + (pv2 >>> 0) + carryEq;
+        const xh2 = ((t2 >>> 0) ^ pv2) | eq2;
+        let ph2 = mv2 | ~(xh2 | pv2);
+        let mh2 = pv2 & xh2;
 
         // if (lastWord === 2) {
         if (ph2 & lastMask) score++;
