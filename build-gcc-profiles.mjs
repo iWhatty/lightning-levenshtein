@@ -92,7 +92,7 @@ function findGlobalExport(code, name) {
 
 function stripGlobalExportBlock(code) {
   return code.replace(
-    /"undefined"!==typeof globalThis&&\([^;]*globalThis[^;]*\);?/g,
+    /(?:"undefined"!==typeof globalThis|typeof globalThis!=="undefined")&&\([^;]*globalThis[^;]*\);?/g,
     ""
   );
 }

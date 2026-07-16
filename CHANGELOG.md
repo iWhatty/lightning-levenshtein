@@ -27,6 +27,7 @@
 - docs(memory): correct `/unicode` static PEQ payload to three full-width lanes, or 768 KiB per worker.
 - bench(profiles): add isolated 1/2/4/8-worker throughput and memory measurements for the stable profile prototype.
 - feat(profiles): add `/profiles` and `/profiles/min` factories for explicit ASCII, Latin-1, and code-unit workloads with checked or prevalidated input policies.
+- fix(build): remove temporary `globalThis` export bridges from generated ESM bundles under current Closure output syntax.
 
 - chore(license): finalize AGPL-3.0 + WATT3D Additional Terms metadata  `693bb5d`
 - chore(pkg): update GitHub repo URL after rename  `4fa7776`

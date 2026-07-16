@@ -1,4 +1,18 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+
+for (const bundle of [
+  "dist/lightning-levenshtein.min.js",
+  "dist/lightning-levenshtein-v2.min.js",
+  "dist/lightning-levenshtein-unicode.min.js",
+  "dist/lightning-levenshtein-profiles.min.js"
+]) {
+  assert.doesNotMatch(
+    readFileSync(bundle, "utf8"),
+    /globalThis/,
+    `${bundle} leaked its temporary global export bridge`
+  );
+}
 
 const root = await import("lightning-levenshtein");
 const rootMin = await import("lightning-levenshtein/min");
