@@ -115,7 +115,7 @@ Release and benchmark status wording is reconciled across `text-profile-integrat
 
 ## Recommended Next Work
 
-The [Review hardening sprint](./review-hardening-sprint.md) is complete on the uncommitted checkout; its [audit record](./review-hardening-audit.md) identifies the actual local gate and limits. The [Compatibility readiness record](./compatibility-readiness-sprint.md) adds passing Windows x64 gates on Node 18.20.8 and 24.11.0 for the fingerprinted dirty tree with reused dependencies. The audited [fresh-install record](./fresh-install-readiness-sprint.md) adds a passing frozen-lockfile install and gate on Node 24.11.0 in a copied dirty tree. Use the [Release delivery map](./release-delivery-map.md) to review accumulated patches; clean-commit validation, Node 18 fresh-install evidence, and other platforms remain pending. The npm `0.0.6` release state above is historical and does not describe the current dirty package tree.
+The [Review hardening sprint](./review-hardening-sprint.md) and [audit record](./review-hardening-audit.md) document the earlier dirty-tree work. The [Release delivery map](./release-delivery-map.md) now records seven local review-branch commits and passing Windows x64 clean-commit gates on Node 18.20.8 and 24.11.0 with reused dependencies. The audited [fresh-install record](./fresh-install-readiness-sprint.md) covers Node 24.11.0 in an earlier copied dirty tree; a Node 18 fresh install and other platforms remain pending. The npm `0.0.6` release state above is historical and does not describe the local review branch, which has not been pushed or published.
 
 Order:
 
