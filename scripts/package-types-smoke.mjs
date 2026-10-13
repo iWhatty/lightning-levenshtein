@@ -1,39 +1,25 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
-const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+import { assertPackageDeclarations } from "./package-declaration-contract.mjs";
+import { PUBLIC_EXPORTS } from "./package-contract.mjs";
+import { runTypeScriptProject } from "./typescript-smoke.mjs";
 
-const expected = {
-  ".": ["closest", "distance", "distanceMax"],
-  "./min": ["closest", "distance", "distanceMax"],
-  "./v2": ["levenshteinLightning"],
-  "./v2/min": ["levenshteinLightning"],
-  "./unicode": ["distanceUnicode"],
-  "./unicode/min": ["distanceUnicode"],
-  "./profiles": ["createDistance"],
-  "./profiles/min": ["createDistance"]
-};
+const packageRoot = resolve(".");
+const pkg = JSON.parse(readFileSync(join(packageRoot, "package.json"), "utf8"));
 
 assert.equal(pkg.types, pkg.exports["."].types);
 
-for (const [subpath, names] of Object.entries(expected)) {
-  const entry = pkg.exports[subpath];
-  assert.ok(entry, `missing package export: ${subpath}`);
-  assert.ok(entry.types, `missing types condition for ${subpath}`);
+assertPackageDeclarations({
+  packageRoot,
+  pkg,
+  publicExports: PUBLIC_EXPORTS,
+});
 
-  const typePath = entry.types.replace(/^\.\//, "");
-  assert.ok(existsSync(typePath), `missing declaration file: ${entry.types}`);
-  assert.ok(
-    pkg.files.includes(typePath),
-    `declaration file is not included in package files: ${typePath}`
-  );
-
-  const declaredNames = Array.from(
-    readFileSync(typePath, "utf8").matchAll(/export function (\w+)/g),
-    (match) => match[1]
-  ).sort();
-
-  assert.deepEqual(declaredNames, names.slice().sort(), `${subpath} types drift`);
-}
-
-console.log("package declaration smoke check passed");
+runTypeScriptProject({
+  cwd: process.cwd(),
+  project: "tsconfig.package-smoke.json",
+  label: "TypeScript consumer compilation",
+});
+console.log("package declaration and TypeScript consumer smoke check passed");

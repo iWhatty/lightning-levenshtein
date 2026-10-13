@@ -51,17 +51,37 @@ The package exposes four logical entrypoints, each with an ESM-source path for b
 ```jsonc
 {
   "exports": {
-    ".":             { "import": "./src/index.js",       "default": "./dist/lightning-levenshtein.min.js" },
-    "./min":         {                                    "default": "./dist/lightning-levenshtein.min.js" },
-    "./v2":          { "import": "./src/v2/index.js",    "default": "./dist/lightning-levenshtein-v2.min.js" },
-    "./v2/min":      {                                    "default": "./dist/lightning-levenshtein-v2.min.js" },
-    "./unicode":     { "import": "./src/unicode.js",     "default": "./dist/lightning-levenshtein-unicode.min.js" },
-    "./unicode/min": {                                    "default": "./dist/lightning-levenshtein-unicode.min.js" },
-    "./profiles":     { "import": "./src/profiles.js",   "default": "./dist/lightning-levenshtein-profiles.min.js" },
-    "./profiles/min": {                                    "default": "./dist/lightning-levenshtein-profiles.min.js" }
+    ".":             { "types": "./dist/lightning-levenshtein.min.d.ts",         "import": "./src/index.js",       "default": "./dist/lightning-levenshtein.min.js" },
+    "./min":         { "types": "./dist/lightning-levenshtein.min.d.ts",                                      "default": "./dist/lightning-levenshtein.min.js" },
+    "./v2":          { "types": "./dist/lightning-levenshtein-v2.min.d.ts",      "import": "./src/v2/index.js",    "default": "./dist/lightning-levenshtein-v2.min.js" },
+    "./v2/min":      { "types": "./dist/lightning-levenshtein-v2.min.d.ts",                                   "default": "./dist/lightning-levenshtein-v2.min.js" },
+    "./unicode":     { "types": "./dist/lightning-levenshtein-unicode.min.d.ts", "import": "./src/unicode.js",     "default": "./dist/lightning-levenshtein-unicode.min.js" },
+    "./unicode/min": { "types": "./dist/lightning-levenshtein-unicode.min.d.ts",                              "default": "./dist/lightning-levenshtein-unicode.min.js" },
+    "./profiles":    { "types": "./dist/lightning-levenshtein-profiles.min.d.ts", "import": "./src/profiles.js",   "default": "./dist/lightning-levenshtein-profiles.min.js" },
+    "./profiles/min": { "types": "./dist/lightning-levenshtein-profiles.min.d.ts",                            "default": "./dist/lightning-levenshtein-profiles.min.js" }
   }
 }
 ```
+
+### TypeScript
+
+Declarations ship with the package; no `@types` package is needed. All eight public subpaths publish explicit `types` conditions. To resolve subpath imports, use a TypeScript module-resolution mode that understands package `exports`, such as `NodeNext` (used by the local release checks), `Node16`, or `Bundler`. Legacy `node`/`node10` resolution does not resolve every subpath. For profile types, use type-only imports from the `profiles` subpath:
+
+```ts
+import { createDistance } from "lightning-levenshtein/profiles";
+import type {
+  TextProfile,
+  OutOfRangePolicy,
+  DistanceProfileOptions
+} from "lightning-levenshtein/profiles";
+
+const profile: TextProfile = "ascii";
+const outOfRange: OutOfRangePolicy = "throw";
+const options: DistanceProfileOptions = { profile, outOfRange };
+const distanceAscii = createDistance(options);
+```
+
+Local release checks verify declarations for all eight subpaths through strict NodeNext, no-emit TypeScript compilation against both the workspace package and an installed packed tarball.
 
 The `.`, `./v2`, `./unicode`, and `./profiles` entrypoints route bundlers at ESM source so unused code can be tree-shaken. Explicit `/min` subpaths expose the pre-built Closure bundles for consumers that want them directly.
 
