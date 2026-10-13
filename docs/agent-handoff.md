@@ -68,7 +68,7 @@ Keep default API limited to `distance`, `distanceMax`, and `closest`. Unicode an
 ## Work Completed
 
 - Post-review maintenance work is recorded in the [Review hardening sprint](./review-hardening-sprint.md): complete raw-evidence validation, external collection and validated import, promotion recomputation, shell-free npm execution, semantic declaration exports, and ordered package conditions. Consult its [audit record](./review-hardening-audit.md) for actual completion and platform coverage rather than treating this historical handoff as current test evidence.
-- The [release delivery map](./release-delivery-map.md) records later patch-group reviews and current dirty-tree test evidence. It does not turn the historical `0.0.6` release state above into a new release.
+- The [release delivery map](./release-delivery-map.md) records later patch-group reviews, clean-commit gates, and fresh-install evidence. It does not turn the historical `0.0.6` release state above into a new npm release.
 - Profile selection now uses explicit name routing, so prototype-inherited object keys cannot bypass unknown-profile validation.
 - Closure builds now fail closed if tracked `externs.js` is missing or omits a configured public export; build tooling no longer masks deletion, and profile extern coverage includes `createDistance`.
 - Closure compiler execution now bypasses shell command parsing, so workspace paths with spaces or metacharacters remain atomic arguments.
@@ -115,18 +115,20 @@ Release and benchmark status wording is reconciled across `text-profile-integrat
 
 ## Recommended Next Work
 
-The [Review hardening sprint](./review-hardening-sprint.md) and [audit record](./review-hardening-audit.md) document the earlier dirty-tree work. The [Release delivery map](./release-delivery-map.md) records the assembled local review branch, later hardening commits, and passing Windows x64 clean-commit gates on Node 18.20.8 and 24.11.0. Fresh frozen-lockfile installs and full gates also passed on Windows Node 24.11.0 and WSL2 Linux Node 18.20.8; the [Node-version evidence register](./node-version-testing.md#evidence-register) keeps their exact commits and limits separate. Native Linux, macOS, Node 18.0, and other supported runtime patches remain untested here. The npm `0.0.6` release state above is historical and does not describe the local review branch, which has not been pushed or published.
+The [Review hardening sprint](./review-hardening-sprint.md) and [audit record](./review-hardening-audit.md) document the earlier dirty-tree work. The [Release delivery map](./release-delivery-map.md) records the assembled review branch, later hardening commits, and passing Windows x64 clean-commit gates on Node 18.20.8 and 24.11.0. Fresh frozen-lockfile installs and full gates also passed on Windows Node 24.11.0 and WSL2 Linux Node 18.20.8; the [Node-version evidence register](./node-version-testing.md#evidence-register) keeps their exact commits and limits separate. Native macOS, Node 18.0, and other supported runtime patches remain untested here. The npm `0.0.6` release state above is historical; newer source on `main` is not a new npm release.
 
 Order:
 
-1. With maintainer approval, create GitHub Release `v0.0.6` from existing tag. Use `CHANGELOG.md` 0.0.6 section. Do not run Actions.
-2. Keep package-facing documentation and release status aligned as work lands.
-3. Run quiet-host Intel qualification: three independent raw repetitions, aggregate, inspect stability, promote only if evidence merits README change.
-4. Run separate AMD and Apple Silicon qualification when maintainer provides machines. Never pool absolute throughput across machines.
-5. Treat browser/V8, Firefox/SpiderMonkey, and Safari/JavaScriptCore as separate evidence tracks.
-6. Later: parameterized generated v2 width variants. Do not insert per-call width checks into hot kernels.
-7. Later: dense token API for DNA, proteins, phonemes, and transcript words.
-8. Later: AssemblyScript batch spike. Keep Wasm out of published package until boundary-inclusive evidence wins.
+1. Run the [macOS fresh-clone gate](#macos-fresh-clone-gate) on the maintainer's Mac and record exact commit, runtime, architecture, and output.
+2. Complete independent review of the integrated changes before any future npm release.
+3. Keep package-facing documentation and release status aligned as work lands.
+4. Run quiet-host Intel qualification: three independent raw repetitions, aggregate, inspect stability, promote only if evidence merits README change.
+5. Run separate AMD and Apple Silicon qualification when maintainer provides machines. Never pool absolute throughput across machines.
+6. Treat browser/V8, Firefox/SpiderMonkey, and Safari/JavaScriptCore as separate evidence tracks.
+7. With maintainer approval, create GitHub Release `v0.0.6` from existing tag. Use `CHANGELOG.md` 0.0.6 section. Do not run Actions.
+8. Later: parameterized generated v2 width variants. Do not insert per-call width checks into hot kernels.
+9. Later: dense token API for DNA, proteins, phonemes, and transcript words.
+10. Later: AssemblyScript batch spike. Keep Wasm out of published package until boundary-inclusive evidence wins.
 
 ## Required Guardrails
 
@@ -165,6 +167,29 @@ pnpm.cmd run bench:packages -- --repetition=0 --out-dir=../lightning-evidence/pa
 ```
 
 Read qualification docs before timing. Collect all repetitions outside the checkout, import the selected complete raw set with `node bench/import-runs.js --kind=packages <external-files...>`, then aggregate, review, promote, and render. Each command requires the explicit inputs documented there. The obsolete `bench:packages:all` shortcut was removed; do not infer the qualification sequence from command names alone.
+
+## macOS Fresh-Clone Gate
+
+Clone `main` on the Mac. Use a trusted Node.js 18.20.8 installation for the minimum-major compatibility run and pnpm 10.33.1, which `package.json` pins. Node 18 is upstream end-of-life; this run checks the package's declared `>=18` contract, not a recommendation for new deployments. A separate Node 24 run is useful if available. Do not switch the Mac's global runtime without the maintainer's choice.
+
+```bash
+git clone https://github.com/iWhatty/lightning-levenshtein.git
+cd lightning-levenshtein
+git switch main
+git pull --ff-only origin main
+git status --porcelain=v1
+git rev-parse HEAD
+sw_vers
+uname -m
+node --version
+node -p "process.versions.v8"
+pnpm --version
+pnpm install --frozen-lockfile
+pnpm run check:ci
+git status --porcelain=v1
+```
+
+Record CPU model, Node and pnpm versions, full gate output, and final working-tree state. Stop and report any failure or generated-file diff; do not force-clean it. This gate includes codegen drift, source/import, docs, policy, builds, 24 Jest suites, package/type consumers, packed install, and exact tarball checks. Do not run timed qualification benchmarks, GitHub Actions, or npm publish as part of this transfer.
 
 ## npm Authentication Note
 

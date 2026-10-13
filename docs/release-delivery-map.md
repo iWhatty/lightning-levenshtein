@@ -1,8 +1,8 @@
 # Release Delivery Map
 
-Status: seven patch groups assembled on local branch `codex/release-hardening-review`, updated 2026-10-13. No push, tag, npm publish, or GitHub Release followed.
+Status: seven patch groups assembled on `codex/release-hardening-review`, updated 2026-10-13. This map records pre-integration validation; see the [agent handoff](./agent-handoff.md#macos-fresh-clone-gate) for the next machine check. No tag, npm publish, or GitHub Release followed.
 
-The branch starts at `a70f0b84cad82455162bef6c7dda8cbec25abd55` and still declares package version `0.0.6`. Its local commits are not the previously published npm `0.0.6` tarball described in [the historical handoff](./agent-handoff.md). Historical dirty-tree reviews remain below; the clean-commit validation record is in [Validation and release boundary](#validation-and-release-boundary). Existing public benchmark selection and release state remain unchanged.
+The branch starts at `a70f0b84cad82455162bef6c7dda8cbec25abd55` and still declares package version `0.0.6`. Its commits are not the previously published npm `0.0.6` tarball described in [the historical handoff](./agent-handoff.md). Historical dirty-tree reviews remain below; the clean-commit validation record is in [Validation and release boundary](#validation-and-release-boundary). Existing public benchmark selection and npm release state remain unchanged.
 
 ## Patch groups
 
@@ -34,7 +34,7 @@ On 2026-10-13, the obsolete `bench:packages:all` script was removed. It called m
 
 The source smoke check now rejects relative imports that resolve to directories. Existence and path-casing checks alone could accept a directory even though a direct ESM directory import fails. An isolated fixture regression covers the failure without placing a bad import in the checkout. The same dirty tree passed Windows x64 `check:ci` on Node 24.11.0 and process-isolated Node 18.20.8: 24 suites, 218 tests, four builds, packed-install and type consumers, and the exact 45-file package on each. Its 193-file non-documentation fingerprint is `af76eeb7c280fc66e778e0b1ba8e0c8066ca68a101df6f5342a64f83c5cd17bb`. Package manifest, pnpm lockfile, all four published bundles, selected benchmark results, and legacy promotion manifest retained their previous hashes. Existing dependencies were reused; clean-commit, fresh-install, and cross-platform evidence remain pending.
 
-Remaining work: independent review of the local commits, native Linux/macOS coverage, and quiet-host benchmark qualification. Node 18.20.8 passing does not establish every Node `>=18` patch. No push, release, or public benchmark promotion is authorized by this record.
+Remaining work: independent review of the integrated commits, native Linux/macOS coverage, and quiet-host benchmark qualification. Node 18.20.8 passing does not establish every Node `>=18` patch. No release or public benchmark promotion is authorized by this record.
 
 `package.json` was staged by hunk: TypeScript dependency with package contracts, `codegen:check` and obsolete `bench:packages:all` removal with generated kernels, diagnostic aggregation with benchmark evidence, and `test:policy`/`check:ci` wiring with repository policy. `pnpm-lock.yaml` stayed with the TypeScript dependency.
 
