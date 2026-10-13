@@ -9,4 +9,7 @@ data.json
 
 data*.json
 
-index_temp.js
+*_temp.js
+*.closure-temp
+*.codegen-temp
+*.codegen-backup

@@ -1,22 +1,19 @@
-
-
 // codegen\tools\generateMyers32-B.cjs
 
 // Optimized Myers 32-bit variants (unrolled for fixed b.length)
-const fs = require('fs');
 const path = require('path');
+const { writeOrCheckGeneratedOutputs } = require('./generated-output.cjs');
 
 const out = [];
 out.push('// Auto-generated: Optimized Myers 32-bit variants with fixed b.length');
 out.push('// Source: codegen/tools/generateMyers32-B.cjs');
-out.push('const peq = new Uint32Array(65535);');
+out.push('const peq = new Uint32Array(65536);');
 out.push('export const myers_table = [];');
 
 for (let n = 1; n <= 32; n++) {
   out.push('');
   out.push(`function myers_b${n}(a, b) {`);
   out.push('  const nA = a.length;');
-  out.push(`  const lst = 1 << (nA - 1);`);
   out.push('  let pv = -1 >>> 0, mv = 0, sc = nA;');
 
   // Setup peq dynamically
@@ -38,10 +35,7 @@ for (let n = 1; n <= 32; n++) {
     out.push(`    mv |= ~(eq | pv);`);
     out.push(`    pv &= eq;`);
 
-    // score += ((pv >>> (n - 1)) & 1) - ((mv >>> (n - 1)) & 1);
-    out.push(`    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);`);
-    // out.push(`    if (mv & lst) sc++;`);
-    // out.push(`    if (pv & lst) sc--;`);
+    out.push(`    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);`);
 
     if (i !== n - 1) {
       out.push(`    mv = ((mv << 1) | 1) >>> 0;`);
@@ -66,14 +60,18 @@ for (let n = 1; n <= 32; n++) {
 // Dispatcher
 out.push('');
 out.push('export function myers32_unrolledB(a, b) {');
+out.push('  if (a.length < 1 || a.length > 32 || b.length < 1 || b.length > 32) return null;');
 out.push('  const fn = myers_table[b.length];');
-out.push('  return fn ? fn(a, b) : null;');
+out.push('  return fn(a, b);');
 out.push('}');
 out.push('');
 
+const generated = out.join('\n');
 const outputPath = path.resolve(__dirname, '..', 'artifacts', 'myers32-unrolledB.js');
-
-fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-fs.writeFileSync(outputPath, out.join('\n'), 'utf8');
-
-console.log(`✅ Generated ${outputPath}`);
+writeOrCheckGeneratedOutputs({
+  generated,
+  outputPaths: [outputPath],
+  label: 'Myers32 B',
+  refreshCommand: 'pnpm run codegen:myers32:b',
+  check: process.argv.includes('--check'),
+});

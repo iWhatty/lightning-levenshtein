@@ -114,11 +114,10 @@
         "bench:packages:rank": "node ./bench/packages/render-readme-rank-chart.js",
         "bench:packages:chart": "pnpm run bench:packages:bar && pnpm run bench:packages:linechart && pnpm run bench:packages:percent && pnpm run bench:packages:rank",
         "bench:packages:render": "pnpm run bench:packages:table && pnpm run bench:packages:chart",
-        "bench:packages:all": "pnpm run bench:packages && pnpm run bench:packages:table && pnpm run bench:packages:chart",
         "codegen:myers32:a": "node ./codegen/tools/generateMyers32-A.cjs",
         "codegen:myers32:b": "node ./codegen/tools/generateMyers32-B.cjs",
         "codegen:myers32": "pnpm run codegen:myers32:a && pnpm run codegen:myers32:b",
-        "codegen:check": "node ./codegen/tools/generateMyers32-A.cjs --check"
+        "codegen:check": "node ./codegen/tools/generateMyers32-A.cjs --check && node ./codegen/tools/generateMyers32-B.cjs --check"
     },
     "keywords": [
         "levenshtein",

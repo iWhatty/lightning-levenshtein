@@ -1,10 +1,10 @@
 // Auto-generated: Optimized Myers 32-bit variants with fixed b.length
-const peq = new Uint32Array(256);
-const myers_table = [];
+// Source: codegen/tools/generateMyers32-B.cjs
+const peq = new Uint32Array(65536);
+export const myers_table = [];
 
 function myers_b1(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -18,7 +18,7 @@ function myers_b1(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -29,7 +29,6 @@ myers_table[1] = myers_b1;
 
 function myers_b2(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -43,7 +42,7 @@ function myers_b2(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -52,7 +51,7 @@ function myers_b2(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -63,7 +62,6 @@ myers_table[2] = myers_b2;
 
 function myers_b3(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -77,7 +75,7 @@ function myers_b3(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -86,7 +84,7 @@ function myers_b3(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -95,7 +93,7 @@ function myers_b3(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -106,7 +104,6 @@ myers_table[3] = myers_b3;
 
 function myers_b4(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -120,7 +117,7 @@ function myers_b4(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -129,7 +126,7 @@ function myers_b4(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -138,7 +135,7 @@ function myers_b4(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -147,7 +144,7 @@ function myers_b4(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -158,7 +155,6 @@ myers_table[4] = myers_b4;
 
 function myers_b5(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -172,7 +168,7 @@ function myers_b5(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -181,7 +177,7 @@ function myers_b5(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -190,7 +186,7 @@ function myers_b5(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -199,7 +195,7 @@ function myers_b5(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -208,7 +204,7 @@ function myers_b5(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -219,7 +215,6 @@ myers_table[5] = myers_b5;
 
 function myers_b6(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -233,7 +228,7 @@ function myers_b6(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -242,7 +237,7 @@ function myers_b6(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -251,7 +246,7 @@ function myers_b6(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -260,7 +255,7 @@ function myers_b6(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -269,7 +264,7 @@ function myers_b6(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -278,7 +273,7 @@ function myers_b6(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -289,7 +284,6 @@ myers_table[6] = myers_b6;
 
 function myers_b7(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -303,7 +297,7 @@ function myers_b7(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -312,7 +306,7 @@ function myers_b7(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -321,7 +315,7 @@ function myers_b7(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -330,7 +324,7 @@ function myers_b7(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -339,7 +333,7 @@ function myers_b7(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -348,7 +342,7 @@ function myers_b7(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -357,7 +351,7 @@ function myers_b7(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -368,7 +362,6 @@ myers_table[7] = myers_b7;
 
 function myers_b8(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -382,7 +375,7 @@ function myers_b8(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -391,7 +384,7 @@ function myers_b8(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -400,7 +393,7 @@ function myers_b8(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -409,7 +402,7 @@ function myers_b8(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -418,7 +411,7 @@ function myers_b8(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -427,7 +420,7 @@ function myers_b8(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -436,7 +429,7 @@ function myers_b8(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -445,7 +438,7 @@ function myers_b8(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -456,7 +449,6 @@ myers_table[8] = myers_b8;
 
 function myers_b9(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -470,7 +462,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -479,7 +471,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -488,7 +480,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -497,7 +489,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -506,7 +498,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -515,7 +507,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -524,7 +516,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -533,7 +525,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -542,7 +534,7 @@ function myers_b9(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -553,7 +545,6 @@ myers_table[9] = myers_b9;
 
 function myers_b10(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -567,7 +558,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -576,7 +567,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -585,7 +576,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -594,7 +585,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -603,7 +594,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -612,7 +603,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -621,7 +612,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -630,7 +621,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -639,7 +630,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -648,7 +639,7 @@ function myers_b10(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -659,7 +650,6 @@ myers_table[10] = myers_b10;
 
 function myers_b11(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -673,7 +663,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -682,7 +672,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -691,7 +681,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -700,7 +690,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -709,7 +699,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -718,7 +708,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -727,7 +717,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -736,7 +726,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -745,7 +735,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -754,7 +744,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -763,7 +753,7 @@ function myers_b11(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -774,7 +764,6 @@ myers_table[11] = myers_b11;
 
 function myers_b12(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -788,7 +777,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -797,7 +786,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -806,7 +795,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -815,7 +804,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -824,7 +813,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -833,7 +822,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -842,7 +831,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -851,7 +840,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -860,7 +849,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -869,7 +858,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -878,7 +867,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -887,7 +876,7 @@ function myers_b12(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -898,7 +887,6 @@ myers_table[12] = myers_b12;
 
 function myers_b13(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -912,7 +900,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -921,7 +909,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -930,7 +918,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -939,7 +927,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -948,7 +936,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -957,7 +945,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -966,7 +954,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -975,7 +963,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -984,7 +972,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -993,7 +981,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1002,7 +990,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1011,7 +999,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1020,7 +1008,7 @@ function myers_b13(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -1031,7 +1019,6 @@ myers_table[13] = myers_b13;
 
 function myers_b14(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -1045,7 +1032,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1054,7 +1041,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1063,7 +1050,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1072,7 +1059,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1081,7 +1068,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1090,7 +1077,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1099,7 +1086,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1108,7 +1095,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1117,7 +1104,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1126,7 +1113,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1135,7 +1122,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1144,7 +1131,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1153,7 +1140,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1162,7 +1149,7 @@ function myers_b14(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -1173,7 +1160,6 @@ myers_table[14] = myers_b14;
 
 function myers_b15(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -1187,7 +1173,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1196,7 +1182,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1205,7 +1191,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1214,7 +1200,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1223,7 +1209,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1232,7 +1218,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1241,7 +1227,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1250,7 +1236,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1259,7 +1245,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1268,7 +1254,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1277,7 +1263,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1286,7 +1272,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1295,7 +1281,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1304,7 +1290,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1313,7 +1299,7 @@ function myers_b15(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -1324,7 +1310,6 @@ myers_table[15] = myers_b15;
 
 function myers_b16(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -1338,7 +1323,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1347,7 +1332,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1356,7 +1341,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1365,7 +1350,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1374,7 +1359,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1383,7 +1368,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1392,7 +1377,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1401,7 +1386,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1410,7 +1395,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1419,7 +1404,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1428,7 +1413,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1437,7 +1422,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1446,7 +1431,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1455,7 +1440,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1464,7 +1449,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1473,7 +1458,7 @@ function myers_b16(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -1484,7 +1469,6 @@ myers_table[16] = myers_b16;
 
 function myers_b17(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -1498,7 +1482,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1507,7 +1491,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1516,7 +1500,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1525,7 +1509,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1534,7 +1518,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1543,7 +1527,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1552,7 +1536,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1561,7 +1545,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1570,7 +1554,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1579,7 +1563,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1588,7 +1572,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1597,7 +1581,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1606,7 +1590,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1615,7 +1599,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1624,7 +1608,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1633,7 +1617,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1642,7 +1626,7 @@ function myers_b17(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -1653,7 +1637,6 @@ myers_table[17] = myers_b17;
 
 function myers_b18(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -1667,7 +1650,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1676,7 +1659,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1685,7 +1668,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1694,7 +1677,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1703,7 +1686,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1712,7 +1695,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1721,7 +1704,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1730,7 +1713,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1739,7 +1722,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1748,7 +1731,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1757,7 +1740,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1766,7 +1749,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1775,7 +1758,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1784,7 +1767,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1793,7 +1776,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1802,7 +1785,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1811,7 +1794,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1820,7 +1803,7 @@ function myers_b18(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -1831,7 +1814,6 @@ myers_table[18] = myers_b18;
 
 function myers_b19(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -1845,7 +1827,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1854,7 +1836,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1863,7 +1845,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1872,7 +1854,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1881,7 +1863,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1890,7 +1872,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1899,7 +1881,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1908,7 +1890,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1917,7 +1899,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1926,7 +1908,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1935,7 +1917,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1944,7 +1926,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1953,7 +1935,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1962,7 +1944,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1971,7 +1953,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1980,7 +1962,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1989,7 +1971,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -1998,7 +1980,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2007,7 +1989,7 @@ function myers_b19(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -2018,7 +2000,6 @@ myers_table[19] = myers_b19;
 
 function myers_b20(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -2032,7 +2013,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2041,7 +2022,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2050,7 +2031,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2059,7 +2040,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2068,7 +2049,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2077,7 +2058,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2086,7 +2067,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2095,7 +2076,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2104,7 +2085,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2113,7 +2094,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2122,7 +2103,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2131,7 +2112,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2140,7 +2121,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2149,7 +2130,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2158,7 +2139,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2167,7 +2148,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2176,7 +2157,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2185,7 +2166,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2194,7 +2175,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2203,7 +2184,7 @@ function myers_b20(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -2214,7 +2195,6 @@ myers_table[20] = myers_b20;
 
 function myers_b21(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -2228,7 +2208,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2237,7 +2217,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2246,7 +2226,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2255,7 +2235,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2264,7 +2244,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2273,7 +2253,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2282,7 +2262,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2291,7 +2271,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2300,7 +2280,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2309,7 +2289,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2318,7 +2298,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2327,7 +2307,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2336,7 +2316,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2345,7 +2325,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2354,7 +2334,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2363,7 +2343,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2372,7 +2352,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2381,7 +2361,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2390,7 +2370,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2399,7 +2379,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2408,7 +2388,7 @@ function myers_b21(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -2419,7 +2399,6 @@ myers_table[21] = myers_b21;
 
 function myers_b22(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -2433,7 +2412,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2442,7 +2421,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2451,7 +2430,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2460,7 +2439,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2469,7 +2448,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2478,7 +2457,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2487,7 +2466,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2496,7 +2475,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2505,7 +2484,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2514,7 +2493,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2523,7 +2502,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2532,7 +2511,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2541,7 +2520,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2550,7 +2529,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2559,7 +2538,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2568,7 +2547,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2577,7 +2556,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2586,7 +2565,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2595,7 +2574,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2604,7 +2583,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2613,7 +2592,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2622,7 +2601,7 @@ function myers_b22(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -2633,7 +2612,6 @@ myers_table[22] = myers_b22;
 
 function myers_b23(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -2647,7 +2625,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2656,7 +2634,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2665,7 +2643,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2674,7 +2652,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2683,7 +2661,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2692,7 +2670,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2701,7 +2679,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2710,7 +2688,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2719,7 +2697,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2728,7 +2706,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2737,7 +2715,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2746,7 +2724,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2755,7 +2733,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2764,7 +2742,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2773,7 +2751,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2782,7 +2760,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2791,7 +2769,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2800,7 +2778,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2809,7 +2787,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2818,7 +2796,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2827,7 +2805,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2836,7 +2814,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2845,7 +2823,7 @@ function myers_b23(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -2856,7 +2834,6 @@ myers_table[23] = myers_b23;
 
 function myers_b24(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -2870,7 +2847,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2879,7 +2856,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2888,7 +2865,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2897,7 +2874,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2906,7 +2883,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2915,7 +2892,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2924,7 +2901,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2933,7 +2910,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2942,7 +2919,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2951,7 +2928,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2960,7 +2937,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2969,7 +2946,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2978,7 +2955,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2987,7 +2964,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -2996,7 +2973,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3005,7 +2982,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3014,7 +2991,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3023,7 +3000,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3032,7 +3009,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3041,7 +3018,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3050,7 +3027,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3059,7 +3036,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3068,7 +3045,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3077,7 +3054,7 @@ function myers_b24(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -3088,7 +3065,6 @@ myers_table[24] = myers_b24;
 
 function myers_b25(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -3102,7 +3078,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3111,7 +3087,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3120,7 +3096,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3129,7 +3105,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3138,7 +3114,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3147,7 +3123,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3156,7 +3132,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3165,7 +3141,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3174,7 +3150,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3183,7 +3159,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3192,7 +3168,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3201,7 +3177,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3210,7 +3186,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3219,7 +3195,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3228,7 +3204,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3237,7 +3213,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3246,7 +3222,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3255,7 +3231,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3264,7 +3240,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3273,7 +3249,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3282,7 +3258,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3291,7 +3267,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3300,7 +3276,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3309,7 +3285,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3318,7 +3294,7 @@ function myers_b25(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -3329,7 +3305,6 @@ myers_table[25] = myers_b25;
 
 function myers_b26(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -3343,7 +3318,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3352,7 +3327,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3361,7 +3336,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3370,7 +3345,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3379,7 +3354,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3388,7 +3363,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3397,7 +3372,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3406,7 +3381,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3415,7 +3390,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3424,7 +3399,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3433,7 +3408,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3442,7 +3417,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3451,7 +3426,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3460,7 +3435,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3469,7 +3444,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3478,7 +3453,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3487,7 +3462,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3496,7 +3471,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3505,7 +3480,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3514,7 +3489,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3523,7 +3498,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3532,7 +3507,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3541,7 +3516,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3550,7 +3525,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3559,7 +3534,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3568,7 +3543,7 @@ function myers_b26(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -3579,7 +3554,6 @@ myers_table[26] = myers_b26;
 
 function myers_b27(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -3593,7 +3567,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3602,7 +3576,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3611,7 +3585,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3620,7 +3594,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3629,7 +3603,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3638,7 +3612,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3647,7 +3621,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3656,7 +3630,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3665,7 +3639,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3674,7 +3648,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3683,7 +3657,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3692,7 +3666,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3701,7 +3675,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3710,7 +3684,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3719,7 +3693,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3728,7 +3702,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3737,7 +3711,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3746,7 +3720,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3755,7 +3729,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3764,7 +3738,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3773,7 +3747,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3782,7 +3756,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3791,7 +3765,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3800,7 +3774,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3809,7 +3783,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3818,7 +3792,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3827,7 +3801,7 @@ function myers_b27(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -3838,7 +3812,6 @@ myers_table[27] = myers_b27;
 
 function myers_b28(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -3852,7 +3825,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3861,7 +3834,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3870,7 +3843,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3879,7 +3852,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3888,7 +3861,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3897,7 +3870,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3906,7 +3879,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3915,7 +3888,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3924,7 +3897,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3933,7 +3906,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3942,7 +3915,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3951,7 +3924,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3960,7 +3933,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3969,7 +3942,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3978,7 +3951,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3987,7 +3960,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -3996,7 +3969,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4005,7 +3978,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4014,7 +3987,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4023,7 +3996,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4032,7 +4005,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4041,7 +4014,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4050,7 +4023,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4059,7 +4032,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4068,7 +4041,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4077,7 +4050,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4086,7 +4059,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4095,7 +4068,7 @@ function myers_b28(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -4106,7 +4079,6 @@ myers_table[28] = myers_b28;
 
 function myers_b29(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -4120,7 +4092,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4129,7 +4101,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4138,7 +4110,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4147,7 +4119,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4156,7 +4128,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4165,7 +4137,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4174,7 +4146,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4183,7 +4155,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4192,7 +4164,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4201,7 +4173,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4210,7 +4182,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4219,7 +4191,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4228,7 +4200,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4237,7 +4209,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4246,7 +4218,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4255,7 +4227,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4264,7 +4236,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4273,7 +4245,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4282,7 +4254,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4291,7 +4263,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4300,7 +4272,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4309,7 +4281,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4318,7 +4290,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4327,7 +4299,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4336,7 +4308,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4345,7 +4317,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4354,7 +4326,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4363,7 +4335,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4372,7 +4344,7 @@ function myers_b29(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -4383,7 +4355,6 @@ myers_table[29] = myers_b29;
 
 function myers_b30(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -4397,7 +4368,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4406,7 +4377,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4415,7 +4386,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4424,7 +4395,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4433,7 +4404,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4442,7 +4413,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4451,7 +4422,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4460,7 +4431,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4469,7 +4440,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4478,7 +4449,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4487,7 +4458,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4496,7 +4467,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4505,7 +4476,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4514,7 +4485,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4523,7 +4494,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4532,7 +4503,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4541,7 +4512,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4550,7 +4521,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4559,7 +4530,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4568,7 +4539,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4577,7 +4548,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4586,7 +4557,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4595,7 +4566,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4604,7 +4575,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4613,7 +4584,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4622,7 +4593,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4631,7 +4602,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4640,7 +4611,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4649,7 +4620,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4658,7 +4629,7 @@ function myers_b30(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -4669,7 +4640,6 @@ myers_table[30] = myers_b30;
 
 function myers_b31(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -4683,7 +4653,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4692,7 +4662,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4701,7 +4671,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4710,7 +4680,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4719,7 +4689,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4728,7 +4698,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4737,7 +4707,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4746,7 +4716,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4755,7 +4725,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4764,7 +4734,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4773,7 +4743,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4782,7 +4752,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4791,7 +4761,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4800,7 +4770,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4809,7 +4779,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4818,7 +4788,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4827,7 +4797,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4836,7 +4806,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4845,7 +4815,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4854,7 +4824,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4863,7 +4833,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4872,7 +4842,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4881,7 +4851,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4890,7 +4860,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4899,7 +4869,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4908,7 +4878,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4917,7 +4887,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4926,7 +4896,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4935,7 +4905,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4944,7 +4914,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4953,7 +4923,7 @@ function myers_b31(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -4964,7 +4934,6 @@ myers_table[31] = myers_b31;
 
 function myers_b32(a, b) {
   const nA = a.length;
-  const lst = 1 << (nA - 1);
   let pv = -1 >>> 0, mv = 0, sc = nA;
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] |= 1 << i;
@@ -4978,7 +4947,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4987,7 +4956,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -4996,7 +4965,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5005,7 +4974,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5014,7 +4983,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5023,7 +4992,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5032,7 +5001,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5041,7 +5010,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5050,7 +5019,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5059,7 +5028,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5068,7 +5037,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5077,7 +5046,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5086,7 +5055,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5095,7 +5064,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5104,7 +5073,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5113,7 +5082,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5122,7 +5091,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5131,7 +5100,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5140,7 +5109,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5149,7 +5118,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5158,7 +5127,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5167,7 +5136,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5176,7 +5145,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5185,7 +5154,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5194,7 +5163,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5203,7 +5172,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5212,7 +5181,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5221,7 +5190,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5230,7 +5199,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5239,7 +5208,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5248,7 +5217,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
     mv = ((mv << 1) | 1) >>> 0;
     pv = ((pv << 1) | ~(xv | mv)) >>> 0;
     mv &= xv;
@@ -5257,7 +5226,7 @@ function myers_b32(a, b) {
     eq |= ((eq & pv) + pv) ^ pv;
     mv |= ~(eq | pv);
     pv &= eq;
-    sc += ((pv >>> (nA - 1)) & 1) - ((mv >>> (nA - 1)) & 1);
+    sc += ((mv >>> (nA - 1)) & 1) - ((pv >>> (nA - 1)) & 1);
 
   for (let i = 0; i < nA; i++) {
     peq[a.charCodeAt(i)] = 0;
@@ -5267,6 +5236,7 @@ function myers_b32(a, b) {
 myers_table[32] = myers_b32;
 
 export function myers32_unrolledB(a, b) {
+  if (a.length < 1 || a.length > 32 || b.length < 1 || b.length > 32) return null;
   const fn = myers_table[b.length];
-  return fn ? fn(a, b) : null;
+  return fn(a, b);
 }

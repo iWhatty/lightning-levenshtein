@@ -1,7 +1,7 @@
 // codegen\tools\generateMyers32-A.cjs
 
-const fs = require('fs');
 const path = require('path');
+const { writeOrCheckGeneratedOutputs } = require('./generated-output.cjs');
 
 const out = [];
 out.push('// Auto-generated: Optimized Myers 32-bit variants with fixed A.length');
@@ -67,28 +67,10 @@ const outputPaths = [
   path.resolve(__dirname, '..', '..', 'src', 'v2', 'myers32-unrolledA.js')
 ];
 
-if (process.argv.includes('--check')) {
-  const stalePaths = outputPaths.filter((outputPath) => {
-    if (!fs.existsSync(outputPath)) return true;
-    return normalizeEol(fs.readFileSync(outputPath, 'utf8')) !== generated;
-  });
-
-  if (stalePaths.length > 0) {
-    console.error('Generated Myers32 A outputs are stale:');
-    for (const stalePath of stalePaths) console.error(`- ${stalePath}`);
-    console.error('Run `pnpm run codegen:myers32:a` to refresh them.');
-    process.exitCode = 1;
-  } else {
-    console.log('Generated Myers32 A outputs are current');
-  }
-} else {
-  for (const outputPath of outputPaths) {
-    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-    fs.writeFileSync(outputPath, generated, 'utf8');
-    console.log(`Generated ${outputPath}`);
-  }
-}
-
-function normalizeEol(value) {
-  return value.replace(/\r\n/g, '\n');
-}
+writeOrCheckGeneratedOutputs({
+  generated,
+  outputPaths,
+  label: 'Myers32 A',
+  refreshCommand: 'pnpm run codegen:myers32:a',
+  check: process.argv.includes('--check'),
+});
