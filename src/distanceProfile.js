@@ -4,12 +4,6 @@ import { createMyers32 } from "./myers_32_factory.js";
 import { createMyersX } from "./myers_x_factory.js";
 import { createMyersX64 } from "./myers_x64_factory.js";
 
-const PROFILE_WIDTHS = {
-  "ascii": 128,
-  "latin1": 256,
-  "codeUnit": 65536
-};
-
 /**
  * Creates an isolated, table-bound Levenshtein distance function.
  *
@@ -20,7 +14,7 @@ export function createDistance(options) {
   // Quoted public keys must survive Closure ADVANCED property renaming.
   const profile = options?.["profile"];
   const outOfRange = options?.["outOfRange"] ?? "throw";
-  const width = PROFILE_WIDTHS[profile];
+  const width = profileWidth(profile);
 
   if (width === undefined) {
     throw new TypeError(`Unknown text profile: ${String(profile)}`);
@@ -61,6 +55,13 @@ export function createDistance(options) {
     assertInProfile(b, width, profile, "second");
     return dispatch(a, b);
   };
+}
+
+function profileWidth(profile) {
+  if (profile === "ascii") return 128;
+  if (profile === "latin1") return 256;
+  if (profile === "codeUnit") return 65536;
+  return undefined;
 }
 
 function assertInProfile(value, width, profile, label) {

@@ -50,6 +50,11 @@ test("each profile accepts its maximum code unit at every stable tier", () => {
 
 test("factory rejects unknown configuration values", () => {
   expect(() => createDistance({ profile: "utf8" })).toThrow(TypeError);
+  for (const inheritedName of ["constructor", "toString", "__proto__"]) {
+    expect(() => createDistance({ profile: inheritedName })).toThrow(
+      `Unknown text profile: ${inheritedName}`
+    );
+  }
   expect(() => createDistance({ profile: "ascii", outOfRange: "fallback" })).toThrow(TypeError);
   expect(() => createDistance()).toThrow(TypeError);
 });
