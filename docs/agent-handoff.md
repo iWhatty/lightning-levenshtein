@@ -115,7 +115,7 @@ Release and benchmark status wording is reconciled across `text-profile-integrat
 
 ## Recommended Next Work
 
-The [Review hardening sprint](./review-hardening-sprint.md) and [audit record](./review-hardening-audit.md) document the earlier dirty-tree work. The [Release delivery map](./release-delivery-map.md) now records seven local review-branch commits and passing Windows x64 clean-commit gates on Node 18.20.8 and 24.11.0 with reused dependencies. The audited [fresh-install record](./fresh-install-readiness-sprint.md) covers Node 24.11.0 in an earlier copied dirty tree; a Node 18 fresh install and other platforms remain pending. The npm `0.0.6` release state above is historical and does not describe the local review branch, which has not been pushed or published.
+The [Review hardening sprint](./review-hardening-sprint.md) and [audit record](./review-hardening-audit.md) document the earlier dirty-tree work. The [Release delivery map](./release-delivery-map.md) records the assembled local review branch, later hardening commits, and passing Windows x64 clean-commit gates on Node 18.20.8 and 24.11.0. Fresh frozen-lockfile installs and full gates also passed on Windows Node 24.11.0 and WSL2 Linux Node 18.20.8; the [Node-version evidence register](./node-version-testing.md#evidence-register) keeps their exact commits and limits separate. Native Linux, macOS, Node 18.0, and other supported runtime patches remain untested here. The npm `0.0.6` release state above is historical and does not describe the local review branch, which has not been pushed or published.
 
 Order:
 
