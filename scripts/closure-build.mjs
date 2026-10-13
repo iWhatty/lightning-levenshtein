@@ -1,9 +1,11 @@
 import { execFileSync } from "node:child_process";
 import {
+  closeSync,
   copyFileSync,
   existsSync,
   lstatSync,
   mkdirSync,
+  openSync,
   readFileSync,
   readdirSync,
   renameSync,
@@ -36,13 +38,24 @@ export function buildClosureBundle({
   }
   const source = readFileSync(entryFile, "utf8");
   const stagingOutputFile = closureStagingFile(outputFile);
-  const copyStagingFiles = copies.map((copy) => closureStagingFile(copy));
-
-  mkdirSync(dirname(outputFile), { recursive: true });
-  for (const copy of copies) mkdirSync(dirname(copy), { recursive: true });
+  let ownsTemporaryEntry = false;
+  let ownsStagingOutput = false;
 
   try {
-    writeFileSync(temporaryEntryFile, `${source}${globalExportBlock(exportNames)}`);
+    const entryDescriptor = openExclusiveBuildFile(temporaryEntryFile, "temporary entry");
+    ownsTemporaryEntry = true;
+    try {
+      writeFileSync(entryDescriptor, `${source}${globalExportBlock(exportNames)}`);
+    } finally {
+      closeSync(entryDescriptor);
+    }
+
+    mkdirSync(dirname(outputFile), { recursive: true });
+    for (const copy of copies) mkdirSync(dirname(copy), { recursive: true });
+
+    const outputDescriptor = openExclusiveBuildFile(stagingOutputFile, "staging output");
+    ownsStagingOutput = true;
+    closeSync(outputDescriptor);
 
     console.log(`Running Closure Compiler for ${label}...`);
     runClosureCompiler({
@@ -63,23 +76,26 @@ export function buildClosureBundle({
       console.log(`Copied output to: ${copy}`);
     }
   } finally {
-    if (existsSync(temporaryEntryFile)) {
-      unlinkSync(temporaryEntryFile);
+    if (ownsTemporaryEntry) {
+      cleanupStagingFile(temporaryEntryFile);
       console.log(`Cleaned up temporary file: ${temporaryEntryFile}`);
     }
-    if (existsSync(stagingOutputFile)) unlinkSync(stagingOutputFile);
-    for (const stagingFile of copyStagingFiles) cleanupStagingFile(stagingFile);
+    if (ownsStagingOutput) cleanupStagingFile(stagingOutputFile);
   }
 }
 
 export function copyFileAtomically(sourceFile, outputFile) {
   const stagingFile = closureStagingFile(outputFile);
+  let ownsStagingFile = false;
 
   try {
+    const descriptor = openExclusiveBuildFile(stagingFile, "copy staging output");
+    ownsStagingFile = true;
+    closeSync(descriptor);
     copyFileSync(sourceFile, stagingFile);
     replaceFileAtomically(stagingFile, outputFile);
   } finally {
-    cleanupStagingFile(stagingFile);
+    if (ownsStagingFile) cleanupStagingFile(stagingFile);
   }
 }
 
@@ -184,6 +200,17 @@ function throwPathCollision(current, previous) {
 // replacement and never exposes a partially copied bundle.
 export function replaceFileAtomically(stagingFile, outputFile) {
   renameSync(stagingFile, outputFile);
+}
+
+function openExclusiveBuildFile(file, label) {
+  try {
+    return openSync(file, "wx");
+  } catch (error) {
+    if (error.code === "EEXIST") {
+      throw new Error(`Closure ${label} already exists; inspect before removing: ${file}`, { cause: error });
+    }
+    throw error;
+  }
 }
 
 function cleanupStagingFile(stagingFile) {

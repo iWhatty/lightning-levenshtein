@@ -267,7 +267,28 @@ describe("Closure bundle rewriting", () => {
     }
   });
 
-  test("preserves secondary copy target when source is unavailable", () => {
+  test("preserves an existing secondary staging file and copy target", () => {
+    const directory = mkdtempSync(join(tmpdir(), "lightning-closure-build-"));
+    const outputFile = join(directory, "source.js");
+    const copyFile = join(directory, "bundle.js");
+    const stagingFile = closureStagingFile(copyFile);
+
+    try {
+      writeFileSync(outputFile, "new bundle");
+      writeFileSync(copyFile, "old bundle");
+      writeFileSync(stagingFile, "stale staging");
+
+      expect(() => copyFileAtomically(outputFile, copyFile))
+        .toThrow("Closure copy staging output already exists; inspect before removing:");
+
+      expect(readFileSync(copyFile, "utf8")).toBe("old bundle");
+      expect(readFileSync(stagingFile, "utf8")).toBe("stale staging");
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  test("removes owned secondary staging when source is unavailable", () => {
     const directory = mkdtempSync(join(tmpdir(), "lightning-closure-build-"));
     const outputFile = join(directory, "missing.js");
     const copyFile = join(directory, "bundle.js");
@@ -275,12 +296,72 @@ describe("Closure bundle rewriting", () => {
 
     try {
       writeFileSync(copyFile, "old bundle");
-      writeFileSync(stagingFile, "stale staging");
 
       expect(() => copyFileAtomically(outputFile, copyFile)).toThrow();
 
       expect(readFileSync(copyFile, "utf8")).toBe("old bundle");
       expect(existsSync(stagingFile)).toBe(false);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  test("preserves an existing temporary entry before creating output", () => {
+    const directory = mkdtempSync(join(tmpdir(), "lightning-closure-build-"));
+    const sourceDirectory = join(directory, "src");
+    const entryFile = join(sourceDirectory, "index.js");
+    const temporaryEntryFile = join(sourceDirectory, "index_temp.js");
+    const outputFile = join(directory, "new", "bundle.js");
+
+    try {
+      mkdirSync(sourceDirectory);
+      writeFileSync(entryFile, "export const distance = () => 0;\n");
+      writeFileSync(temporaryEntryFile, "keep existing entry");
+
+      expect(() => buildClosureBundle({
+        label: "existing entry test",
+        sourceDirectory,
+        entryFile,
+        temporaryEntryFile,
+        outputFile,
+        exportNames: ["distance"],
+        includeExterns: false,
+      })).toThrow("Closure temporary entry already exists; inspect before removing:");
+
+      expect(readFileSync(temporaryEntryFile, "utf8")).toBe("keep existing entry");
+      expect(existsSync(join(directory, "new"))).toBe(false);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+
+  test("preserves an existing primary staging file and published bundle", () => {
+    const directory = mkdtempSync(join(tmpdir(), "lightning-closure-build-"));
+    const sourceDirectory = join(directory, "src");
+    const entryFile = join(sourceDirectory, "index.js");
+    const temporaryEntryFile = join(sourceDirectory, "index_temp.js");
+    const outputFile = join(directory, "bundle.js");
+    const stagingFile = closureStagingFile(outputFile);
+
+    try {
+      mkdirSync(sourceDirectory);
+      writeFileSync(entryFile, "export const distance = () => 0;\n");
+      writeFileSync(outputFile, "old bundle");
+      writeFileSync(stagingFile, "keep existing staging");
+
+      expect(() => buildClosureBundle({
+        label: "existing staging test",
+        sourceDirectory,
+        entryFile,
+        temporaryEntryFile,
+        outputFile,
+        exportNames: ["distance"],
+        includeExterns: false,
+      })).toThrow("Closure staging output already exists; inspect before removing:");
+
+      expect(readFileSync(outputFile, "utf8")).toBe("old bundle");
+      expect(readFileSync(stagingFile, "utf8")).toBe("keep existing staging");
+      expect(existsSync(temporaryEntryFile)).toBe(false);
     } finally {
       rmSync(directory, { recursive: true, force: true });
     }

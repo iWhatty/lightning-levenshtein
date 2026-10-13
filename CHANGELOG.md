@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- fix(build): claim Closure temporary entries and staged outputs exclusively, preserve pre-existing files on collision, and clean up only files created by the current build.
 - fix(bench): require external measured-run output, import validated raw repetitions without overwriting evidence, and recompute aggregate statistics and provenance before qualification promotion.
 - fix(bench): reject incomplete workload matrices, missing checksum/protocol/runtime evidence, inconsistent measurements, and unknown package/dependency versions.
 - fix(package): execute the verified npm JavaScript CLI through Node with literal arguments instead of Windows shell command strings.
