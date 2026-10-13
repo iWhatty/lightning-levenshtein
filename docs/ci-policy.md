@@ -18,7 +18,7 @@ On Windows systems where PowerShell blocks package-manager shims, use:
 pnpm.cmd run check:ci
 ```
 
-The gate checks code generation, repository source/import integrity, benchmark evidence promotion, all production bundles, Jest behavior, public exports, declarations, packed-tarball installation, and the exact publish file list.
+The gate checks code generation, repository source/import integrity, repository policy, benchmark evidence promotion, all production bundles, Jest behavior, public exports, declarations, packed-tarball installation, and the exact publish file list. Repository policy rejects active GitHub Actions workflows, missing pnpm ownership, `package-lock.json`, an unpinned package manager, and npm credentials in a repository `.npmrc`.
 
 ## Cross-Platform Checks
 

@@ -1,16 +1,13 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+
+import { collectRelativeImports, hasExactPathCase } from "./source-invariants.mjs";
 
 const root = resolve(".");
 const extensions = new Set([".js", ".mjs", ".cjs"]);
 const ignoredDirectories = new Set([".git", "node_modules"]);
-const importPatterns = [
-  /\b(?:import|export)\s+(?:[^"';]*?\s+from\s+)?["'](\.{1,2}\/[^"']+)["']/g,
-  /\bimport\s*\(\s*["'](\.{1,2}\/[^"']+)["']\s*\)/g,
-  /\brequire\s*\(\s*["'](\.{1,2}\/[^"']+)["']\s*\)/g
-];
 
 const files = collectJavaScriptFiles(root).sort();
 const failures = [];
@@ -25,13 +22,15 @@ for (const file of files) {
   }
 
   const source = readFileSync(file, "utf8");
-  for (const pattern of importPatterns) {
-    for (const match of source.matchAll(pattern)) {
-      relativeImportCount++;
-      const target = fileURLToPath(new URL(match[1], pathToFileURL(file)));
-      if (!existsSync(target)) {
-        failures.push(`${relative(file)}: missing relative import ${match[1]}`);
-      }
+  for (const specifier of collectRelativeImports(source, file)) {
+    relativeImportCount++;
+    const target = fileURLToPath(new URL(specifier, pathToFileURL(file)));
+    if (!existsSync(target)) {
+      failures.push(`${relative(file)}: missing relative import ${specifier}`);
+    } else if (!statSync(target).isFile()) {
+      failures.push(`${relative(file)}: relative import is not a file ${specifier}`);
+    } else if (!hasExactPathCase(root, target)) {
+      failures.push(`${relative(file)}: relative import has incorrect path casing ${specifier}`);
     }
   }
 }
