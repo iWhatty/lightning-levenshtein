@@ -4,7 +4,7 @@
 
 Add explicit, memory-tunable text profiles to the stable API first, while preserving the existing default, `/unicode`, and `/v2` behavior and performance. Keep v2 profile generation as a later project after the stable design is measured.
 
-This plan implements the semantics in [Levenshtein Use Cases and Text Profiles](./use-cases-and-text-profiles.md). The `/profiles` source, minified bundle, declarations, and package exports are implemented in the repository; npm publication remains a separate release decision.
+This plan implements the semantics in [Levenshtein Use Cases and Text Profiles](./use-cases-and-text-profiles.md). The `/profiles` source, minified bundle, declarations, and package exports shipped in npm release `0.0.6`.
 
 ## Why Stable Core First
 
@@ -184,7 +184,7 @@ Promotion requires correctness at every v2 dispatch edge, reproducible package b
 3. **Complete — Memory harness:** repeatable 1/2/4/8-worker measurements.
 4. **Complete — API review:** `/profiles`, `createDistance`, safe `throw` default, and explicit `assume-valid` policy.
 5. **Complete — Package integration:** declarations, source/min exports, build, smoke tests, and README examples.
-6. **Open — Release decision:** npm publication and versioning remain maintainer actions.
+6. **Complete — Release:** `/profiles` shipped in npm release `0.0.6`; future publication and versioning remain maintainer actions.
 
 ### Factory Spike Status
 

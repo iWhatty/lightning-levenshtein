@@ -29,37 +29,17 @@ pnpm run check:ci
 
 - Record the exact Node, V8, pnpm, OS, architecture, CPU, and commit used. State separately which Node results are current-commit checks and which are historical evidence.
 
-- Or run the same checks step by step:
-
-```bash
-pnpm run build:all
-```
-
-```bash
-pnpm test --runInBand --verbose
-```
-
-```bash
-pnpm run test:package
-```
-
-```bash
-pnpm run test:package:types
-```
-
-```bash
-pnpm run test:package:tarball
-```
-
-```bash
-pnpm run test:package:pack
-```
+- For a failed gate, run the individual scripts listed by `check:ci` in `package.json` to locate the failure. Rerun the full gate after fixing it; its script is the authoritative list of release checks.
 
 - Produce the human-readable npm dry-run manifest and review every path, packed size, and unpacked size:
 
 ```bash
 pnpm run test:package:pack:report
 ```
+
+- Treat pre-publish type evidence as two layers:
+  - Structural manifest/declaration checks: `pnpm run test:package:types` verifies exact `types` conditions and shipped declaration files for all eight public subpaths.
+  - Semantic compilation: `pnpm run test:package:types` compiles the workspace consumer with strict NodeNext and no emit; `pnpm run test:package:tarball` compiles the installed packed-tarball consumer with the same settings.
 
 - Confirm runtime source dependencies, bundles, declarations, README assets, and controlling legal files are present. Confirm tests, build tools, experimental benches, CI configuration, contributor-only documents, and repository crawler policy are absent.
 

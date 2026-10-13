@@ -34,7 +34,11 @@ Completed in the evidence-promotion slice:
 - a durable results index and explicit promotion/render commands;
 - legacy provenance labeling without changing the currently published benchmark values.
 
-Still open: quiet-host qualification, diagnostic aggregation, and cross-platform runs.
+Diagnostic aggregation is complete with configuration, revision, runtime, checksum, target-set, and sample-pairing guards.
+
+Follow-up: the 2026-10-04 review found incomplete-evidence and aggregate-recomputation gaps, plus a collection workflow that dirtied its own checkout. The [Review hardening sprint](./review-hardening-sprint.md) tracks these repairs and their independent audit; the implementation history above is not proof those follow-up checks passed.
+
+Still open: quiet-host qualification and separate cross-platform runs.
 
 ## Operating Rules
 

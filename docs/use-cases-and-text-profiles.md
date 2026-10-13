@@ -168,7 +168,7 @@ The stable core binds tables once through shared kernel factories. For v2, build
 
 1. **Complete — Baseline and profile evidence.** The repository records stable/v2 package benchmarks, profile throughput, static PEQ payload, and 1/2/4/8-worker measurements.
 2. **Complete — Stable string factories.** `/profiles` exposes ASCII, Latin-1, and code-unit factories with `throw` and `assume-valid` policies.
-3. **Next — Harden benchmark qualification.** Add balanced target ordering, repeated-run aggregation, broader workloads, and cross-platform evidence. See [Benchmark Hardening Sprint](./benchmark-hardening-sprint.md).
+3. **In progress — Qualify benchmark evidence.** Balanced target ordering, package and diagnostic aggregation, broader workloads, and explicit promotion are complete. Remaining work is quiet-host qualification and separate cross-platform evidence. See [Benchmark Hardening Sprint](./benchmark-hardening-sprint.md).
 4. **Later — Parameterize v2 generation.** Generate width variants from shared templates and verify every dispatch boundary for every width.
 5. **Later — Prototype dense token input.** Start with DNA and word-token fixtures because their semantics and alphabets are clear.
 6. **Later — Treat code-point and grapheme modes as separate products.** Their preprocessing and semantic costs should not be hidden behind a table-width flag.
@@ -177,7 +177,7 @@ The stable core binds tables once through shared kernel factories. For v2, build
 
 The operator should own semantic normalization and know the domain. Lightning Levenshtein should own fast, explicit sequence profiles; validation options; accurate memory documentation; and reproducible benchmarks.
 
-The stable string-profile and worker experiments are complete. The next measurement work is benchmark hardening; generated v2 width variants and dense token input remain separate future projects. A generic arbitrary-alphabet string map should not be the next design: dense token input provides clearer semantics, lower memory, and a cleaner hot path.
+The stable string-profile and worker experiments are complete. Benchmark harness, workload, aggregation, and promotion hardening are complete; next measurement work is quiet-host qualification and separate cross-platform evidence. Generated v2 width variants and dense token input remain separate future projects. A generic arbitrary-alphabet string map should not be the next design: dense token input provides clearer semantics, lower memory, and a cleaner hot path.
 
 The stable-core implementation scope and acceptance gates are tracked in [Text Profile Integration Plan](./text-profile-integration-plan.md).
 

@@ -4,6 +4,46 @@
 
 ## Unreleased
 
+- fix(bench): require external measured-run output, import validated raw repetitions without overwriting evidence, and recompute aggregate statistics and provenance before qualification promotion.
+- fix(bench): reject incomplete workload matrices, missing checksum/protocol/runtime evidence, inconsistent measurements, and unknown package/dependency versions.
+- fix(package): execute the verified npm JavaScript CLI through Node with literal arguments instead of Windows shell command strings.
+- test(package): derive ambient declaration exports from TypeScript semantics and validate conditional-export order, including real consumer resolution tests.
+- docs(maintenance): add durable review-hardening task plans and an independent audit record; distinguish legacy fixed-order evidence from the current rotating harness.
+
+- test(package): parse declarations with the TypeScript compiler API and lock value/type-only exports across all eight public subpaths.
+- refactor(package): share one path-safe declaration validator across workspace and packed-install checks.
+- test(package): reject declaration targets that escape a package root through filesystem links.
+- refactor(package): share exact npm metadata validation across dry-run and installed-tarball checks.
+- test(package): lock legacy npm entrypoints and repository identity in the shared metadata contract.
+- refactor(package): share TypeScript compiler invocation between workspace and packed-install smoke checks.
+- test(package): compile strict NodeNext, no-emit TypeScript consumers from workspace and packed installs across all eight public subpaths, including valid profile types and intentional invalid-usage assertions.
+- docs(package): document all eight explicit declaration conditions, export-map-aware TypeScript resolution, and profile type-only imports.
+- chore(bench): remove the obsolete `bench:packages:all` shortcut; measured runs require explicit external output and separate evidence review and promotion.
+- test(source): reject relative imports that resolve to directories; repository imports must name files.
+- Reject prototype-inherited names such as `constructor` and `toString` as unknown text profiles instead of treating them as table widths.
+- Make Closure builds fail closed when tracked externs are missing or omit configured public exports, and add the missing `createDistance` profile declaration.
+- fix(build): reject canonical collisions among Closure entries, outputs, copies, and derived staging files before filesystem mutation.
+
+- bench(diagnostics): aggregate compatible raw repetitions into paired throughput and baseline-ratio statistics with strict evidence guards.
+- fix(codegen): correct the experimental Myers32 B score recurrence, give it full UTF-16 PEQ coverage, enforce its supported input domain, and add shared generated-output drift checks.
+- refactor(build): centralize Closure compilation, temporary-entry cleanup, and ESM export recovery while preserving production bundles byte-for-byte.
+- refactor(build): invoke Closure with an argument array instead of a shell command string, preserving paths containing spaces or shell metacharacters.
+- fix(build): preflight entry/compiler/extern inputs and reject empty, unsafe, or duplicate public export names before creating build outputs.
+- fix(build): compile and validate through an ignored staging output so compiler or export-rewrite failures do not overwrite the last valid published bundle.
+- fix(build): atomically replace staged Closure bundles after export validation, preserving the last valid publication if replacement fails.
+- fix(build): publish configured secondary copies through same-directory staging and atomic replacement, preserving existing copies on failure.
+- refactor(package): centralize public subpaths, declarations, metadata, bundle checks, npm invocation, and exact tarball expectations for release validation.
+- refactor(package): share one runtime API contract between workspace and packed-install smoke checks.
+- test(package): lock every public subpath to its exact type, source-import, and minified-default targets in workspace and packed manifests.
+- fix(bench): centralize CLI validation and accept pnpm's standalone argument separator in benchmark commands.
+- fix(bench): reject duplicate raw run identifiers during aggregation and share run compatibility checks across evidence pipelines.
+- test(source): verify relative import casing component-by-component so Windows catches paths that would fail on Linux and in npm consumers.
+- test(policy): enforce disabled cloud CI, pnpm lock ownership, exact package-manager pinning, and repository npm credential hygiene in the local release gate.
+- fix(bench): exclude run identity and output-directory metadata from package aggregation configuration matching.
+- fix(bench): bind package aggregates to matching checksums, seeds, targets, revisions, runtimes, protocols, and dependency versions.
+- fix(build): exclude stale generated entry files from Closure inputs while retaining the active temporary entry deterministically.
+- docs(status): reconcile profile release and benchmark-hardening status after npm `0.0.6`.
+
 ## 0.0.6 — 2026-07-16
 
 - fix(v2): propagate unsigned addition carries in the 33–64 and 65–96 character specialized Myers kernels; the missing carry could overstate distances for mixed and repeated inputs.

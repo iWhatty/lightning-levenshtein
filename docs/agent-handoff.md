@@ -67,42 +67,66 @@ Keep default API limited to `distance`, `distanceMax`, and `closest`. Unicode an
 
 ## Work Completed
 
+- Post-review maintenance work is recorded in the [Review hardening sprint](./review-hardening-sprint.md): complete raw-evidence validation, external collection and validated import, promotion recomputation, shell-free npm execution, semantic declaration exports, and ordered package conditions. Consult its [audit record](./review-hardening-audit.md) for actual completion and platform coverage rather than treating this historical handoff as current test evidence.
+- The [release delivery map](./release-delivery-map.md) records later patch-group reviews and current dirty-tree test evidence. It does not turn the historical `0.0.6` release state above into a new release.
+- Profile selection now uses explicit name routing, so prototype-inherited object keys cannot bypass unknown-profile validation.
+- Closure builds now fail closed if tracked `externs.js` is missing or omits a configured public export; build tooling no longer masks deletion, and profile extern coverage includes `createDistance`.
+- Closure compiler execution now bypasses shell command parsing, so workspace paths with spaces or metacharacters remain atomic arguments.
+- Closure builds preflight required inputs and public export identifiers before creating output directories or temporary files.
+- Closure build paths are canonicalized without filesystem reads; entry, temporary, output, copy, and derived staging aliases fail before mutation, including Windows case-equivalent paths and duplicate copies.
+- Closure compiler output is staged and export-validated before atomically replacing a published bundle with a same-directory rename; staging files are cleaned in `finally` and ignored after interrupted builds.
+- Closure secondary copies now use same-directory staging and atomic replacement, preserving existing copy targets when copy or replacement fails.
+
 - Fixed unsigned carry propagation in v2 33–64 and 65–96 kernels.
 - Added deterministic reference coverage at every production dispatch boundary.
-- Made Myers32 A generator own production and comparison outputs with drift check.
+- Made Myers32 A own production and comparison outputs, and Myers32 B own its experimental artifact, with drift checks for both generators.
 - Added `/unicode` and `/profiles` source/min entrypoints plus aligned declarations.
 - Added ASCII, Latin-1, and code-unit profile factories with `throw` and explicit `assume-valid` policies.
 - Extracted shared table-bound long-kernel factories.
 - Added profile throughput and 1/2/4/8-worker memory harnesses.
 - Hardened package benchmark scheduling, checksums, raw metadata, aggregation, promotion, and claim generation.
+- Shared one runtime API behavior contract between workspace and packed-tarball package validation.
+- Package validation now enforces exact `types`, `import`, and `default` condition targets for all eight public subpaths.
+- Package declaration contracts now record exact runtime value names and type-only names for all eight public subpaths; structural checks parse `.d.ts` files with TypeScript 5.9 compiler APIs.
+- Workspace and packed-install declaration checks share one path-safe validator, including package-file membership plus lexical and filesystem-link package-root escape guards.
+- npm dry-run and installed-tarball checks share one exact public metadata contract, including legacy entrypoints and repository identity.
+- Package type validation now compiles strict NodeNext TypeScript consumers from both the workspace and packed install for all eight public subpaths, including profile type-only imports and intentional invalid-usage assertions, with no emit.
+- Workspace and packed-install TypeScript smoke checks share one root-compiler runner with atomic arguments, inherited diagnostics, and labeled failures.
+- README now mirrors all eight explicit declaration conditions and documents export-map-aware TypeScript resolution plus profile type-only imports.
 - Added diagnostic workload families and dispatch-edge correctness checks.
+- Added guarded multi-run diagnostic aggregation with paired baseline ratios.
+- Centralized Closure build invariants while preserving all production bundle hashes.
+- Centralized package release contracts across direct imports, declarations, installed tarballs, and exact pack checks.
+- Centralized benchmark CLI validation, including pnpm argument-separator handling.
+- Unified early duplicate-run and compatibility validation across benchmark aggregators and promotion.
+- Added platform-independent exact-case checks for every relative JavaScript import.
+- Added release-gate enforcement for disabled cloud CI, pnpm lock ownership, and repository npm credential hygiene.
+- Kept package aggregation strict on measurement settings while ignoring run identity and output routing.
+- Bound package aggregates to matching dataset evidence, targets, protocols, revisions, runtimes, and dependency versions.
+- Prevented interrupted-build temporary entries from contaminating later Closure bundles.
 - Added docs/link/source checks, exact tarball allowlist, install smoke, and pack report.
 - Documented licensing as source-available, not OSI-approved open source.
 - Disabled paid GitHub Actions; local release gate is canonical.
 - Published and verified npm `0.0.6`.
 
-## Known Documentation Drift
+## Documentation Status
 
-First safe cleanup:
-
-- `text-profile-integration-plan.md` still says npm publication/release decision is pending. `/profiles` shipped in `0.0.6`.
-- `use-cases-and-text-profiles.md` says benchmark hardening is next. Harness, workload, and promotion slices are complete; remaining work is quiet-host qualification, diagnostic aggregation, and cross-platform evidence.
-
-Update status language only. Preserve design history and source citations.
+Release and benchmark status wording is reconciled across `text-profile-integration-plan.md`, `use-cases-and-text-profiles.md`, and `technical-reflection.md`. Preserve design history and source citations during future cleanup.
 
 ## Recommended Next Work
+
+The [Review hardening sprint](./review-hardening-sprint.md) is complete on the uncommitted checkout; its [audit record](./review-hardening-audit.md) identifies the actual local gate and limits. The [Compatibility readiness record](./compatibility-readiness-sprint.md) adds passing Windows x64 gates on Node 18.20.8 and 24.11.0 for the fingerprinted dirty tree with reused dependencies. The audited [fresh-install record](./fresh-install-readiness-sprint.md) adds a passing frozen-lockfile install and gate on Node 24.11.0 in a copied dirty tree. Use the [Release delivery map](./release-delivery-map.md) to review accumulated patches; clean-commit validation, Node 18 fresh-install evidence, and other platforms remain pending. The npm `0.0.6` release state above is historical and does not describe the current dirty package tree.
 
 Order:
 
 1. With maintainer approval, create GitHub Release `v0.0.6` from existing tag. Use `CHANGELOG.md` 0.0.6 section. Do not run Actions.
-2. Reconcile known documentation drift above.
+2. Keep package-facing documentation and release status aligned as work lands.
 3. Run quiet-host Intel qualification: three independent raw repetitions, aggregate, inspect stability, promote only if evidence merits README change.
-4. Add diagnostic aggregation if current workload runner output cannot be compared cleanly across repetitions.
-5. Run separate AMD and Apple Silicon qualification when maintainer provides machines. Never pool absolute throughput across machines.
-6. Treat browser/V8, Firefox/SpiderMonkey, and Safari/JavaScriptCore as separate evidence tracks.
-7. Later: parameterized generated v2 width variants. Do not insert per-call width checks into hot kernels.
-8. Later: dense token API for DNA, proteins, phonemes, and transcript words.
-9. Later: AssemblyScript batch spike. Keep Wasm out of published package until boundary-inclusive evidence wins.
+4. Run separate AMD and Apple Silicon qualification when maintainer provides machines. Never pool absolute throughput across machines.
+5. Treat browser/V8, Firefox/SpiderMonkey, and Safari/JavaScriptCore as separate evidence tracks.
+6. Later: parameterized generated v2 width variants. Do not insert per-call width checks into hot kernels.
+7. Later: dense token API for DNA, proteins, phonemes, and transcript words.
+8. Later: AssemblyScript batch spike. Keep Wasm out of published package until boundary-inclusive evidence wins.
 
 ## Required Guardrails
 
@@ -114,6 +138,7 @@ Order:
 - Prove algorithms in `bench/` or `codegen/` before production promotion.
 - Rebuild `dist/` after source changes.
 - Keep declarations and exports aligned.
+- Keep package type smoke strict, semantic, and no-emit; retain structural declaration and manifest guards.
 - Keep `pnpm-lock.yaml`; do not add `package-lock.json`.
 - Do not edit `LICENSE` or `ADDITIONAL_TERMS.md` without maintainer direction and legal review.
 - Do not call project OSI-approved open source. Use “source-available.”
@@ -125,21 +150,21 @@ Order:
 ```powershell
 pnpm.cmd run check:ci
 pnpm.cmd run test:docs
+pnpm.cmd run test:policy
+pnpm.cmd run test:package:types
 pnpm.cmd run test:package:pack:report
 pnpm.cmd run bench:packages:promotion:check
 pnpm.cmd run bench:diagnostics:verify
+pnpm.cmd run bench:diagnostics:aggregate -- --set=<name> --baseline=v2 <raw-run.json>...
 ```
 
 Qualification timing is separate:
 
 ```powershell
-pnpm.cmd run bench:packages
-pnpm.cmd run bench:packages:aggregate
-pnpm.cmd run bench:packages:promote
-pnpm.cmd run bench:packages:render
+pnpm.cmd run bench:packages -- --repetition=0 --out-dir=../lightning-evidence/packages
 ```
 
-Read qualification docs before timing. Do not infer command sequence from names alone.
+Read qualification docs before timing. Collect all repetitions outside the checkout, import the selected complete raw set with `node bench/import-runs.js --kind=packages <external-files...>`, then aggregate, review, promote, and render. Each command requires the explicit inputs documented there. The obsolete `bench:packages:all` shortcut was removed; do not infer the qualification sequence from command names alone.
 
 ## npm Authentication Note
 

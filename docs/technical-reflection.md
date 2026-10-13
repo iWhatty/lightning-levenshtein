@@ -60,7 +60,7 @@ The primary package benchmark currently represents one narrow workload:
 
 That workload is valid and reproducible, but it does not represent dictionary correction, shared-prefix search, identifiers with one edit, unequal lengths, repeated alphabets, multilingual code units, browsers, or every supported Node version.
 
-Targets also run in a fixed order. Scheduler activity, JIT state, garbage collection, power management, and background load can therefore correlate with a library's position in the sequence. Cooling reduces thermal throttling risk but cannot remove those other effects.
+The selected legacy results used a fixed target order. The current harness uses seeded shuffling and repetition-based rotation, but that improvement does not retroactively qualify the legacy numbers. Scheduler activity, JIT state, garbage collection, power management, and background load still require quiet-host repetitions and stability review; cooling alone cannot remove those effects.
 
 ## The Ugly
 
@@ -102,6 +102,6 @@ Future claims should always travel with:
 
 The project has a credible technical foundation and an unusually good experimental culture for a small JavaScript package. Its main risk is no longer algorithmic weakness; it is allowing specialization, claims, and documentation to grow faster than the evidence and maintenance system around them.
 
-The next leverage point is benchmark hardening: broaden workload coverage, reduce ordering bias, record repeated runs, and make cross-platform comparison disciplined without turning CI into a benchmark laboratory.
+Benchmark harness, workload, aggregation, and evidence-promotion infrastructure is implemented. A deep review found validation and collection-workflow gaps; the [Review hardening sprint](./review-hardening-sprint.md) tracks their repair and independent audit. Quiet-host qualification remains a separate next step, with cross-platform results kept independent rather than turning CI into a benchmark laboratory.
 
 See [Benchmark Hardening Sprint](./benchmark-hardening-sprint.md) for the executable plan.
