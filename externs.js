@@ -1,7 +1,7 @@
 
 /** 
  * @externs
- * @fileoverview Fastest Levenshtein exposed externs.
+* @fileoverview Public lightning-levenshtein exports preserved by Closure builds.
  **/
 
 
@@ -35,3 +35,9 @@ function distanceMax(a, b, maxDistance) {}
  * @return {string|null}
  */
 function closest(str, arr, maxDistance) {}
+
+/**
+ * @param {!Object} options
+ * @return {function(string, string): number}
+ */
+function createDistance(options) {}

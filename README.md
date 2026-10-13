@@ -315,9 +315,13 @@ bench/packages/
 codegen/tools/
   generateMyers32-A.cjs  # owns the production v2 short-string table
   generateMyers32-B.cjs  # experimental comparison generator
+
+scripts/
+  closure-build.mjs      # shared production bundle pipeline
+  package-contract.mjs   # test-only public package and tarball contract
 ```
 
-Run `pnpm run codegen:myers32:a` after changing the production Myers32 generator. The command refreshes both the comparison artifact and `src/v2/myers32-unrolledA.js`; `pnpm run codegen:check` verifies that neither output has drifted.
+Run `pnpm run codegen:myers32:a` after changing the production Myers32 generator. The command refreshes both the comparison artifact and `src/v2/myers32-unrolledA.js`. The `pnpm run codegen:check` gate verifies both A outputs and the experimental B comparison artifact. See [generated artifact ownership](./codegen/README.md) for scope and commands.
 
 ---
 
