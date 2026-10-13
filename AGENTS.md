@@ -23,13 +23,13 @@ Current project/release handoff: `docs/agent-handoff.md`.
 - `pnpm run test:source` syntax-checks repository JavaScript and verifies relative imports without executing benchmarks.
 - `pnpm run test:docs` validates repository-local Markdown links and citation presence; `pnpm run test:package:pack:report` prints the exact npm dry-run manifest for review.
 - `pnpm run codegen:myers32:a` refreshes the production v2 short-string table and its comparison artifact; `pnpm run codegen:check` verifies both outputs.
-- `pnpm run bench:packages` runs the public package comparison benchmark.
+- `pnpm run bench:packages -- --out-dir=<external-directory>` runs the public package comparison benchmark. Measured package and diagnostic runs require output outside the checkout; import complete repetitions with `node bench/import-runs.js` before aggregation. See `bench/packages/qualification/README.md`.
 - `pnpm run bench:packages:promotion:check` validates the selected README evidence; `bench:packages:promote` selects a qualified aggregate and `bench:packages:render` refreshes all generated outputs.
 - `pnpm run bench:myers32` and `pnpm run bench:myersx` run kernel exploration benches.
 - `pnpm run bench:profiles` compares table-bound stable long-kernel widths with the historical implementation.
 - `pnpm run bench:profiles:dispatch` measures checked and unchecked profile prototypes across stable tiers.
 - `pnpm run bench:profiles:workers` isolates 1/2/4/8-worker profile throughput and memory measurements.
-- `pnpm run bench:diagnostics:verify` checks all workload families and v2 dispatch edges without timing; `pnpm run bench:diagnostics` enables measurement explicitly.
+- `pnpm run bench:diagnostics:verify` checks all workload families and v2 dispatch edges without timing; `pnpm run bench:diagnostics -- --out-dir=<external-directory>` enables measurement explicitly.
 
 ## Maintainer Notes
 

@@ -6,7 +6,15 @@ import { createRequire } from "module";
 import { fileURLToPath } from "url";
 
 import { buildPairs, mean, median } from "../data.js";
+import {
+  parseIntegerListArgument,
+  parseNonNegativeIntegerArgument,
+  parsePositiveIntegerArgument,
+  stripArgumentSeparator,
+  validateSafeName,
+} from "../cli-arguments.js";
 import { balancedTargetOrder, checksumPairs, verifyTargets } from "../harness.js";
+import { requireExternalOutputDirectory, writeEvidenceExclusive } from "../evidence-files.js";
 import { referenceDistance } from "../reference-distance.js";
 
 import { distance as fastestLevenshtein } from "fastest-levenshtein";
@@ -19,7 +27,6 @@ import { distance as levenshteinLightningV1 } from "../../dist/lightning-levensh
 
 const require = createRequire(import.meta.url);
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const RAW_DIR = path.join(ROOT_DIR, "bench/packages/qualification/raw");
 const PACKAGE_JSON = JSON.parse(
   fs.readFileSync(path.join(ROOT_DIR, "package.json"), "utf8")
 );
@@ -42,7 +49,8 @@ const TARGETS = [
   ["levenshtein-edit-distance", levenshteinEditDistance],
 ];
 
-const options = parseArguments(process.argv.slice(2));
+const options = parseArguments(stripArgumentSeparator(process.argv.slice(2)));
+if (!options.verifyOnly) options.outDir = requireExternalOutputDirectory(options.outDir, ROOT_DIR);
 const revision = readGitRevision();
 const runId = options.runId ?? makeRunId(revision.commit, options.repetition);
 const results = {
@@ -137,8 +145,8 @@ if (options.verifyOnly) {
 } else {
   fs.mkdirSync(options.outDir, { recursive: true });
   const outFile = path.join(options.outDir, `${runId}.json`);
-  fs.writeFileSync(outFile, `${JSON.stringify(results, null, 2)}\n`, "utf8");
-  console.log(`\nWrote ${path.relative(ROOT_DIR, outFile)}`);
+  writeEvidenceExclusive(outFile, `${JSON.stringify(results, null, 2)}\n`);
+  console.log(`\nWrote ${outFile}`);
 }
 
 function warm(fn, pairs, rounds) {
@@ -182,47 +190,20 @@ function finalizeLength(lengthResults) {
 }
 
 function parseArguments(args) {
-  const parsed = { ...DEFAULTS, outDir: RAW_DIR, verifyOnly: false, runId: null };
+  const parsed = { ...DEFAULTS, outDir: null, verifyOnly: false, runId: null };
   for (const argument of args) {
     if (argument === "--verify-only") parsed.verifyOnly = true;
-    else if (argument.startsWith("--lengths=")) parsed.lengths = integerList(argument, "--lengths=");
-    else if (argument.startsWith("--seeds=")) parsed.seeds = integerList(argument, "--seeds=");
-    else if (argument.startsWith("--pairs=")) parsed.pairs = positiveInteger(argument, "--pairs=");
-    else if (argument.startsWith("--duration-ms=")) parsed.durationMs = positiveInteger(argument, "--duration-ms=");
-    else if (argument.startsWith("--warm-rounds=")) parsed.warmRounds = nonNegativeInteger(argument, "--warm-rounds=");
-    else if (argument.startsWith("--repetition=")) parsed.repetition = nonNegativeInteger(argument, "--repetition=");
-    else if (argument.startsWith("--run-id=")) parsed.runId = safeRunId(argument.slice(9));
-    else if (argument.startsWith("--out-dir=")) parsed.outDir = path.resolve(ROOT_DIR, argument.slice(10));
+    else if (argument.startsWith("--lengths=")) parsed.lengths = parseIntegerListArgument(argument, "--lengths=");
+    else if (argument.startsWith("--seeds=")) parsed.seeds = parseIntegerListArgument(argument, "--seeds=");
+    else if (argument.startsWith("--pairs=")) parsed.pairs = parsePositiveIntegerArgument(argument, "--pairs=");
+    else if (argument.startsWith("--duration-ms=")) parsed.durationMs = parsePositiveIntegerArgument(argument, "--duration-ms=");
+    else if (argument.startsWith("--warm-rounds=")) parsed.warmRounds = parseNonNegativeIntegerArgument(argument, "--warm-rounds=");
+    else if (argument.startsWith("--repetition=")) parsed.repetition = parseNonNegativeIntegerArgument(argument, "--repetition=");
+    else if (argument.startsWith("--run-id=")) parsed.runId = validateSafeName(argument.slice(9), "run id");
+    else if (argument.startsWith("--out-dir=")) parsed.outDir = argument.slice(10);
     else throw new Error(`Unknown argument: ${argument}`);
   }
   return parsed;
-}
-
-function integerList(argument, prefix) {
-  const values = argument.slice(prefix.length).split(",").map((value) => Number(value));
-  if (!values.length || values.some((value) => !Number.isInteger(value) || value < 0)) {
-    throw new TypeError(`${prefix.slice(0, -1)} requires comma-separated non-negative integers`);
-  }
-  return values;
-}
-
-function positiveInteger(argument, prefix) {
-  const value = nonNegativeInteger(argument, prefix);
-  if (value === 0) throw new TypeError(`${prefix.slice(0, -1)} must be greater than zero`);
-  return value;
-}
-
-function nonNegativeInteger(argument, prefix) {
-  const value = Number(argument.slice(prefix.length));
-  if (!Number.isInteger(value) || value < 0) {
-    throw new TypeError(`${prefix.slice(0, -1)} requires a non-negative integer`);
-  }
-  return value;
-}
-
-function safeRunId(value) {
-  if (!/^[A-Za-z0-9._-]+$/.test(value)) throw new TypeError("run id contains unsafe characters");
-  return value;
 }
 
 function makeRunId(commit, repetition) {

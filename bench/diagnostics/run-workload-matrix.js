@@ -5,6 +5,15 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import { balancedTargetOrder, checksumPairs, summarize, verifyTargets } from "../harness.js";
+import { requireExternalOutputDirectory, writeEvidenceExclusive } from "../evidence-files.js";
+import {
+  parseIntegerListArgument,
+  parseListArgument,
+  parseNonNegativeIntegerArgument,
+  parsePositiveIntegerArgument,
+  stripArgumentSeparator,
+  validateSafeName,
+} from "../cli-arguments.js";
 import { referenceDistance } from "../reference-distance.js";
 import { buildWorkloadPairs, WORKLOAD_FAMILIES } from "../workloads.js";
 import { targetsForDomain } from "./targets.js";
@@ -15,7 +24,10 @@ const DEFAULT_LENGTHS = [
   127, 128, 129, 223, 224, 225, 255, 256, 257, 511, 512, 513,
 ];
 const DEFAULT_SEEDS = [1337, 7331, 20250321];
-const options = parseArguments(process.argv.slice(2));
+const options = parseArguments(stripArgumentSeparator(process.argv.slice(2)));
+if (options.measure) options.outDir = requireExternalOutputDirectory(options.outDir, ROOT_DIR);
+const command = { ...options };
+delete command.outDir;
 const results = {
   schemaVersion: 1,
   meta: {
@@ -23,7 +35,7 @@ const results = {
     generatedAt: new Date().toISOString(),
     revision: readGitRevision(),
     mode: options.measure ? "measure" : "verify-only",
-    command: options,
+    command,
     families: Object.fromEntries(options.families.map((family) => [family, WORKLOAD_FAMILIES[family]])),
     runtime: {
       node: process.version,
@@ -94,11 +106,10 @@ for (const family of options.families) {
 if (!options.measure) {
   console.log("\nDiagnostic verification passed; no timing results were written.");
 } else {
-  const outDir = path.join(ROOT_DIR, "bench/diagnostics/results/raw");
-  fs.mkdirSync(outDir, { recursive: true });
-  const outFile = path.join(outDir, `${results.meta.runId}.json`);
-  fs.writeFileSync(outFile, `${JSON.stringify(results, null, 2)}\n`, "utf8");
-  console.log(`\nWrote ${path.relative(ROOT_DIR, outFile)}`);
+  fs.mkdirSync(options.outDir, { recursive: true });
+  const outFile = path.join(options.outDir, `${results.meta.runId}.json`);
+  writeEvidenceExclusive(outFile, `${JSON.stringify(results, null, 2)}\n`);
+  console.log(`\nWrote ${outFile}`);
 }
 
 function warm(fn, pairs, rounds) {
@@ -135,56 +146,27 @@ function parseArguments(args) {
     repetition: 0,
     measure: false,
     runId: null,
+    outDir: null,
   };
 
   for (const argument of args) {
     if (argument === "--measure") parsed.measure = true;
     else if (argument.startsWith("--families=")) {
-      parsed.families = list(argument, "--families=");
+      parsed.families = parseListArgument(argument, "--families=");
       for (const family of parsed.families) {
         if (!WORKLOAD_FAMILIES[family]) throw new TypeError(`unknown workload family: ${family}`);
       }
-    } else if (argument.startsWith("--lengths=")) parsed.lengths = integerList(argument, "--lengths=");
-    else if (argument.startsWith("--seeds=")) parsed.seeds = integerList(argument, "--seeds=");
-    else if (argument.startsWith("--pairs=")) parsed.pairs = positiveInteger(argument, "--pairs=");
-    else if (argument.startsWith("--duration-ms=")) parsed.durationMs = positiveInteger(argument, "--duration-ms=");
-    else if (argument.startsWith("--warm-rounds=")) parsed.warmRounds = nonNegativeInteger(argument, "--warm-rounds=");
-    else if (argument.startsWith("--repetition=")) parsed.repetition = nonNegativeInteger(argument, "--repetition=");
-    else if (argument.startsWith("--run-id=")) parsed.runId = safeName(argument.slice(9));
+    } else if (argument.startsWith("--lengths=")) parsed.lengths = parseIntegerListArgument(argument, "--lengths=");
+    else if (argument.startsWith("--seeds=")) parsed.seeds = parseIntegerListArgument(argument, "--seeds=");
+    else if (argument.startsWith("--pairs=")) parsed.pairs = parsePositiveIntegerArgument(argument, "--pairs=");
+    else if (argument.startsWith("--duration-ms=")) parsed.durationMs = parsePositiveIntegerArgument(argument, "--duration-ms=");
+    else if (argument.startsWith("--warm-rounds=")) parsed.warmRounds = parseNonNegativeIntegerArgument(argument, "--warm-rounds=");
+    else if (argument.startsWith("--repetition=")) parsed.repetition = parseNonNegativeIntegerArgument(argument, "--repetition=");
+    else if (argument.startsWith("--run-id=")) parsed.runId = validateSafeName(argument.slice(9), "run id");
+    else if (argument.startsWith("--out-dir=")) parsed.outDir = argument.slice(10);
     else throw new Error(`unknown argument: ${argument}`);
   }
   return parsed;
-}
-
-function list(argument, prefix) {
-  const raw = argument.slice(prefix.length);
-  if (!raw) throw new TypeError(`${prefix.slice(0, -1)} cannot be empty`);
-  return raw.split(",");
-}
-
-function integerList(argument, prefix) {
-  const values = list(argument, prefix).map(Number);
-  if (values.some((value) => !Number.isInteger(value) || value < 0)) {
-    throw new TypeError(`${prefix.slice(0, -1)} requires non-negative integers`);
-  }
-  return values;
-}
-
-function positiveInteger(argument, prefix) {
-  const value = nonNegativeInteger(argument, prefix);
-  if (value === 0) throw new TypeError(`${prefix.slice(0, -1)} must be greater than zero`);
-  return value;
-}
-
-function nonNegativeInteger(argument, prefix) {
-  const value = Number(argument.slice(prefix.length));
-  if (!Number.isInteger(value) || value < 0) throw new TypeError(`${prefix.slice(0, -1)} requires a non-negative integer`);
-  return value;
-}
-
-function safeName(value) {
-  if (!/^[A-Za-z0-9._-]+$/.test(value)) throw new TypeError("run id contains unsafe characters");
-  return value;
 }
 
 function makeRunId(repetition) {

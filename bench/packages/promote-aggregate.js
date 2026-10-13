@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 
+import { stripArgumentSeparator, validateSafeName } from "../cli-arguments.js";
+import { requireEvidenceDirectory, requireFileWithin, writeEvidenceReplace } from "../evidence-files.js";
 import {
   normalizePromotedBenchmark,
   PACKAGES_DIR,
@@ -8,8 +10,14 @@ import {
   validateAggregateFiles,
 } from "./evidence.js";
 
-const options = parseArguments(process.argv.slice(2));
-const aggregateFile = path.resolve(options.aggregate);
+const options = parseArguments(stripArgumentSeparator(process.argv.slice(2)));
+const aggregateDir = path.join(PACKAGES_DIR, "qualification/aggregates");
+requireEvidenceDirectory(aggregateDir, PACKAGES_DIR);
+const aggregateFile = requireFileWithin(
+  path.resolve(options.aggregate),
+  aggregateDir,
+  "promotion aggregate"
+);
 const relativeSource = path.relative(path.dirname(PROMOTION_FILE), aggregateFile).replaceAll("\\", "/");
 const aggregate = JSON.parse(fs.readFileSync(aggregateFile, "utf8"));
 const manifest = {
@@ -27,12 +35,10 @@ const manifest = {
 };
 
 const sourceRelativeToPackages = path.relative(PACKAGES_DIR, aggregateFile);
-if (sourceRelativeToPackages.startsWith("..") || path.isAbsolute(sourceRelativeToPackages)) {
-  throw new Error("aggregate must be inside bench/packages");
-}
 normalizePromotedBenchmark(manifest, aggregate, sourceRelativeToPackages);
 validateAggregateFiles(aggregate);
-fs.writeFileSync(PROMOTION_FILE, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+requireEvidenceDirectory(path.dirname(PROMOTION_FILE), PACKAGES_DIR);
+writeEvidenceReplace(PROMOTION_FILE, `${JSON.stringify(manifest, null, 2)}\n`);
 console.log(`Promoted ${options.id}; run pnpm run bench:packages:render to refresh checked-in outputs.`);
 
 function parseArguments(args) {
@@ -46,9 +52,8 @@ function parseArguments(args) {
   if (!values.id || !values.aggregate) {
     throw new Error("Usage: node bench/packages/promote-aggregate.js --id=<id> --aggregate=<file>");
   }
-  if (!/^[A-Za-z0-9._-]+$/.test(values.id)) throw new TypeError("promotion id contains unsafe characters");
   return {
-    id: values.id,
+    id: validateSafeName(values.id, "promotion id"),
     aggregate: values.aggregate,
     metric: "mean",
   };

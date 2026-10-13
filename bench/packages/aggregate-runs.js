@@ -2,13 +2,19 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import { stripArgumentSeparator, validateSafeName } from "../cli-arguments.js";
+import { requireEvidenceDirectory, requireFileWithin, writeEvidenceExclusive } from "../evidence-files.js";
 import { aggregateRuns } from "./aggregate.js";
 
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const argumentsList = process.argv.slice(2);
+const argumentsList = stripArgumentSeparator(process.argv.slice(2));
 const setArgument = argumentsList.find((argument) => argument.startsWith("--set="));
 const baselineArgument = argumentsList.find((argument) => argument.startsWith("--baseline="));
 const inputFiles = argumentsList.filter((argument) => !argument.startsWith("--"));
+const unknownArgument = argumentsList.find((argument) =>
+  argument.startsWith("--") && !argument.startsWith("--set=") && !argument.startsWith("--baseline=")
+);
+if (unknownArgument) throw new Error(`unknown argument: ${unknownArgument}`);
 
 if (!setArgument || inputFiles.length === 0) {
   throw new Error(
@@ -16,17 +22,24 @@ if (!setArgument || inputFiles.length === 0) {
   );
 }
 
-const setName = setArgument.slice(6);
-if (!/^[A-Za-z0-9._-]+$/.test(setName)) throw new TypeError("set name contains unsafe characters");
-const baseline = baselineArgument?.slice(11) || "fastest-levenshtein";
-const runs = inputFiles.map((file) => JSON.parse(fs.readFileSync(path.resolve(file), "utf8")));
+const setName = validateSafeName(setArgument.slice(6), "set name");
+const baseline = validateSafeName(
+  baselineArgument?.slice(11) || "fastest-levenshtein",
+  "baseline"
+);
+const rawDir = path.join(ROOT_DIR, "bench/packages/qualification/raw");
+requireEvidenceDirectory(rawDir, ROOT_DIR);
+const resolvedFiles = inputFiles.map((file) => requireFileWithin(file, rawDir, "package raw input"));
+if (new Set(resolvedFiles).size !== resolvedFiles.length) throw new Error("duplicate package raw input path");
+const runs = resolvedFiles.map((file) => JSON.parse(fs.readFileSync(file, "utf8")));
 const aggregate = aggregateRuns(runs, baseline);
-aggregate.sourceFiles = inputFiles.map((file) =>
-  path.relative(ROOT_DIR, path.resolve(file)).replaceAll("\\", "/")
+aggregate.sourceFiles = resolvedFiles.map((file) =>
+  path.relative(ROOT_DIR, file).replaceAll("\\", "/")
 );
 const outDir = path.join(ROOT_DIR, "bench/packages/qualification/aggregates");
 const outFile = path.join(outDir, `${setName}.json`);
 
+requireEvidenceDirectory(outDir, ROOT_DIR);
 fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(outFile, `${JSON.stringify(aggregate, null, 2)}\n`, "utf8");
+writeEvidenceExclusive(outFile, `${JSON.stringify(aggregate, null, 2)}\n`);
 console.log(`Wrote ${path.relative(ROOT_DIR, outFile)}`);

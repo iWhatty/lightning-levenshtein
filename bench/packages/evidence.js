@@ -1,13 +1,19 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { isDeepStrictEqual } from "util";
+
+import { assertUniqueRunIds } from "../run-evidence.js";
+import { requireEvidenceDirectory, requireFileWithin } from "../evidence-files.js";
+import { aggregateRuns, PACKAGE_TARGET_COUNT } from "./aggregate.js";
 
 export const PACKAGES_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const PROMOTION_FILE = path.join(PACKAGES_DIR, "qualification/promotion.json");
 
 export function loadPromotedBenchmark(promotionFile = PROMOTION_FILE) {
   const manifest = readJson(promotionFile);
-  const sourceFile = resolveCheckedInSource(promotionFile, manifest.source?.path);
+  validateManifest(manifest);
+  const sourceFile = resolveCheckedInSource(promotionFile, manifest.source.path, manifest.source.type);
   const source = readJson(sourceFile);
   if (manifest.source.type === "qualification-aggregate") validateAggregateFiles(source);
   return normalizePromotedBenchmark(manifest, source, path.relative(PACKAGES_DIR, sourceFile));
@@ -129,10 +135,18 @@ function validateAggregateSource(manifest, source) {
   }
   const runtimeSignature = JSON.stringify(first.runtime);
   const dependencySignature = JSON.stringify(first.dependencyVersions);
-  const runIds = new Set();
+  assertUniqueRunIds(source.sourceRuns, (run) => run.runId, "qualification run");
+  const repetitions = new Set();
+  const rotations = new Set();
   for (const run of source.sourceRuns) {
-    if (runIds.has(run.runId)) throw new Error(`duplicate qualification run id: ${run.runId}`);
-    runIds.add(run.runId);
+    if (!Number.isSafeInteger(run.repetition) || run.repetition < 0) {
+      throw new Error(`source run ${run.runId} has invalid repetition`);
+    }
+    if (repetitions.has(run.repetition)) {
+      throw new Error(`duplicate qualification repetition: ${run.repetition}`);
+    }
+    repetitions.add(run.repetition);
+    rotations.add(run.repetition % PACKAGE_TARGET_COUNT);
     if (run.revision?.dirty || !run.revision?.commit || run.revision.commit === "unknown") {
       throw new Error(`source run ${run.runId} does not identify a clean revision`);
     }
@@ -150,6 +164,9 @@ function validateAggregateSource(manifest, source) {
   if (!String(first.runtime?.node ?? "").startsWith("v")) {
     throw new Error("qualification runtime does not identify Node.js");
   }
+  if (rotations.size < 3) {
+    throw new Error("qualification requires at least three distinct target-order rotations");
+  }
   validateTargets(manifest, source.command.lengths, source.results);
 }
 
@@ -159,19 +176,36 @@ export function validateAggregateFiles(source) {
     throw new Error("qualification aggregate must identify every raw source file");
   }
   const root = path.resolve(PACKAGES_DIR, "../..");
+  const rawDir = path.join(PACKAGES_DIR, "qualification/raw");
+  requireEvidenceDirectory(rawDir, root);
   const seen = new Set();
+  const runs = [];
   for (let index = 0; index < source.sourceFiles.length; index++) {
     const file = source.sourceFiles[index];
-    if (seen.has(file)) throw new Error(`duplicate qualification raw source: ${file}`);
-    seen.add(file);
-    const resolved = path.resolve(root, file);
-    if (!resolved.startsWith(`${root}${path.sep}`) || !fs.existsSync(resolved)) {
-      throw new Error(`qualification raw source is missing or outside the repository: ${file}`);
+    if (typeof file !== "string" || !file || path.isAbsolute(file)) {
+      throw new Error(`qualification raw source must be a relative path: ${file}`);
     }
+    let resolved;
+    try {
+      resolved = requireFileWithin(path.resolve(root, file), rawDir, "qualification raw source");
+    } catch {
+      throw new Error(`qualification raw source is missing or outside qualification/raw: ${file}`);
+    }
+    if (seen.has(resolved)) throw new Error(`duplicate qualification raw source: ${file}`);
+    seen.add(resolved);
+    const canonicalLabel = path.relative(root, resolved).replaceAll("\\", "/");
+    if (file !== canonicalLabel) throw new Error(`aliased qualification raw source: ${file}`);
     const raw = readJson(resolved);
-    if (raw.schemaVersion !== 2 || raw.meta?.runId !== source.sourceRuns[index].runId) {
+    if (raw.meta?.runId !== source.sourceRuns[index].runId) {
       throw new Error(`qualification raw source does not match aggregate run: ${file}`);
     }
+    runs.push(raw);
+  }
+  const recomputed = aggregateRuns(runs, source.baseline);
+  const { generatedAt: _storedTimestamp, sourceFiles: _storedPaths, ...storedSemantic } = source;
+  const { generatedAt: _newTimestamp, ...recomputedSemantic } = recomputed;
+  if (!isDeepStrictEqual(storedSemantic, recomputedSemantic)) {
+    throw new Error("qualification aggregate does not match recomputed raw evidence");
   }
 }
 
@@ -196,14 +230,21 @@ function promotionMetadata(manifest, sourceLabel) {
   };
 }
 
-function resolveCheckedInSource(promotionFile, sourcePath) {
+function resolveCheckedInSource(promotionFile, sourcePath, sourceType) {
   if (!sourcePath || path.isAbsolute(sourcePath)) throw new TypeError("promotion source must be a relative path");
   const resolved = path.resolve(path.dirname(promotionFile), sourcePath);
-  const relative = path.relative(PACKAGES_DIR, resolved);
-  if (relative.startsWith("..") || path.isAbsolute(relative)) {
-    throw new Error("promotion source must remain inside bench/packages");
+  if (sourceType === "legacy-results") {
+    if (sourcePath !== "../results.json") {
+      throw new Error("legacy promotion source must be ../results.json");
+    }
+    return requireFileWithin(resolved, PACKAGES_DIR, "legacy promotion source");
   }
-  return resolved;
+  if (sourcePath === "../results.json") {
+    throw new Error("qualification aggregate source cannot use legacy results.json");
+  }
+  const aggregateDir = path.join(PACKAGES_DIR, "qualification/aggregates");
+  requireEvidenceDirectory(aggregateDir, PACKAGES_DIR);
+  return requireFileWithin(resolved, aggregateDir, "promotion aggregate source");
 }
 
 function readJson(file) {

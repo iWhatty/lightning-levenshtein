@@ -44,6 +44,27 @@ describe("benchmark evidence promotion", () => {
     const missingVersions = aggregate();
     missingVersions.sourceRuns[0].dependencyVersions = {};
     expect(() => normalizePromotedBenchmark(manifest(), missingVersions)).toThrow("identify package");
+
+    const duplicate = aggregate();
+    duplicate.sourceRuns[2].runId = duplicate.sourceRuns[1].runId;
+    expect(() => normalizePromotedBenchmark(manifest(), duplicate))
+      .toThrow("duplicate qualification run id: run-1");
+
+    const repeated = aggregate();
+    repeated.sourceRuns[2].repetition = repeated.sourceRuns[1].repetition;
+    expect(() => normalizePromotedBenchmark(manifest(), repeated))
+      .toThrow("duplicate qualification repetition: 1");
+
+    const repeatedRotation = aggregate();
+    repeatedRotation.sourceRuns[1].repetition = 6;
+    repeatedRotation.sourceRuns[2].repetition = 12;
+    expect(() => normalizePromotedBenchmark(manifest(), repeatedRotation))
+      .toThrow("three distinct target-order rotations");
+
+    const missingRepetition = aggregate();
+    delete missingRepetition.sourceRuns[0].repetition;
+    expect(() => normalizePromotedBenchmark(manifest(), missingRepetition))
+      .toThrow("invalid repetition");
   });
 
   test("claim validation rejects unscoped world-fastest wording", () => {
@@ -78,6 +99,7 @@ function manifest() {
 function aggregate() {
   const run = (index) => ({
     runId: `run-${index}`,
+    repetition: index,
     generatedAt: "2026-07-16T00:00:00.000Z",
     revision: { commit: "abc123", dirty: false },
     runtime: { node: "v24.0.0", cpu: "fixture" },
