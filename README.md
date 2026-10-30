@@ -1,11 +1,10 @@
 # ⚡ lightning-levenshtein
 
-[![npm](https://img.shields.io/npm/v/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
-[![downloads](https://img.shields.io/npm/dm/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/lightning-levenshtein)](https://bundlephobia.com/package/lightning-levenshtein)
-[![license](https://img.shields.io/badge/license-source--available-blue)](https://github.com/iWhatty/lightning-levenshtein/blob/main/LICENSE)
-[![stars](https://img.shields.io/github/stars/iWhatty/lightning-levenshtein?style=social)](https://github.com/iWhatty/lightning-levenshtein)
-[![types](https://img.shields.io/npm/types/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
+[![npm](https://badgen.net/npm/v/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
+[![downloads](https://badgen.net/npm/dm/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
+[![license](https://badgen.net/static/license/AGPL-3.0%20%2B%20terms/blue)](https://github.com/iWhatty/lightning-levenshtein/blob/main/LICENSE)
+[![stars](https://badgen.net/github/stars/iWhatty/lightning-levenshtein)](https://github.com/iWhatty/lightning-levenshtein)
+[![types](https://badgen.net/npm/types/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
 
 Fast Levenshtein distance in pure JavaScript. Compact default API for general-purpose edit distance, plus opt-in subpaths for maximum throughput and Unicode-width character tables.
 
