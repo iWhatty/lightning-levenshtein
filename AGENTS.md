@@ -45,6 +45,7 @@ Current project/release handoff: `docs/agent-handoff.md`.
 - `src/distanceUnicode.js` backs the explicit `/unicode` subpath through `src/unicode.js`. Do not export Unicode code from `src/index.js`; that causes the default dist bundle to pull in wide tables.
 - Do not overwrite unrelated lockfile changes. This repo is currently on pnpm in the maintainer's local system.
 - Do not treat a push as authorization to run GitHub Actions. The retained workflow must stay `.disabled`; request a maintainer-run local platform check when additional coverage is needed.
+- CHANGELOG entries say what changed for someone using the package, a line or two each, with behavior changes called out. Leave out byte counts, tests, build and benchmark notes, refactors and commit hashes; commit messages and `docs/` carry those.
 
 ## Polish Backlog
 
