@@ -94,7 +94,7 @@ The stable core API. Bundlers receive ESM source; unbundled consumers can use `l
 
 `distanceMax(a, b, maxDistance)` returns the exact distance when it is within the effective threshold. When the threshold is exceeded, it returns a value greater than the threshold rather than a sentinel such as `-1`. A fractional threshold between `0` and `1` is interpreted relative to the original length of `a` and rounded up.
 
-`closest(str, candidates, maxDistance)` returns the first best candidate within the threshold. Candidate order breaks equal-distance ties.
+`closest(str, candidates, maxDistance)` returns the first best candidate within an integer threshold, or `null` if none qualifies. Candidate order breaks equal-distance ties.
 
 ### Max-throughput API
 
@@ -172,9 +172,9 @@ Profiles are `ascii` (`0..127`), `latin1` (`0..255`), and `codeUnit` (`0..65535`
 
 ### Character table strategy
 
-The default API uses a 256-entry PEQ table through 64 code units, so those tiers assume ASCII/Latin-1-style input. Its long-string fallback uses two full-width PEQ lanes. The default therefore optimizes common short and medium inputs but does not promise one uniform character-table width across every tier.
+`distance` uses 256-entry PEQ tables through 64 code units and full-width tables above that. `distanceMax` and `closest` use 256-entry tables at every length. Use ASCII/Latin-1 input for the default API; use `/unicode` or `/profiles` for wider text.
 
-The `unicode` subpath exposes `distanceUnicode`, which is backed by a full UTF-16 code-unit PEQ table at every tier. That path is intentionally separate so callers can opt into consistent wider character support without adding per-call detection to the hot path.
+`distanceUnicode` uses full UTF-16 tables at every tier. It counts code units, so deleting a surrogate pair costs two edits. It does not normalize text or compare grapheme clusters.
 
 The design direction is:
 
@@ -205,7 +205,7 @@ Dense integer sequences remain the preferred future shape for DNA, proteins, pho
 
 See the checked-in [stable-core integration plan](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/text-profile-integration-plan.md) for the implemented API, validation policies, file scope, test matrix, worker benchmarks, and v2 deferral criteria. The [technical reflection](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/technical-reflection.md) and [benchmark-hardening sprint](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/benchmark-hardening-sprint.md) record the broader architectural assessment and next measurement work.
 
-### Dispatch strategy
+### v2 dispatch strategy
 
 The runtime selects the cheapest correct kernel for the current input size.
 

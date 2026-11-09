@@ -411,3 +411,20 @@ test("tier-edge adversarial cases", () => {
     expect(distance(base, alt)).toBe(levenshtein(base, alt));
   }
 });
+
+test("returns null when every candidate exceeds the integer cutoff", () => {
+  expect(closest("cat", ["dog", "bird"], 1)).toBeNull();
+});
+
+test("includes candidates exactly at the integer cutoff", () => {
+  expect(closest("cat", ["dog", "cut"], 1)).toBe("cut");
+});
+
+test("a zero cutoff accepts only exact matches", () => {
+  expect(closest("cat", ["cut"], 0)).toBeNull();
+  expect(closest("cat", ["cut", "cat"], 0)).toBe("cat");
+});
+
+test("an empty string candidate is a valid closest match", () => {
+  expect(closest("", ["a", ""], 0)).toBe("");
+});

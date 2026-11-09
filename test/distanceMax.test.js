@@ -69,3 +69,19 @@ test("supports a fractional threshold", () => {
   expect(distanceMax("abcdefghij", "abcdefxhij", 0.25)).toBe(1);
   expect(distanceMax("abcdefghij", "abcxxxxxxx", 0.25)).toBeGreaterThan(3);
 });
+
+test("fractional thresholds use the original first argument before swapping", () => {
+  expect(distanceMax("ab", "abcd", 0.5)).toBeGreaterThan(1);
+  expect(distanceMax("abcd", "ab", 0.5)).toBe(2);
+});
+
+test("fractional thresholds round up and one is an absolute cutoff", () => {
+  expect(distanceMax("abcde", "axxye", 0.5)).toBe(3);
+  expect(distanceMax("abcde", "axxye", 1)).toBeGreaterThan(1);
+});
+
+test("empty strings return their exact length even above the cutoff", () => {
+  expect(distanceMax("", "abc", 0)).toBe(3);
+  expect(distanceMax("abc", "", 0)).toBe(3);
+  expect(distanceMax("", "", 0)).toBe(0);
+});
