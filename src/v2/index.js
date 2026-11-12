@@ -24,6 +24,12 @@ const strategy = myers_table;
  * - Correct and memory-safe for all input lengths
  */
 export function levenshteinLightning(a, b) {
+  // A throw inside a kernel would leave its PEQ tables dirty for every later
+  // call, so reject non-strings before one runs.
+  if (typeof a !== 'string' || typeof b !== 'string') {
+    throw new TypeError('levenshteinLightning: both arguments must be strings');
+  }
+
   if (a === b) return 0;
 
   // Deliberately avoid destructuring swap here.

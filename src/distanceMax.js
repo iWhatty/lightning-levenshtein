@@ -21,6 +21,14 @@ import { myers_x } from './myers_x.js';
  * otherwise, a value greater than that threshold.
  */
 export function distanceMax(a, b, maxDistance = Number.MAX_SAFE_INTEGER) {
+  // Kernels write into shared PEQ tables and clear them on return, so nothing
+  // may throw once one starts. Reject non-strings here, and convert the
+  // threshold once: a BigInt or Symbol throws now instead of inside a kernel.
+  if (typeof a !== 'string' || typeof b !== 'string') {
+    throw new TypeError('distanceMax: both arguments must be strings');
+  }
+  maxDistance = +maxDistance;
+
   if (a === b) return 0;
 
   const originalLength = a.length;
@@ -30,7 +38,7 @@ export function distanceMax(a, b, maxDistance = Number.MAX_SAFE_INTEGER) {
   if (bLength === 0) return originalLength;
 
   // Developer Experience (DX) feature: interpret float as % of `a.length`
-  if (typeof maxDistance === 'number' && maxDistance > 0 && maxDistance < 1) {
+  if (maxDistance > 0 && maxDistance < 1) {
     maxDistance = Math.ceil(maxDistance * originalLength);
   }
 
