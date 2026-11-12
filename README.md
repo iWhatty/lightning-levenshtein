@@ -62,6 +62,8 @@ The package exposes four logical entrypoints, each with an ESM-source path for b
 }
 ```
 
+Every distance function, on every entry point, takes primitive strings and throws a `TypeError` for anything else, including `String` objects, `null` and `undefined`.
+
 ### TypeScript
 
 Declarations ship with the package; no `@types` package is needed. All eight public subpaths publish explicit `types` conditions. To resolve subpath imports, use a TypeScript module-resolution mode that understands package `exports`, such as `NodeNext` (used by the local release checks), `Node16`, or `Bundler`. Legacy `node`/`node10` resolution does not resolve every subpath. For profile types, use type-only imports from the `profiles` subpath:

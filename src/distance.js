@@ -13,6 +13,13 @@ import { myers_x64 } from './myers_x64.js';
  * @returns {number} The Levenshtein distance between `a` and `b`.
  */
 export function distance(a, b) {
+  // Kernels write into shared PEQ tables and clear them on return. A throw
+  // midway would leave them dirty for every later call, so reject anything
+  // that is not a primitive string before a kernel runs.
+  if (typeof a !== 'string' || typeof b !== 'string') {
+    throw new TypeError('distance: both arguments must be strings');
+  }
+
   // Fast path: identical strings
   if (a === b) return 0;
 

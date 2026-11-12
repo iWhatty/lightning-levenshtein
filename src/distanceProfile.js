@@ -33,6 +33,13 @@ export function createDistance(options) {
   );
 
   const dispatch = (a, b) => {
+    // A throw inside a kernel would leave this function's PEQ tables dirty
+    // for every later call, so reject non-strings before one runs. This
+    // applies under "assume-valid" too: that policy skips range checks only.
+    if (typeof a !== "string" || typeof b !== "string") {
+      throw new TypeError("createDistance: both arguments must be strings");
+    }
+
     if (a === b) return 0;
 
     if (a.length < b.length) {
@@ -51,6 +58,10 @@ export function createDistance(options) {
   if (outOfRange === "assume-valid" || width === 65536) return dispatch;
 
   return (a, b) => {
+    // Checked before the range scan so every non-string gets the same error.
+    if (typeof a !== "string" || typeof b !== "string") {
+      throw new TypeError("createDistance: both arguments must be strings");
+    }
     assertInProfile(a, width, profile, "first");
     assertInProfile(b, width, profile, "second");
     return dispatch(a, b);

@@ -2,6 +2,11 @@
 
 What changed for people using the package, per release. Entries before 0.0.5 were reconstructed from git history.
 
+## Unreleased
+
+- Fix: a call that threw partway through, such as one given a non-string argument, could make later calls return wrong distances for the rest of the process.
+- Behavior change: every distance function now throws a `TypeError` unless both arguments are primitive strings. `String` objects, numbers, `null` and `undefined` are rejected instead of producing an unreliable result. `distanceMax` and `closest` also reject `BigInt` and `Symbol` thresholds.
+
 ## 0.0.7 — 2026-11-02
 
 - Fix: `createDistance` rejects profile names inherited from `Object.prototype`, such as `"constructor"` and `"toString"`, with the usual unknown-profile `TypeError`.
