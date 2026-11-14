@@ -27,7 +27,7 @@ pnpm add lightning-levenshtein
 npm install lightning-levenshtein
 ```
 
-Node.js consumers require Node 18 or newer. Browser consumers can use a bundler-facing source entrypoint or an explicit `/min` bundle.
+Node.js consumers require Node 18 or newer. The package is ESM-only: use `import`, or `await import("lightning-levenshtein")` from CommonJS. `require()` works only on Node versions that can load ES modules that way (20.19+ and 22.12+). Browser consumers can use a bundler-facing source entrypoint or an explicit `/min` bundle.
 
 ---
 
