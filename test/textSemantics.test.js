@@ -1,3 +1,11 @@
+import {
+  distance as distanceDefault,
+  distanceMax as distanceMaxDefault
+} from "../src/index.js";
+import {
+  distance as distanceDefaultMin,
+  distanceMax as distanceMaxDefaultMin
+} from "../dist/lightning-levenshtein.min.js";
 import { distanceUnicode } from "../src/unicode.js";
 import { distanceUnicode as distanceUnicodeMin } from "../dist/lightning-levenshtein-unicode.min.js";
 import { levenshteinLightning } from "../src/v2/index.js";
@@ -6,6 +14,10 @@ import { createDistance } from "../src/profiles.js";
 import { createDistance as createDistanceMin } from "../dist/lightning-levenshtein-profiles.min.js";
 
 const implementations = [
+  ["default", distanceDefault],
+  ["default/min", distanceDefaultMin],
+  ["default distanceMax", distanceMaxDefault],
+  ["default/min distanceMax", distanceMaxDefaultMin],
   ["unicode", distanceUnicode],
   ["unicode/min", distanceUnicodeMin],
   ["v2", levenshteinLightning],

@@ -1,6 +1,6 @@
 /**
  * Levenshtein distance between two strings, counted in UTF-16 code units at
- * every length.
+ * every length. Returns the same result as the default `distance`.
  *
  * A character outside the Basic Multilingual Plane is two code units, so
  * deleting one costs two edits. Text is not normalized.

@@ -32,7 +32,10 @@ export async function assertPackageRuntime(publicExports) {
   assert.equal(v2.levenshteinLightning("kitten", "sitting"), 3);
   assert.equal(v2Min.levenshteinLightning("kitten", "sitting"), 3);
 
-  assert.equal(root.distance("\u4f60a", "\u4f60b"), 2);
+  assert.equal(root.distance("\u4f60a", "\u4f60b"), 1);
+  assert.equal(rootMin.distance("\u4f60a", "\u4f60b"), 1);
+  assert.equal(root.closest("\u4f60a", ["zz", "\u4f60b"]), "\u4f60b");
+  assert.equal(rootMin.closest("\u4f60a", ["zz", "\u4f60b"]), "\u4f60b");
   assert.equal(unicode.distanceUnicode("\u4f60a", "\u4f60b"), 1);
   assert.equal(unicodeMin.distanceUnicode("\u4f60a", "\u4f60b"), 1);
 

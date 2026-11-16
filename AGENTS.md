@@ -37,7 +37,7 @@ Current project/release handoff: `docs/agent-handoff.md`.
 - Keep benchmark claims reproducible from checked-in scripts and data generation settings.
 - Prefer proving algorithm changes in `bench/` or `codegen/` before moving them into `src/` or `src/v2/`.
 - Be careful with case-sensitive paths. Windows may pass imports that fail on Linux and npm consumers.
-- The default short and blockwise tiers use a 256-entry PEQ, while its long fallback and all v2 tiers use wider tables. Future PEQ-width support should stay explicit and pre-routed, not a silent default change or per-call auto scan in the hot path.
+- The default entry point uses two full-width 65,536-entry PEQ lanes, shared by its short, blockwise, threshold and long kernels; `/unicode` shares the same lanes and all v2 tiers are full-width too. Narrower tables exist only through `/profiles`. PEQ-width support should stay explicit and pre-routed, never a per-call auto scan in the hot path, and any change to what the default API accepts needs maintainer sign-off and a CHANGELOG entry.
 - `docs/use-cases-and-text-profiles.md` records the intended configurable alphabet direction, current static PEQ memory costs, and the distinction between code-unit, byte, token, code-point, and grapheme distance.
 - `docs/text-profile-integration-plan.md` scopes stable-core profiles first and defers v2 width variants until shared generation and worker-memory evidence exist.
 - `docs/licensing-position.md` records the source-available classification and custom-license metadata. Do not describe the project as OSI-approved open source or edit legal terms without maintainer direction and legal review.

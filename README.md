@@ -6,7 +6,7 @@
 [![stars](https://badgen.net/github/stars/iWhatty/lightning-levenshtein)](https://github.com/iWhatty/lightning-levenshtein)
 [![types](https://badgen.net/npm/types/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
 
-Fast Levenshtein distance in pure JavaScript. Compact default API for general-purpose edit distance, plus opt-in subpaths for maximum throughput and Unicode-width character tables.
+Fast Levenshtein distance in pure JavaScript. Compact default API for general-purpose edit distance over any JavaScript string, plus opt-in subpaths for maximum throughput and restricted-alphabet profiles.
 
 ## Features
 
@@ -116,7 +116,7 @@ Full-width UTF-16 code-unit distance:
 import { distanceUnicode } from "lightning-levenshtein/unicode";
 ```
 
-Use this path when your strings can contain code units above `255`, such as many BMP characters, and you need consistent full-width behavior at every input length. It is intentionally pre-routed so the hot loop does not scan each call to select a character table. Use `lightning-levenshtein/unicode/min` for the pre-built bundle.
+`distanceUnicode` returns the same result as the default `distance`, which now uses full-width tables at every length. The subpath remains for existing imports. Use `lightning-levenshtein/unicode/min` for the pre-built bundle.
 
 ### Profiles API
 
@@ -152,7 +152,7 @@ Use the `v2` subpath if you specifically want the specialized `levenshteinLightn
 import { levenshteinLightning } from "lightning-levenshtein/v2";
 ```
 
-Use the `unicode` subpath if you need consistent full-width UTF-16 code-unit behavior:
+The `unicode` subpath is kept for existing imports and behaves like the default `distance`:
 
 ```js
 import { distanceUnicode } from "lightning-levenshtein/unicode";
@@ -174,18 +174,17 @@ Profiles are `ascii` (`0..127`), `latin1` (`0..255`), and `codeUnit` (`0..65535`
 
 ### Character table strategy
 
-`distance` uses 256-entry PEQ tables through 64 code units and full-width tables above that. `distanceMax` and `closest` use 256-entry tables at every length. Use ASCII/Latin-1 input for the default API; use `/unicode` or `/profiles` for wider text.
-
-`distanceUnicode` uses full UTF-16 tables at every tier. It counts code units, so deleting a surrogate pair costs two edits. It does not normalize text or compare grapheme clusters.
+`distance`, `distanceMax`, `closest`, `distanceUnicode` and `levenshteinLightning` all use full-width UTF-16 code-unit PEQ tables at every length, so they accept any JavaScript string. They count code units, so deleting a surrogate pair costs two edits. They do not normalize text or compare grapheme clusters.
 
 The design direction is:
 
-- keep `distance` fast and pre-routed for common ASCII/Latin-1 workloads
-- expose full-width UTF-16 code-unit behavior through the deliberate `/unicode` subpath
+- keep `distance` correct for every string without a per-call scan to pick a table
+- let kernels that never run at the same time share full-width tables, so correctness costs no extra memory
+- offer narrower tables through `/profiles` for callers who want a small, validated alphabet
 - share kernel implementations by binding the PEQ table before entering the hot function
 - avoid naive automatic routing that scans both strings on every call
 
-The `/profiles` factory implements that direction without changing the default entrypoint. Each returned function owns its mutable tables and scratch state, so create one per worker or independent execution context and reuse it synchronously.
+The `/profiles` factory implements the narrower-table option without changing the default entrypoint. Each returned function owns its mutable tables and scratch state, so create one per worker or independent execution context and reuse it synchronously.
 
 The repository design note [Levenshtein Use Cases and Text Profiles](https://github.com/iWhatty/lightning-levenshtein/blob/main/docs/use-cases-and-text-profiles.md) covers real-world workloads, precise comparison units, current per-worker memory costs, and configurable-profile design.
 
@@ -195,8 +194,8 @@ Static typed-array payload currently scales with each worker or module realm:
 
 | Entrypoint | PEQ payload per worker | 4 workers | 8 workers |
 | --- | ---: | ---: | ---: |
-| default | about 513 KiB | about 2 MiB | about 4 MiB |
-| `/unicode` | 768 KiB | 3 MiB | 6 MiB |
+| default | 512 KiB | 2 MiB | 4 MiB |
+| `/unicode` | 512 KiB | 2 MiB | 4 MiB |
 | `/v2` | 6 MiB | 24 MiB | 48 MiB |
 
 Profile factories allocate three PEQ lanes per returned function: 1.5 KiB for ASCII, 3 KiB for Latin-1, or 768 KiB for full code-unit coverage.

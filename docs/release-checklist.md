@@ -61,7 +61,7 @@ pnpm run test:package:pack:report
 - Unicode entrypoint: `lightning-levenshtein/unicode`
   - Routes ESM consumers to `src/unicode.js` for tree shaking.
   - Explicit UTF-16 code-unit path.
-  - Keeps wider PEQ tables out of the default hot path.
+  - Returns the same result as the default `distance`; kept for existing imports.
   - `lightning-levenshtein/unicode/min` explicitly selects the pre-built Closure bundle.
 
 - Profile entrypoint: `lightning-levenshtein/profiles`

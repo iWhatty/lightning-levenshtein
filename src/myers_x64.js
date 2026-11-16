@@ -2,9 +2,7 @@
 
 "use strict";
 
+import { peq, peq1 } from "./peq.js";
 import { createMyersX64 } from "./myers_x64_factory.js";
 
-const peq0 = new Uint32Array(65536);
-const peq1 = new Uint32Array(65536);
-
-export const myers_x64 = createMyersX64(peq0, peq1);
+export const myers_x64 = createMyersX64(peq, peq1);
