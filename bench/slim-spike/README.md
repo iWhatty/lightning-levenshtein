@@ -81,9 +81,8 @@ What this shows so far:
 - Up to 16 code units, slim keeps most of v2's lead over the default entry point, with a twenty-fourth of v2's table memory.
 - From 17 to 32, slim falls to the generic 32-bit kernel's speed, between default and v2. Unrolling to 32 would close that gap for about 22 KB more code.
 - Above 32, slim runs the stable blockwise kernel. It is behind default from 128 up, where default switches to its two-lane long kernel, and well behind v2's fixed-width kernels.
+- The `exact-one-edit` row at 16 is partly the generic kernel. That family's insertions make 17-unit strings, which leave the unrolled tier, and that probably explains the gap to v2 there.
 - On `bmp-code-units`, default looks slower, but its results there are wrong. Slim and v2 compute correct distances.
-
-In a separate private workload of English dictionary lookups (35,997 headwords, 99.8% of them 16 code units or shorter), slim matched v2: about 1.5× fastest-levenshtein per lookup. That data is not in this repository.
 
 ## Not yet established
 
