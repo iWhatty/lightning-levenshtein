@@ -1,6 +1,6 @@
 // bench/slim-spike/run-bench.js
 //
-// Paired throughput comparison: slim spike against production default,
+// Paired throughput comparison: the /slim entry against production default,
 // production v2 and fastest-levenshtein, on the repository's workload
 // families. Entries run in rotating order within each round, and each cell
 // reports the median of the rounds. Prints to stdout only; nothing is written.
@@ -14,7 +14,7 @@
 import { distance as fastest } from "fastest-levenshtein";
 import { distance as productionDefault } from "../../src/index.js";
 import { levenshteinLightning as productionV2 } from "../../src/v2/index.js";
-import { distance as slim } from "./core/index.js";
+import { distanceSlim as slim } from "../../src/slim.js";
 import { buildWorkloadPairs } from "../workloads.js";
 
 const argument = (name, fallback) => {

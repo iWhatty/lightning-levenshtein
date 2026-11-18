@@ -38,7 +38,7 @@ pnpm run test:package:pack:report
 ```
 
 - Treat pre-publish type evidence as two layers:
-  - Structural manifest/declaration checks: `pnpm run test:package:types` verifies exact `types` conditions and shipped declaration files for all eight public subpaths.
+  - Structural manifest/declaration checks: `pnpm run test:package:types` verifies exact `types` conditions and shipped declaration files for all ten public subpaths.
   - Semantic compilation: `pnpm run test:package:types` compiles the workspace consumer with strict NodeNext and no emit; `pnpm run test:package:tarball` compiles the installed packed-tarball consumer with the same settings.
 
 - Confirm runtime source dependencies, bundles, declarations, README assets, and controlling legal files are present. Confirm tests, build tools, experimental benches, CI configuration, contributor-only documents, and repository crawler policy are absent.
@@ -70,6 +70,12 @@ pnpm run test:package:pack:report
   - Defaults to rejecting out-of-profile input; unchecked use must be explicit.
   - Keeps profile tables out of the default bundle and owns state per returned function.
   - `lightning-levenshtein/profiles/min` explicitly selects the pre-built Closure bundle.
+
+- Slim entrypoint: `lightning-levenshtein/slim`
+  - Routes ESM consumers to `src/slim.js`.
+  - Exports `distanceSlim`; every tier shares the one full-width table from `src/myers_32_unrolled16.js`.
+  - Keeps that table and the 1–16 kernels out of the default bundle.
+  - `lightning-levenshtein/slim/min` explicitly selects the pre-built Closure bundle.
 
 ## Benchmark Evidence Review
 
@@ -111,4 +117,6 @@ npm publish
   - `lightning-levenshtein/unicode/min`
   - `lightning-levenshtein/profiles`
   - `lightning-levenshtein/profiles/min`
+  - `lightning-levenshtein/slim`
+  - `lightning-levenshtein/slim/min`
 - Confirm the README renders expected benchmark charts on npm.

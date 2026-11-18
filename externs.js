@@ -22,6 +22,13 @@ function distanceUnicode(a, b) {}
 /**
  * @param {string} a
  * @param {string} b
+ * @return {number}
+ */
+function distanceSlim(a, b) {}
+
+/**
+ * @param {string} a
+ * @param {string} b
  * @param {number=} maxDistance
  * @return {number}
  */

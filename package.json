@@ -51,6 +51,15 @@
         "./profiles/min": {
             "types": "./dist/lightning-levenshtein-profiles.min.d.ts",
             "default": "./dist/lightning-levenshtein-profiles.min.js"
+        },
+        "./slim": {
+            "types": "./dist/lightning-levenshtein-slim.min.d.ts",
+            "import": "./src/slim.js",
+            "default": "./dist/lightning-levenshtein-slim.min.js"
+        },
+        "./slim/min": {
+            "types": "./dist/lightning-levenshtein-slim.min.d.ts",
+            "default": "./dist/lightning-levenshtein-slim.min.js"
         }
     },
     "files": [
@@ -63,6 +72,8 @@
         "dist/lightning-levenshtein-unicode.min.d.ts",
         "dist/lightning-levenshtein-profiles.min.js",
         "dist/lightning-levenshtein-profiles.min.d.ts",
+        "dist/lightning-levenshtein-slim.min.js",
+        "dist/lightning-levenshtein-slim.min.d.ts",
         "docs/licensing-position.md",
         "bench/packages/relative-to-fastest-levenshtein.svg",
         "bench/packages/mean-ops-loglog-chart.svg",
@@ -77,7 +88,8 @@
         "build:v2": "node ./build-gcc-bolt.mjs",
         "build:unicode": "node ./build-gcc-unicode.mjs",
         "build:profiles": "node ./build-gcc-profiles.mjs",
-        "build:all": "pnpm run build && pnpm run build:v2 && pnpm run build:unicode && pnpm run build:profiles",
+        "build:slim": "node ./build-gcc-slim.mjs",
+        "build:all": "pnpm run build && pnpm run build:v2 && pnpm run build:unicode && pnpm run build:profiles && pnpm run build:slim",
         "check:ci": "pnpm run codegen:check && pnpm run test:source && pnpm run test:docs && pnpm run test:policy && pnpm run bench:packages:promotion:check && pnpm run build:all && pnpm test --runInBand --verbose && pnpm run test:package && pnpm run test:package:types && pnpm run test:package:tarball && pnpm run test:package:pack",
         "prepublishOnly": "pnpm run check:ci",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",

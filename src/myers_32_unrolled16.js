@@ -1,5 +1,5 @@
-// Derived by bench/slim-spike/derive-kernels.js from src/v2/myers32-unrolledA.js
-// (lengths 1-16 only, table exported). Do not edit by hand.
+// Auto-generated: Optimized Myers 32-bit variants with fixed A.length
+// Source: codegen/tools/generateMyers32-A.cjs
 export const peq = new Uint32Array(65536);
 export const myers_table = [];
 

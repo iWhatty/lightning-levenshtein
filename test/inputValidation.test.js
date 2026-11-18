@@ -10,6 +10,8 @@ import { levenshteinLightning } from "../src/v2/index.js";
 import { levenshteinLightning as levenshteinLightningMin } from "../dist/lightning-levenshtein-v2.min.js";
 import { createDistance } from "../src/profiles.js";
 import { createDistance as createDistanceMin } from "../dist/lightning-levenshtein-profiles.min.js";
+import { distanceSlim } from "../src/slim.js";
+import { distanceSlim as distanceSlimMin } from "../dist/lightning-levenshtein-slim.min.js";
 
 // Kernels write into shared PEQ tables and clear them on return. Before the
 // entry-point guards, a call that threw midway left those tables dirty and
@@ -29,7 +31,9 @@ const twoArgument = [
   ["profiles latin1 assume-valid", createDistance({ profile: "latin1", outOfRange: "assume-valid" })],
   ["profiles/min latin1 assume-valid", createDistanceMin({ profile: "latin1", outOfRange: "assume-valid" })],
   ["profiles codeUnit", createDistance({ profile: "codeUnit" })],
-  ["profiles/min codeUnit", createDistanceMin({ profile: "codeUnit" })]
+  ["profiles/min codeUnit", createDistanceMin({ profile: "codeUnit" })],
+  ["slim", distanceSlim],
+  ["slim/min", distanceSlimMin]
 ];
 
 // One pattern per dispatch family, so a dirty table in any tier is visible.

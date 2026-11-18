@@ -3,13 +3,17 @@
 const path = require('path');
 const { writeOrCheckGeneratedOutputs } = require('./generated-output.cjs');
 
+// Emits the unrolled kernels for A.length 1..maxLength. `exportTable` exports
+// the PEQ table so a dispatcher can bind its other tiers to the same lanes;
+// `dispatcher` appends the standalone myers32_unrolledA entry.
+function generate({ maxLength, exportTable, dispatcher }) {
 const out = [];
 out.push('// Auto-generated: Optimized Myers 32-bit variants with fixed A.length');
 out.push('// Source: codegen/tools/generateMyers32-A.cjs');
-out.push('const peq = new Uint32Array(65536);');
+out.push(`${exportTable ? 'export ' : ''}const peq = new Uint32Array(65536);`);
 out.push('export const myers_table = [];');
 
-for (let n = 1; n <= 32; n++) {
+for (let n = 1; n <= maxLength; n++) {
   const lastMask = 1 << (n - 1);
 
   out.push('');
@@ -53,24 +57,37 @@ for (let n = 1; n <= 32; n++) {
   out.push(`myers_table[${n}] = myers_${n};`);
 }
 
-// Dispatcher
-out.push('');
-out.push('export function myers32_unrolledA(a, b) {');
-out.push('  const fn = myers_table[a.length];');
-out.push('  return fn ? fn(a, b) : null;');
-out.push('}');
+if (dispatcher) {
+  out.push('');
+  out.push('export function myers32_unrolledA(a, b) {');
+  out.push('  const fn = myers_table[a.length];');
+  out.push('  return fn ? fn(a, b) : null;');
+  out.push('}');
+}
 out.push('');
 
-const generated = out.join('\n');
-const outputPaths = [
-  path.resolve(__dirname, '..', 'artifacts', 'myers32-unrolledA.js'),
-  path.resolve(__dirname, '..', '..', 'src', 'v2', 'myers32-unrolledA.js')
-];
+return out.join('\n');
+}
+
+const check = process.argv.includes('--check');
 
 writeOrCheckGeneratedOutputs({
-  generated,
-  outputPaths,
+  generated: generate({ maxLength: 32, exportTable: false, dispatcher: true }),
+  outputPaths: [
+    path.resolve(__dirname, '..', 'artifacts', 'myers32-unrolledA.js'),
+    path.resolve(__dirname, '..', '..', 'src', 'v2', 'myers32-unrolledA.js')
+  ],
   label: 'Myers32 A',
   refreshCommand: 'pnpm run codegen:myers32:a',
-  check: process.argv.includes('--check'),
+  check,
+});
+
+// The /slim entry unrolls only the lengths most words fit in, and binds its
+// generic 32-bit and blockwise tiers to the exported table.
+writeOrCheckGeneratedOutputs({
+  generated: generate({ maxLength: 16, exportTable: true, dispatcher: false }),
+  outputPaths: [path.resolve(__dirname, '..', '..', 'src', 'myers_32_unrolled16.js')],
+  label: 'Myers32 A slim',
+  refreshCommand: 'pnpm run codegen:myers32:a',
+  check,
 });

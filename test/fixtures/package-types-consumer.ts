@@ -10,6 +10,8 @@ import { distanceUnicode } from "lightning-levenshtein/unicode";
 import { distanceUnicode as minDistanceUnicode } from "lightning-levenshtein/unicode/min";
 import { createDistance } from "lightning-levenshtein/profiles";
 import { createDistance as createDistanceMin } from "lightning-levenshtein/profiles/min";
+import { distanceSlim } from "lightning-levenshtein/slim";
+import { distanceSlim as minDistanceSlim } from "lightning-levenshtein/slim/min";
 import type {
   DistanceProfileOptions,
   OutOfRangePolicy,
@@ -38,6 +40,9 @@ const v2MinDistance: number = minLevenshteinLightning(first, second);
 const unicodeDistance: number = distanceUnicode("café", "café");
 const unicodeMinDistance: number = minDistanceUnicode("😀", "😃");
 
+const slimDistance: number = distanceSlim(first, second);
+const slimMinDistance: number = minDistanceSlim("日本語", "日本人");
+
 const profile: TextProfile = "ascii";
 const policy: OutOfRangePolicy = "throw";
 const profileOptions: DistanceProfileOptions = { profile, outOfRange: policy };
@@ -57,5 +62,5 @@ void [
   rootDistance, rootDistanceMax, rootClosest,
   minDistanceResult, minDistanceMaxResult, minClosestResult,
   v2Distance, v2MinDistance, unicodeDistance, unicodeMinDistance,
-  profileResult, minProfileResult,
+  profileResult, minProfileResult, slimDistance, slimMinDistance,
 ];
