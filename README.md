@@ -192,7 +192,7 @@ Profiles are `ascii` (`0..127`), `latin1` (`0..255`), and `codeUnit` (`0..65535`
 
 ### Character table strategy
 
-`distance` uses 256-entry PEQ tables through 64 code units and full-width tables above that. `distanceMax` and `closest` use 256-entry tables at every length. Use ASCII/Latin-1 input for the default API; use `/unicode` or `/profiles` for wider text.
+`distance` uses 256-entry PEQ tables through 64 code units and full-width tables above that. `distanceMax` and `closest` use 256-entry tables at every length. Use ASCII/Latin-1 input for the default API; use `/unicode`, `/profiles` or `/slim` for wider text.
 
 `distanceUnicode` uses full UTF-16 tables at every tier. It counts code units, so deleting a surrogate pair costs two edits. It does not normalize text or compare grapheme clusters.
 
