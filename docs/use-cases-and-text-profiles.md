@@ -83,13 +83,13 @@ The code-point row illustrates why a direct table is the wrong representation fo
 
 ### Current entrypoints
 
-- The default entrypoint is mixed-width. `peq.js` supplies one 256-entry table for the 32-bit and blockwise kernels, while the long-string `myers_x64` kernel owns two 65,536-entry tables. Static PEQ storage is therefore about **513 KiB**, plus small retained scratch buffers.
-- The explicit `/unicode` entrypoint uses one shared 65,536-entry table for its short and blockwise tiers plus the long kernel's two full-width lanes: **768 KiB**, plus scratch buffers.
+- The default entrypoint is full-width. `peq.js` supplies two 65,536-entry lanes that the 32-bit, blockwise, threshold and long-string kernels share, because only one of them runs at a time. Static PEQ storage is **512 KiB**, plus small retained scratch buffers.
+- The `/unicode` entrypoint binds the same two lanes and returns the same results as the default `distance`: **512 KiB**, plus scratch buffers.
 - The `/v2` entrypoint owns 24 65,536-entry lanes: **6 MiB**, plus scratch buffers retained by its generalized kernels.
 
 These figures describe typed-array payloads and exclude JavaScript object, module, and allocator overhead. They also explain why worker count matters: eight workers loading v2 can account for roughly 48 MiB of PEQ payload alone.
 
-The README now reflects this mixed-width default behavior and the v2 per-worker PEQ cost.
+The README reflects this full-width default behavior and the v2 per-worker PEQ cost.
 
 ### Stable profile totals
 

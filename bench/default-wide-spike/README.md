@@ -1,5 +1,7 @@
 # Default Wide-Table Spike
 
+> **Status: promoted.** `src/peq.js` and `src/myers_x64.js` now have the shape prototyped here, so the tables below describe the default API before promotion. `core/` is kept as the record of what was verified and measured. `derive-core.js` checks for the old `src` shape and now stops with a re-review message; `verify.js` and `measure-size.mjs` compare `core/` with a `src` that is equivalent to it.
+
 Prototype of a default entry point (`distance`, `distanceMax`, `closest`) that is correct for every UTF-16 code unit, not only ASCII and Latin-1.
 
 ## The problem
@@ -48,7 +50,7 @@ node bench/default-wide-spike/measure-size.mjs --out-dir=<external-directory>
 
 ## What is not established
 
-- Throughput. Short kernels would index a 65,536-entry table instead of a 256-entry one. For ASCII input the same few table entries are touched either way, and the earlier [char table spike](../char-table-spike/README.md) did not find the wide table consistently slower in the 32-bit kernel, but no paired measurement of this core against production exists. That needs a settled host and the package benchmark workflow.
+- Results on other machines or Node versions. A [paired A/B run](../paired-ab/README.md) of this core against production on one Windows x64 host with Node 24 found no difference outside the method's noise floor of about 1% for `distance`, `distanceMax` or `closest` on alphanumeric input, at lengths from 2 to 300.
 
 ## If promoted
 

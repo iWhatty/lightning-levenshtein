@@ -1,8 +1,8 @@
 /**
- * Levenshtein distance between two strings.
+ * Levenshtein distance between two strings, counted in UTF-16 code units.
  *
- * Intended for ASCII/Latin-1 input (code units 0–255). For wider text use
- * `lightning-levenshtein/unicode` or `lightning-levenshtein/profiles`.
+ * A character outside the Basic Multilingual Plane is two code units, so
+ * deleting one costs two edits. Text is not normalized.
  *
  * @throws {TypeError} If either argument is not a primitive string.
  */
@@ -15,7 +15,7 @@ export function distance(a: string, b: string): number;
  * returns some value greater than `maxDistance`, not a sentinel such as `-1`,
  * so compare the result against the threshold.
  *
- * Intended for ASCII/Latin-1 input (code units 0–255).
+ * Counted in UTF-16 code units, like `distance`.
  *
  * @param maxDistance Largest distance of interest. A fraction between 0 and 1
  * is taken relative to the length of `a` and rounded up. Omit for no bound.
@@ -32,7 +32,7 @@ export function distanceMax(
  * Returns the candidate closest to `str`, or `null` if none is within
  * `maxDistance`. The earliest candidate wins a tie.
  *
- * Intended for ASCII/Latin-1 input (code units 0–255).
+ * Distances are counted in UTF-16 code units, like `distance`.
  *
  * @param maxDistance Largest acceptable distance, as an integer. Omit for no
  * bound.

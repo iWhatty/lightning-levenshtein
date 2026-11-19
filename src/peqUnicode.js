@@ -1,2 +1,4 @@
 // ./src/peqUnicode.js
-export const peqUnicode = new Uint32Array(0x10000);
+//
+// The default tables are full-width, so the Unicode entry point shares them.
+export { peq as peqUnicode } from './peq.js';

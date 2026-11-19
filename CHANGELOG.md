@@ -4,6 +4,8 @@ What changed for people using the package, per release. Entries before 0.0.5 wer
 
 ## Unreleased
 
+- Behavior change: `distance`, `distanceMax` and `closest` are now correct for every string, not only ASCII and Latin-1. Text in other scripts, such as Cyrillic, CJK or emoji, previously got overstated distances and could make `closest` pick the wrong candidate; results for such text will now be lower. ASCII and Latin-1 results are unchanged.
+- `distanceUnicode` now returns the same result as `distance`. The `/unicode` entry point remains for existing imports.
 - Fix: a call that threw partway through, such as one given a non-string argument, could make later calls return wrong distances for the rest of the process.
 - Behavior change: every distance function now throws a `TypeError` unless both arguments are primitive strings. `String` objects, numbers, `null` and `undefined` are rejected instead of producing an unreliable result. `distanceMax` and `closest` also reject `BigInt` and `Symbol` thresholds.
 
