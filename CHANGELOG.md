@@ -2,13 +2,13 @@
 
 What changed for people using the package, per release. Entries before 0.0.5 were reconstructed from git history.
 
-## Unreleased
+## 0.1.0
 
-- Behavior change: `distance`, `distanceMax` and `closest` are now correct for every string, not only ASCII and Latin-1. Text in other scripts, such as Cyrillic, CJK or emoji, previously got overstated distances and could make `closest` pick the wrong candidate; results for such text will now be lower. ASCII and Latin-1 results are unchanged.
-- `distanceUnicode` now returns the same result as `distance`. The `/unicode` entry point remains for existing imports.
-- Fix: a call that threw partway through, such as one given a non-string argument, could make later calls return wrong distances for the rest of the process.
-- Behavior change: every distance function now throws a `TypeError` unless both arguments are primitive strings. `String` objects, numbers, `null` and `undefined` are rejected instead of producing an unreliable result. `distanceMax` and `closest` also reject `BigInt` and `Symbol` thresholds.
-- New `/slim` and `/slim/min` entry points: `distanceSlim(a, b)` keeps v2's short-string speed up to 16 code units with one 256 KiB table, and counts every UTF-16 code unit correctly. Longer strings use the stable kernels and run slower than v2.
+- **Behavior change.** The default `distance`, `distanceMax` and `closest` now handle all UTF-16 code units. Inputs containing Cyrillic, CJK scripts or emoji can return corrected distances or a different closest match.
+- `distanceUnicode` now returns the same result as `distance`. Both Unicode subpaths remain available for existing imports.
+- **Behavior change.** Distance functions now throw `TypeError` for non-primitive string inputs, including boxed `String` objects, numbers, `null` and `undefined`. `closest` applies string validation to the query and candidates it compares. `distanceMax` and `closest` reject `BigInt` and `Symbol` thresholds. A rejected call no longer corrupts later distance results.
+- `/slim` and `/slim/min` export `distanceSlim(a, b)` for full UTF-16 code-unit distance. It uses v2's unrolled kernels at lengths 3–16 and shares one full-width lookup table across all lengths.
+- The package is source-available under AGPL-3.0 with WATT3D Additional Terms. See [LICENSE](./LICENSE) and [ADDITIONAL_TERMS.md](./ADDITIONAL_TERMS.md).
 
 ## 0.0.7 — 2026-11-02
 

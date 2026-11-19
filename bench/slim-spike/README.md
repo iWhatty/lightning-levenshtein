@@ -31,7 +31,7 @@ The table is full width, so every UTF-16 code unit is counted correctly. Calls a
 | Production v2 | 24 | 6 MiB | every length, max throughput |
 | [Shared PEQ pool](../shared-peq-spike/README.md) | 8 | 2 MiB | the same v2 kernels, pooled |
 | [Default wide-table](../default-wide-spike/README.md) | 2 | 512 KiB | the default API (`distance`, `distanceMax`, `closest`), correct for every code unit |
-| `/slim` | 1 | 256 KiB | `distanceSlim` only, v2 speed up to 16 code units |
+| `/slim` | 1 | 256 KiB | `distanceSlim`, with v2's unrolled kernels at 3–16 code units |
 
 ## Commands
 
@@ -70,13 +70,7 @@ Throughput relative to fastest-levenshtein (higher is better, median of 7 rotati
 | 64 | 1.31× / 1.19× | 2.16× / 1.83× | 1.28× / 1.20× |
 | 128 | 1.48× / 1.48× | 1.92× / 1.89× | 1.10× / 1.16× |
 
-What this shows:
-
-- Up to 16 code units, slim keeps most of v2's lead over the default entry point, with a twenty-fourth of v2's table memory.
-- The `exact-one-edit` row at 16 is partly the generic kernel. That family's insertions make 17-unit strings, which leave the unrolled tier, and that probably explains the gap to v2 there.
-- From 17 to 32, slim falls to the generic 32-bit kernel's speed, between default and v2. Unrolling to 32 would close that gap for about 22 KB more code.
-- Above 32, slim runs the stable blockwise kernel. It is behind default from 128 up, where default switches to its two-lane long kernel, and well behind v2's fixed-width kernels.
-- On `bmp-code-units`, default looks slower, but its results there are wrong. Slim and v2 compute correct distances.
+In this run, slim trailed or matched v2 on the two sampled workloads at lengths 4–16 and trailed v2 at 24, 32, 64 and 128. Insertions in the length-16 `exact-one-edit` workload can produce 17-unit strings and exercise slim's generic kernel. The default timings were collected before the default API gained full UTF-16 code-unit support. Its `bmp-code-units` timings cannot support a correctness-equivalent comparison.
 
 ## Still open
 

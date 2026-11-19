@@ -75,7 +75,7 @@ pnpm run test:package:pack:report
   - Routes ESM consumers to `src/slim.js`.
   - Exports `distanceSlim`; every tier shares the one full-width table from `src/myers_32_unrolled16.js`.
   - Keeps that table and the 1–16 kernels out of the default bundle.
-  - `lightning-levenshtein/slim/min` explicitly selects the pre-built Closure bundle.
+  - `lightning-levenshtein/slim/min` exports `distanceSlim` from the pre-built Closure bundle.
 
 ## Benchmark Evidence Review
 

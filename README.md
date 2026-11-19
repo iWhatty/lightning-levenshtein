@@ -2,7 +2,7 @@
 
 [![npm](https://badgen.net/npm/v/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
 [![downloads](https://badgen.net/npm/dm/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
-[![license](https://badgen.net/static/license/AGPL-3.0%20%2B%20terms/blue)](https://github.com/iWhatty/lightning-levenshtein/blob/main/LICENSE)
+[![license: source-available](https://badgen.net/static/license/source-available/blue)](https://github.com/iWhatty/lightning-levenshtein/blob/main/LICENSE)
 [![stars](https://badgen.net/github/stars/iWhatty/lightning-levenshtein)](https://github.com/iWhatty/lightning-levenshtein)
 [![types](https://badgen.net/npm/types/lightning-levenshtein)](https://www.npmjs.com/package/lightning-levenshtein)
 
@@ -64,7 +64,7 @@ The package exposes five logical entrypoints, each with an ESM-source path for b
 }
 ```
 
-Every distance function, on every entry point, takes primitive strings and throws a `TypeError` for anything else, including `String` objects, `null` and `undefined`.
+Distance functions require primitive string inputs. Boxed `String` objects, numbers, `null` and `undefined` throw a `TypeError`. `closest` validates the strings it actually compares. `distanceMax` and `closest` also throw `TypeError` for `BigInt` and `Symbol` thresholds.
 
 ### TypeScript
 
@@ -94,7 +94,7 @@ The `.`, `./v2`, `./unicode`, `./profiles`, and `./slim` entrypoints route bundl
 import { distance, distanceMax, closest } from "lightning-levenshtein";
 ```
 
-The stable core API. Bundlers receive ESM source; unbundled consumers can use `lightning-levenshtein/min` to point at the pre-built bundle directly.
+The stable core API handles all UTF-16 code units at every input length. Bundlers receive ESM source. Unbundled consumers can use `lightning-levenshtein/min` to select the pre-built bundle.
 
 `distanceMax(a, b, maxDistance)` returns the exact distance when it is within the effective threshold. When the threshold is exceeded, it returns a value greater than the threshold rather than a sentinel such as `-1`. A fractional threshold between `0` and `1` is interpreted relative to the original length of `a` and rounded up.
 
@@ -138,13 +138,11 @@ Available profiles are `ascii`, `latin1`, and `codeUnit`. The default `outOfRang
 
 ### Slim API
 
-Short-string speed on one table:
-
 ```js
 import { distanceSlim } from "lightning-levenshtein/slim";
 ```
 
-`distanceSlim` runs v2's precompiled kernels up to 16 code units, the stable 32-bit kernel up to 32, and the stable blockwise kernel beyond. Every tier shares one full-width table, so it counts every UTF-16 code unit correctly and allocates 256 KiB per module realm or worker. Choose it for words, identifiers and other short strings when v2's 6 MiB and larger bundle are too much. Above 16 code units it is slower than v2. `lightning-levenshtein/slim/min` exposes the pre-built bundle.
+`distanceSlim` uses direct calculations at lengths 0–2, v2's unrolled kernels at 3–16, the stable 32-bit kernel at 17–32, and the stable blockwise kernel above 32. Dispatch uses the longer string's length in UTF-16 code units. All tiers share one full-width 256 KiB lookup table per module realm or worker. `lightning-levenshtein/slim/min` exports the same `distanceSlim` function through the pre-built bundle.
 
 ---
 
@@ -170,7 +168,7 @@ The `unicode` subpath is kept for existing imports and behaves like the default 
 import { distanceUnicode } from "lightning-levenshtein/unicode";
 ```
 
-Use the `slim` subpath for short strings when you want most of v2's speed with a small payload and full-width tables:
+Use the `slim` subpath when you want short-string specializations with a single full-width lookup table:
 
 ```js
 import { distanceSlim } from "lightning-levenshtein/slim";
@@ -242,7 +240,7 @@ This keeps tiny inputs fast without sacrificing larger-input performance.
 
 ### Benchmark
 
-The benchmark harness generates the same string pairs for every library at each tested length and seed.
+The benchmark harness generates the same string pairs for every library at each tested length and seed. The comparison below shows the historical package benchmark, which predates `/slim`. The exploratory `/slim` figures come from a single Windows 10 desktop run on Node 24.20.0. See the [slim spike](https://github.com/iWhatty/lightning-levenshtein/blob/main/bench/slim-spike/README.md).
 
 <!-- benchmark-environment:start -->
 Node v24.11.0 on win32 x64, 13th Gen Intel(R) Core(TM) i5-13600K. Results generated 2026-07-16.
@@ -304,7 +302,7 @@ pnpm run bench:packages:verify
 pnpm run bench:packages:promotion:check
 ```
 
-Qualification measurements require a settled host and three separate raw repetitions. The checked-in aggregate must then be promoted explicitly before `pnpm run bench:packages:render` can update this section. See the [package benchmark qualification workflow](./bench/packages/qualification/README.md) and [evidence index](./bench/packages/qualification/RESULTS.md).
+Qualification measurements require a settled host and three separate raw repetitions. The checked-in aggregate must then be promoted explicitly before `pnpm run bench:packages:render` can update this section. See the [package benchmark qualification workflow](https://github.com/iWhatty/lightning-levenshtein/blob/main/bench/packages/qualification/README.md) and [evidence index](https://github.com/iWhatty/lightning-levenshtein/blob/main/bench/packages/qualification/RESULTS.md).
 
 ### Project layout
 
@@ -340,7 +338,7 @@ scripts/
   package-contract.mjs   # test-only public package and tarball contract
 ```
 
-Run `pnpm run codegen:myers32:a` after changing the production Myers32 generator. The command refreshes both the comparison artifact and `src/v2/myers32-unrolledA.js`. The `pnpm run codegen:check` gate verifies both A outputs and the experimental B comparison artifact. See [generated artifact ownership](./codegen/README.md) for scope and commands.
+Run `pnpm run codegen:myers32:a` after changing the production Myers32 generator. The command refreshes `src/v2/myers32-unrolledA.js`, the comparison artifact, and the `/slim` 1–16 table in `src/myers_32_unrolled16.js`. The `pnpm run codegen:check` gate verifies those outputs and the experimental B comparison artifact. See [generated artifact ownership](https://github.com/iWhatty/lightning-levenshtein/blob/main/codegen/README.md) for scope and commands.
 
 ---
 
