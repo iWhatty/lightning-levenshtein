@@ -7,7 +7,8 @@ Generated files are owned by scripts under `codegen/tools/`. Do not edit generat
 `generateMyers32-A.cjs` fixes the first argument length from 1 through 32. It owns both:
 
 - `codegen/artifacts/myers32-unrolledA.js`, used for comparison work;
-- `src/v2/myers32-unrolledA.js`, used by the production `/v2` dispatcher.
+- `src/v2/myers32-unrolledA.js`, used by the production `/v2` dispatcher;
+- `src/myers_32_unrolled16.js`, lengths 1 through 16 only with the PEQ table exported, used by the production `/slim` dispatcher.
 
 Refresh with `pnpm run codegen:myers32:a`.
 

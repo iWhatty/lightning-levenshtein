@@ -17,12 +17,12 @@ Current project/release handoff: `docs/agent-handoff.md`.
 
 - This workspace currently uses pnpm for dependency locking. Keep `pnpm-lock.yaml` and avoid reintroducing `package-lock.json` unless the maintainer asks.
 - `pnpm test` runs the Jest suite. On Windows PowerShell environments where package-manager shims are blocked, use the `.cmd` shim.
-- `pnpm run build:all` rebuilds all production bundles: default, `/v2`, `/unicode`, and `/profiles`.
+- `pnpm run build:all` rebuilds all production bundles: default, `/v2`, `/unicode`, `/profiles`, and `/slim`.
 - `pnpm run check:ci` runs the complete local release gate.
 - `docs/node-version-testing.md` defines multi-Node switching, evidence recording, and how to distinguish historical matrix results from current-commit results.
 - `pnpm run test:source` syntax-checks repository JavaScript and verifies relative imports without executing benchmarks.
 - `pnpm run test:docs` validates repository-local Markdown links and citation presence; `pnpm run test:package:pack:report` prints the exact npm dry-run manifest for review.
-- `pnpm run codegen:myers32:a` refreshes the production v2 short-string table and its comparison artifact; `pnpm run codegen:check` verifies both outputs.
+- `pnpm run codegen:myers32:a` refreshes the production v2 short-string table, its comparison artifact, and the `/slim` 1–16 table (`src/myers_32_unrolled16.js`); `pnpm run codegen:check` verifies all three.
 - `pnpm run bench:packages -- --out-dir=<external-directory>` runs the public package comparison benchmark. Measured package and diagnostic runs require output outside the checkout; import complete repetitions with `node bench/import-runs.js` before aggregation. See `bench/packages/qualification/README.md`.
 - `pnpm run bench:packages:promotion:check` validates the selected README evidence; `bench:packages:promote` selects a qualified aggregate and `bench:packages:render` refreshes all generated outputs.
 - `pnpm run bench:myers32` and `pnpm run bench:myersx` run kernel exploration benches.
@@ -42,7 +42,8 @@ Current project/release handoff: `docs/agent-handoff.md`.
 - `docs/text-profile-integration-plan.md` scopes stable-core profiles first and defers v2 width variants until shared generation and worker-memory evidence exist.
 - `docs/licensing-position.md` records the source-available classification and custom-license metadata. Do not describe the project as OSI-approved open source or edit legal terms without maintainer direction and legal review.
 - PEQ-width variants should share factory implementations where possible. Bind the table once at module setup, then export a hot function with no inner-loop mode checks.
-- `src/distanceUnicode.js` backs the explicit `/unicode` subpath through `src/unicode.js`. Do not export Unicode code from `src/index.js`; that causes the default dist bundle to pull in wide tables.
+- `src/distanceSlim.js` backs `/slim` through `src/slim.js`. All its tiers share the one table `src/myers_32_unrolled16.js` exports; keep it out of `src/index.js` so the default entry point can load without the additional table.
+- `src/distanceUnicode.js` backs the explicit `/unicode` subpath through `src/unicode.js`. Keep the compatibility export in that subpath.
 - Do not overwrite unrelated lockfile changes. This repo is currently on pnpm in the maintainer's local system.
 - Do not treat a push as authorization to run GitHub Actions. The retained workflow must stay `.disabled`; request a maintainer-run local platform check when additional coverage is needed.
 - CHANGELOG entries say what changed for someone using the package, a line or two each, with behavior changes called out. Leave out byte counts, tests, build and benchmark notes, refactors and commit hashes; commit messages and `docs/` carry those.

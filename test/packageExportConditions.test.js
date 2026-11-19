@@ -15,7 +15,7 @@ import { assertPackageExportConditions } from "../scripts/package-declaration-co
 const workspacePackage = JSON.parse(readFileSync("package.json", "utf8"));
 
 describe("ordered package export conditions", () => {
-  test("accepts all eight workspace export manifests", () => {
+  test("accepts all ten workspace export manifests", () => {
     expect(() => assertPackageExportConditions({
       pkg: workspacePackage,
       publicExports: PUBLIC_EXPORTS,

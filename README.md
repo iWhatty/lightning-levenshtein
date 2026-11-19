@@ -45,7 +45,7 @@ closest("kitten", ["kitchen", "sitting"]);     // "kitchen"
 
 ## API
 
-The package exposes four logical entrypoints, each with an ESM-source path for bundlers and a pre-built minified path for unbundled `<script type="module">` use:
+The package exposes five logical entrypoints, each with an ESM-source path for bundlers and a pre-built minified path for unbundled `<script type="module">` use:
 
 ```jsonc
 {
@@ -57,7 +57,9 @@ The package exposes four logical entrypoints, each with an ESM-source path for b
     "./unicode":     { "types": "./dist/lightning-levenshtein-unicode.min.d.ts", "import": "./src/unicode.js",     "default": "./dist/lightning-levenshtein-unicode.min.js" },
     "./unicode/min": { "types": "./dist/lightning-levenshtein-unicode.min.d.ts",                              "default": "./dist/lightning-levenshtein-unicode.min.js" },
     "./profiles":    { "types": "./dist/lightning-levenshtein-profiles.min.d.ts", "import": "./src/profiles.js",   "default": "./dist/lightning-levenshtein-profiles.min.js" },
-    "./profiles/min": { "types": "./dist/lightning-levenshtein-profiles.min.d.ts",                            "default": "./dist/lightning-levenshtein-profiles.min.js" }
+    "./profiles/min": { "types": "./dist/lightning-levenshtein-profiles.min.d.ts",                            "default": "./dist/lightning-levenshtein-profiles.min.js" },
+    "./slim":        { "types": "./dist/lightning-levenshtein-slim.min.d.ts",    "import": "./src/slim.js",        "default": "./dist/lightning-levenshtein-slim.min.js" },
+    "./slim/min":    { "types": "./dist/lightning-levenshtein-slim.min.d.ts",                                 "default": "./dist/lightning-levenshtein-slim.min.js" }
   }
 }
 ```
@@ -66,7 +68,7 @@ Every distance function, on every entry point, takes primitive strings and throw
 
 ### TypeScript
 
-Declarations ship with the package; no `@types` package is needed. All eight public subpaths publish explicit `types` conditions. To resolve subpath imports, use a TypeScript module-resolution mode that understands package `exports`, such as `NodeNext` (used by the local release checks), `Node16`, or `Bundler`. Legacy `node`/`node10` resolution does not resolve every subpath. For profile types, use type-only imports from the `profiles` subpath:
+Declarations ship with the package; no `@types` package is needed. All ten public subpaths publish explicit `types` conditions. To resolve subpath imports, use a TypeScript module-resolution mode that understands package `exports`, such as `NodeNext` (used by the local release checks), `Node16`, or `Bundler`. Legacy `node`/`node10` resolution does not resolve every subpath. For profile types, use type-only imports from the `profiles` subpath:
 
 ```ts
 import { createDistance } from "lightning-levenshtein/profiles";
@@ -82,9 +84,9 @@ const options: DistanceProfileOptions = { profile, outOfRange };
 const distanceAscii = createDistance(options);
 ```
 
-Local release checks verify declarations for all eight subpaths through strict NodeNext, no-emit TypeScript compilation against both the workspace package and an installed packed tarball.
+Local release checks verify declarations for all ten subpaths through strict NodeNext, no-emit TypeScript compilation against both the workspace package and an installed packed tarball.
 
-The `.`, `./v2`, `./unicode`, and `./profiles` entrypoints route bundlers at ESM source so unused code can be tree-shaken. Explicit `/min` subpaths expose the pre-built Closure bundles for consumers that want them directly.
+The `.`, `./v2`, `./unicode`, `./profiles`, and `./slim` entrypoints route bundlers at ESM source so unused code can be tree-shaken. Explicit `/min` subpaths expose the pre-built Closure bundles for consumers that want them directly.
 
 ### Default API
 
@@ -134,13 +136,23 @@ const distanceLatin1 = createDistance({
 
 Available profiles are `ascii`, `latin1`, and `codeUnit`. The default `outOfRange: "throw"` policy validates the selected range. Use `assume-valid` only when inputs were validated or normalized before the call. `lightning-levenshtein/profiles/min` exposes the pre-built bundle.
 
+### Slim API
+
+Short-string speed on one table:
+
+```js
+import { distanceSlim } from "lightning-levenshtein/slim";
+```
+
+`distanceSlim` runs v2's precompiled kernels up to 16 code units, the stable 32-bit kernel up to 32, and the stable blockwise kernel beyond. Every tier shares one full-width table, so it counts every UTF-16 code unit correctly and allocates 256 KiB per module realm or worker. Choose it for words, identifiers and other short strings when v2's 6 MiB and larger bundle are too much. Above 16 code units it is slower than v2. `lightning-levenshtein/slim/min` exposes the pre-built bundle.
+
 ---
 
 ## Notes
 
 ### Which one should I pick?
 
-Use the default package entrypoint if you want the stable general-purpose API with the smallest production build:
+Use the default package entrypoint if you want the stable general-purpose API:
 
 ```js
 import { distance, distanceMax, closest } from "lightning-levenshtein";
@@ -156,6 +168,12 @@ The `unicode` subpath is kept for existing imports and behaves like the default 
 
 ```js
 import { distanceUnicode } from "lightning-levenshtein/unicode";
+```
+
+Use the `slim` subpath for short strings when you want most of v2's speed with a small payload and full-width tables:
+
+```js
+import { distanceSlim } from "lightning-levenshtein/slim";
 ```
 
 Use the `profiles` subpath when you want an isolated distance function with an explicit character range and predictable per-instance memory:
@@ -174,7 +192,7 @@ Profiles are `ascii` (`0..127`), `latin1` (`0..255`), and `codeUnit` (`0..65535`
 
 ### Character table strategy
 
-`distance`, `distanceMax`, `closest`, `distanceUnicode` and `levenshteinLightning` all use full-width UTF-16 code-unit PEQ tables at every length, so they accept any JavaScript string. They count code units, so deleting a surrogate pair costs two edits. They do not normalize text or compare grapheme clusters.
+`distance`, `distanceMax`, `closest`, `distanceUnicode`, `distanceSlim` and `levenshteinLightning` all use full-width UTF-16 code-unit PEQ tables at every length, so they accept any JavaScript string. They count code units, so deleting a surrogate pair costs two edits. They do not normalize text or compare grapheme clusters.
 
 The design direction is:
 
@@ -197,6 +215,7 @@ Static typed-array payload currently scales with each worker or module realm:
 | default | 512 KiB | 2 MiB | 4 MiB |
 | `/unicode` | 512 KiB | 2 MiB | 4 MiB |
 | `/v2` | 6 MiB | 24 MiB | 48 MiB |
+| `/slim` | 256 KiB | 1 MiB | 2 MiB |
 
 Profile factories allocate three PEQ lanes per returned function: 1.5 KiB for ASCII, 3 KiB for Latin-1, or 768 KiB for full code-unit coverage.
 

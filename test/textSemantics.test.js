@@ -12,6 +12,8 @@ import { levenshteinLightning } from "../src/v2/index.js";
 import { levenshteinLightning as levenshteinLightningMin } from "../dist/lightning-levenshtein-v2.min.js";
 import { createDistance } from "../src/profiles.js";
 import { createDistance as createDistanceMin } from "../dist/lightning-levenshtein-profiles.min.js";
+import { distanceSlim } from "../src/slim.js";
+import { distanceSlim as distanceSlimMin } from "../dist/lightning-levenshtein-slim.min.js";
 
 const implementations = [
   ["default", distanceDefault],
@@ -23,11 +25,13 @@ const implementations = [
   ["v2", levenshteinLightning],
   ["v2/min", levenshteinLightningMin],
   ["profiles codeUnit", createDistance({ profile: "codeUnit" })],
-  ["profiles/min codeUnit", createDistanceMin({ profile: "codeUnit" })]
+  ["profiles/min codeUnit", createDistanceMin({ profile: "codeUnit" })],
+  ["slim", distanceSlim],
+  ["slim/min", distanceSlimMin]
 ];
 
 test.each(implementations)("%s counts surrogate code units across dispatch boundaries", (_, distance) => {
-  for (const length of [0, 30, 31, 32, 62, 63, 64, 95, 127, 223, 255, 511, 512]) {
+  for (const length of [0, 14, 15, 16, 30, 31, 32, 62, 63, 64, 95, 127, 223, 255, 511, 512]) {
     const prefix = "a".repeat(length);
     const pair = `${prefix}\ud83d\ude00`;
     const unpaired = `${prefix}\ud83d`;

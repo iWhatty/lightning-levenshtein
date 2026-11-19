@@ -10,6 +10,8 @@ import { distanceUnicode } from "lightning-levenshtein/unicode";
 import { distanceUnicode as minDistanceUnicode } from "lightning-levenshtein/unicode/min";
 import { createDistance } from "lightning-levenshtein/profiles";
 import { createDistance as createDistanceMin } from "lightning-levenshtein/profiles/min";
+import { distanceSlim } from "lightning-levenshtein/slim";
+import { distanceSlim as minDistanceSlim } from "lightning-levenshtein/slim/min";
 
 // @ts-expect-error distance arguments must be strings
 distance(1, "sitting");
@@ -41,3 +43,8 @@ createDistance({ profile: "utf8" });
 createDistance({ profile: "ascii", outOfRange: "ignore" });
 // @ts-expect-error profiles/min requires profile options
 createDistanceMin({ outOfRange: "throw" });
+
+// @ts-expect-error slim arguments must be strings
+distanceSlim("kitten", 7);
+// @ts-expect-error slim/min arguments must be strings
+minDistanceSlim(null, "sitting");

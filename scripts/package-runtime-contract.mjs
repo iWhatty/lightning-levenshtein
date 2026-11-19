@@ -22,6 +22,8 @@ export async function assertPackageRuntime(publicExports) {
   const unicodeMin = modules["./unicode/min"];
   const profiles = modules["./profiles"];
   const profilesMin = modules["./profiles/min"];
+  const slim = modules["./slim"];
+  const slimMin = modules["./slim/min"];
 
   assert.equal(root.distance("kitten", "sitting"), 3);
   assert.equal(rootMin.distance("kitten", "sitting"), 3);
@@ -38,6 +40,10 @@ export async function assertPackageRuntime(publicExports) {
   assert.equal(rootMin.closest("\u4f60a", ["zz", "\u4f60b"]), "\u4f60b");
   assert.equal(unicode.distanceUnicode("\u4f60a", "\u4f60b"), 1);
   assert.equal(unicodeMin.distanceUnicode("\u4f60a", "\u4f60b"), 1);
+  assert.equal(slim.distanceSlim("kitten", "sitting"), 3);
+  assert.equal(slimMin.distanceSlim("kitten", "sitting"), 3);
+  assert.equal(slim.distanceSlim("\u4f60a", "\u4f60b"), 1);
+  assert.equal(slimMin.distanceSlim("\u4f60a", "\u4f60b"), 1);
 
   const ascii = profiles.createDistance({ profile: "ascii" });
   const asciiMin = profilesMin.createDistance({ profile: "ascii" });
